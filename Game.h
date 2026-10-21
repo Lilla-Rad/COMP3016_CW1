@@ -1,6 +1,6 @@
 #pragma once
 #include "Entity.h"
-#include "Ball.h"
+#include "Temp.h"
 #include "Constants.h"
 #include "escapeTile.h"
 #include <SDL3/SDL.h>
@@ -19,11 +19,11 @@ private:
 	//ObjectType type;
 	Entity* player;
 	Entity* enemy1;
+	Temp* temp;
 	escapeTile* escape;
 	//bool collisionCheck(SDL_Rect a, SDL_Rect b);
 	/*Entity* enemy2;
 	Entity* enemy3;*/
-	Ball* ball;
 	int level;
 	//rendering
 	void levelSetup(int level);

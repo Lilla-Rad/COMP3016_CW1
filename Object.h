@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL3/SDL.h>
 #include "Constants.h"
+#include <string>
 
 class Object {
 public:
@@ -14,9 +15,9 @@ public:
 	void setY(int ycoord) {
 		y = ycoord;
 	}
-	const char* getAsset() { return asset; }
-	void setAsset(const char* ass) {
-		asset = ass;
+	const std::string getAsset() { return asset; }
+	void setAsset(const std::string ass) {
+		asset == ass;
 	}
 	SDL_Rect getBounds() { return boundaryBox; }
 	void setBounds(SDL_Rect bounds) {
@@ -29,7 +30,7 @@ public:
 protected:
 	int x;
 	int y;
-	const char* asset;
+	const std::string asset;
 	SDL_Rect boundaryBox;
 	ObjectType type;
 };

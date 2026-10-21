@@ -46,10 +46,11 @@ Game::Game() {
 	level = 1;
 	//map = new LoadTexture(WINDOW_WIDTH, WINDOW_HEIGHT);
 	
-	player = new Entity(10, WINDOW_HEIGHT / 2 - PLAYER_HEIGHT / 2, 5, 1, 1, 20, 10, 10, 9999999999, "whatsss.png", { 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::player);
+	player = new Entity(0, WINDOW_HEIGHT / 2 - PLAYER_HEIGHT / 2, 5, 1, 1, 20, 10, 10, 9999999999, "tempplayer.png", { 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::player);
+	
 	escape = new escapeTile(50, WINDOW_HEIGHT / 3 - PLAYER_HEIGHT / 3, 0, 0, 20, "theyretryingokay.png", { WINDOW_WIDTH - 5, WINDOW_HEIGHT - 5, PLAYER_WIDTH, PLAYER_HEIGHT}, ObjectType::escape);
 	enemy1 = new Entity(WINDOW_WIDTH - PADDLE_WIDTH - 20, WINDOW_HEIGHT / 2 - PADDLE_HEIGHT / 2, 5, 0, 0, 20, 20, 20, 4, "pinagaling.png", { WINDOW_WIDTH - PADDLE_WIDTH - 20, WINDOW_HEIGHT / 2 - PADDLE_HEIGHT / 2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
-	ball = new Ball(WINDOW_WIDTH / 2 - BALL_SIZE / 2, WINDOW_HEIGHT / 2 - BALL_SIZE / 2, BALL_SPEED, BALL_SPEED);
+	temp = new Temp(WINDOW_WIDTH / 2 - BALL_SIZE / 2, WINDOW_HEIGHT / 2 - BALL_SIZE / 2, BALL_SPEED, BALL_SPEED);
 	//array of collidable objects in level. [0] is always player, [1] is always the escape tile
 	//Object* collidables[3] = { player, escape, enemy1 };
 	collidables = { player, escape, enemy1 };
@@ -109,7 +110,7 @@ void Game::Run() {
 
 			Input();
 			//enemyturn
-			ball->update(player->getX(), player->getY(), enemy1->getX(), enemy1->getY());
+			temp->update(player->getX(), player->getY(), enemy1->getX(), enemy1->getY());
 			SDL_Delay(30);
 			/*std::cout << "Player:";
 			std::cout << player->getX();
@@ -183,7 +184,7 @@ void Game::Input() {
 				if (state[SDL_SCANCODE_UP] && !(state[SDL_SCANCODE_RIGHT] || state[SDL_SCANCODE_LEFT])) {
 					//std::cout << enemy1->getBounds().x << enemy1->getBounds().y;
 					player->setSpeed(5);
-					player->MoveUp(collidables);
+					player->MoveUp(/*collidables*/);
 	
 				}
 				/*if (state[SDL_SCANCODE_DOWN] && !(state[SDL_SCANCODE_RIGHT] || state[SDL_SCANCODE_LEFT])) {
@@ -236,14 +237,14 @@ void Game::Render() {
 	SDL_RenderClear(renderer);
 	
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-	renderTextureFromFile("adachi-rei-machina-mori.png", NULL, NULL);
+	renderTextureFromFile("tempmap.png", NULL, NULL);
 	SDL_FRect playerRect = { player->getX(), player->getY(), PLAYER_WIDTH, PLAYER_HEIGHT };
 	renderTextureFromFile(player->getAsset(), NULL, &playerRect);
 	SDL_FRect enemy1Rect = { enemy1->getX(), enemy1->getY(), PADDLE_WIDTH, PADDLE_HEIGHT };
 	renderTextureFromFile(enemy1->getAsset(), NULL, &enemy1Rect);
 	SDL_FRect escapeRect = { escape->getX(), escape->getY(), PADDLE_WIDTH, PADDLE_HEIGHT };
 	renderTextureFromFile(escape->getAsset(), NULL, &escapeRect);
-	SDL_FRect ballRect = { ball->getX(), ball->getY(), BALL_SIZE, BALL_SIZE };
+	SDL_FRect ballRect = { temp->getX(), temp->getY(), BALL_SIZE, BALL_SIZE };
 
 	//SDL_RenderFillRect(renderer, &enemy1Rect);
 	SDL_RenderFillRect(renderer, &ballRect);

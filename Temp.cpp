@@ -1,10 +1,10 @@
-#include "Ball.h"
+#include "Temp.h"
 #include <SDL3/SDL.h>
 
-void Ball::update(int leftX, int leftY, int rightX, int rightY) {
+void Temp::update(int leftX, int leftY, int rightX, int rightY) {
 	x += velX;
 	y += velY;
-	
+
 	if (y <= 0 || y >= WINDOW_HEIGHT - BALL_SIZE) {
 		velY = -velY;
 	}
@@ -16,7 +16,7 @@ void Ball::update(int leftX, int leftY, int rightX, int rightY) {
 		velY = BALL_SPEED;
 	}
 
-	if (x >= WINDOW_WIDTH-BALL_SIZE) {
+	if (x >= WINDOW_WIDTH - BALL_SIZE) {
 		x = WINDOW_WIDTH / 2 - BALL_SIZE / 2;
 		y = WINDOW_HEIGHT / 2 - BALL_SIZE / 2;
 		velX = -BALL_SPEED;
@@ -28,7 +28,7 @@ void Ball::update(int leftX, int leftY, int rightX, int rightY) {
 	}
 
 
-	if (x >= WINDOW_WIDTH-PADDLE_WIDTH-BALL_SIZE && y >= rightY && y <= rightY + PADDLE_HEIGHT) {
+	if (x >= WINDOW_WIDTH - PADDLE_WIDTH - BALL_SIZE && y >= rightY && y <= rightY + PADDLE_HEIGHT) {
 		velX = -BALL_SPEED;
 	}
-};
+}

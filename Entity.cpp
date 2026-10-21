@@ -4,13 +4,13 @@
 
 
 
-void Entity::MoveUp(std::vector<Object*> colliders) {
+void Entity::MoveUp(/*std::vector<Object*> colliders*/) {
 	/*for (Object* i : colliders)
 		std::cout << i << "";*/
 	/*for (auto i = colliders.begin(); i != colliders.end(); ++i) {
 		std::cout << i;
 		})*/
-	for (int i = 0; i < colliders.size(); i++) {
+	/*for (int i = 0; i < colliders.size(); i++) {
 		//std::cout << "\n";
 		//std::cout << colliders.at(i);
 		Object* player = colliders.at(0);
@@ -23,7 +23,7 @@ void Entity::MoveUp(std::vector<Object*> colliders) {
 			handleCollision(this, colliders.at(i));
 		}
 
-	}
+	}*/
 	if (y > 0)
 		//std::cout << y - PLAYER_HEIGHT;
 		x += PLAYER_WIDTH;

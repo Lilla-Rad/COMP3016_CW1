@@ -7,8 +7,8 @@
 
 class Entity : public Object {
 public:
-	Entity(int x, int y, int speed, bool isTurn, bool isPlayer, int health, int avoid, int strength, int move, const char* asset, SDL_Rect boundaryBox, ObjectType type) : x(x), y(y), speed(speed), isTurn(isTurn), isPlayer(isPlayer), health(health), avoid(avoid), strength(strength), move(move), asset(asset), boundaryBox(boundaryBox), type(type) {};
-	void MoveUp(std::vector<Object*> colliders);
+	Entity(int x, int y, int speed, bool isTurn, bool isPlayer, int health, int avoid, int strength, int move, const std::string asset, SDL_Rect boundaryBox, ObjectType type) : x(x), y(y), speed(speed), isTurn(isTurn), isPlayer(isPlayer), health(health), avoid(avoid), strength(strength), move(move), asset(asset), boundaryBox(boundaryBox), type(type) {};
+	void MoveUp(/*std::vector<Object*> colliders*/);
 	/*void MoveDown(Object* colliders[]);
 	void MoveLeft(Object* colliders[]);
 	void MoveRight(Object* colliders[]);*/
@@ -48,9 +48,9 @@ public:
 	void setMove(int m) {
 		move = m;
 	}
-	const char* getAsset() { return asset; }
-	void setAsset(const char* ass) {
-		asset = ass;
+	const std::string getAsset() { return asset; }
+	void setAsset(const std::string ass) {
+		asset == ass;
 	}
 	SDL_Rect getBounds() { return boundaryBox; }
 	void setBounds(SDL_Rect bounds) {
@@ -70,7 +70,7 @@ private:
 	int avoid;
 	int strength;
 	int move;
-	const char* asset;
+	const std::string asset;
 	SDL_Rect boundaryBox;
 	ObjectType type;
 };

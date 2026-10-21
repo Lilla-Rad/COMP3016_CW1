@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Ball.cpp" />
     <ClCompile Include="boulderTile.cpp" />
     <ClCompile Include="escapeTile.cpp" />
     <ClCompile Include="forestTile.cpp" />
@@ -28,10 +27,10 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Temp.cpp" />
     <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Ball.h" />
     <ClInclude Include="boulderTile.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="defs.h" />
@@ -43,17 +42,23 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="structs.h" />
+    <ClInclude Include="Temp.h" />
     <ClInclude Include="Tile.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="adachi-rei-machina-mori.png" />
     <Image Include="pinagaling.png" />
+    <Image Include="tempmap.png" />
+    <Image Include="tempplayer.png" />
     <Image Include="theyretryingokay.png" />
     <Image Include="WhatsApp Image 2026-10-13 at 16.58.09.jpeg" />
     <Image Include="whatsss.png" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="u_xg7ssi08yr-comical-kiss-2-381978.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="tempbg.avif" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

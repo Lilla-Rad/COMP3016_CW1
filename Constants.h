@@ -1,9 +1,9 @@
 #pragma once
 #include <string>
 
-const int WINDOW_WIDTH = 800;
-const int WINDOW_HEIGHT = 600;
-const int TILE_SIZE = (WINDOW_WIDTH * WINDOW_HEIGHT) / 50;
+const int WINDOW_WIDTH = 640;
+const int WINDOW_HEIGHT = 352;
+const int TILE_SIZE = (WINDOW_WIDTH*WINDOW_HEIGHT) / 220;
 const int PADDLE_WIDTH = 100;
 const int PADDLE_HEIGHT = 100;
 const int PLAYER_WIDTH = sqrt(TILE_SIZE);

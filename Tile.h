@@ -5,7 +5,7 @@
 
 class Tile : public Object {
 public:
-	Tile(int x, int y, bool passThrough, bool isUsed, int effect, const char* asset, SDL_Rect boundaryBox, ObjectType type) : x(x), y(y), passThrough(passThrough), isUsed(isUsed), effect(effect), asset(asset), boundaryBox(boundaryBox), type(type) {};
+	Tile(int x, int y, bool passThrough, bool isUsed, int effect, const std::string asset, SDL_Rect boundaryBox, ObjectType type) : x(x), y(y), passThrough(passThrough), isUsed(isUsed), effect(effect), asset(asset), boundaryBox(boundaryBox), type(type) {};
 	int getX() const { return x; }
 	int getY() const { return y; }
 	bool getPassThrough() { return passThrough; }
@@ -20,9 +20,9 @@ public:
 	void setEffect(int e) {
 		effect = e;
 	}
-	const char* getAsset() { return asset; }
-	void setAsset(const char* ass) {
-		asset = ass;
+	const std::string getAsset() { return asset; }
+	void setAsset(const std::string ass) {
+		asset == ass;
 	}
 	SDL_Rect getBounds() { return boundaryBox; }
 	void setBounds(SDL_Rect bounds) {
@@ -39,7 +39,7 @@ protected:
 	bool passThrough;
 	bool isUsed;
 	int effect;
-	const char* asset;
+	const std::string asset;
 	SDL_Rect boundaryBox;
 	ObjectType type;
 };
