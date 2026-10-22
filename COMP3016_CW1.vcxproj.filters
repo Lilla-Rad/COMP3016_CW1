@@ -124,35 +124,38 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="adachi-rei-machina-mori.png">
+    <Image Include="assets\img\whatsss.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="whatsss.png">
+    <Image Include="assets\img\tempmap.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="WhatsApp Image 2026-10-13 at 16.58.09.jpeg">
+    <Image Include="assets\img\tempplayer.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="pinagaling.png">
+    <Image Include="assets\img\theyretryingokay.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="theyretryingokay.png">
+    <Image Include="assets\img\adachi-rei-machina-mori.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="tempplayer.png">
+    <Image Include="assets\img\hello-sdl3.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="tempmap.png">
+    <Image Include="assets\img\pinagaling.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\img\WhatsApp Image 2026-10-13 at 16.58.09.jpeg">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Media Include="u_xg7ssi08yr-comical-kiss-2-381978.mp3">
+    <Media Include="assets\mus\sfx\u_xg7ssi08yr-comical-kiss-2-381978.mp3">
       <Filter>Resource Files</Filter>
     </Media>
   </ItemGroup>
   <ItemGroup>
-    <None Include="tempbg.avif">
+    <None Include="assets\img\tempbg.avif">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

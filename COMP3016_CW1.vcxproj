@@ -58,19 +58,20 @@
     <ClInclude Include="Tile.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="adachi-rei-machina-mori.png" />
-    <Image Include="pinagaling.png" />
-    <Image Include="tempmap.png" />
-    <Image Include="tempplayer.png" />
-    <Image Include="theyretryingokay.png" />
-    <Image Include="WhatsApp Image 2026-10-13 at 16.58.09.jpeg" />
-    <Image Include="whatsss.png" />
+    <Image Include="assets\img\adachi-rei-machina-mori.png" />
+    <Image Include="assets\img\hello-sdl3.bmp" />
+    <Image Include="assets\img\pinagaling.png" />
+    <Image Include="assets\img\tempmap.png" />
+    <Image Include="assets\img\tempplayer.png" />
+    <Image Include="assets\img\theyretryingokay.png" />
+    <Image Include="assets\img\WhatsApp Image 2026-10-13 at 16.58.09.jpeg" />
+    <Image Include="assets\img\whatsss.png" />
   </ItemGroup>
   <ItemGroup>
-    <Media Include="u_xg7ssi08yr-comical-kiss-2-381978.mp3" />
+    <Media Include="assets\mus\sfx\u_xg7ssi08yr-comical-kiss-2-381978.mp3" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="tempbg.avif" />
+    <None Include="assets\img\tempbg.avif" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

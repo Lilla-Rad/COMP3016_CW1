@@ -9,9 +9,9 @@ class Entity : public Object {
 public:
 	Entity(int x, int y, int speed, bool isTurn, bool isPlayer, int health, int avoid, int strength, int move, const std::string asset, SDL_Rect boundaryBox, ObjectType type) : x(x), y(y), speed(speed), isTurn(isTurn), isPlayer(isPlayer), health(health), avoid(avoid), strength(strength), move(move), asset(asset), boundaryBox(boundaryBox), type(type) {};
 	void MoveUp(/*std::vector<Object*> colliders*/);
-	/*void MoveDown(Object* colliders[]);
-	void MoveLeft(Object* colliders[]);
-	void MoveRight(Object* colliders[]);*/
+	void MoveDown(/*Object* colliders[]*/);
+	void MoveLeft(/*Object* colliders[] */ );
+	void MoveRight(/*Object* colliders[]*/);
 	int getX() const { return x; }
 	void setX(int xcoord) {
 		x = xcoord;

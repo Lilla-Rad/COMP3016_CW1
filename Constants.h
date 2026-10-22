@@ -3,6 +3,8 @@
 
 const int WINDOW_WIDTH = 640;
 const int WINDOW_HEIGHT = 352;
+const int LVL1_WIDTH = WINDOW_WIDTH;
+const int LVL1_HEIGHT = WINDOW_HEIGHT;
 const int TILE_SIZE = (WINDOW_WIDTH*WINDOW_HEIGHT) / 220;
 const int PADDLE_WIDTH = 100;
 const int PADDLE_HEIGHT = 100;

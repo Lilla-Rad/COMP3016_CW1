@@ -26,36 +26,38 @@ void Entity::MoveUp(/*std::vector<Object*> colliders*/) {
 	}*/
 	if (y > 0)
 		//std::cout << y - PLAYER_HEIGHT;
-		x += PLAYER_WIDTH;
+		y -= PLAYER_HEIGHT;
 		move -= 1;
 
 };
 
-/*void Entity::MoveDown(SDL_Rect collider) {
-	if ((y+PLAYER_HEIGHT) < WINDOW_HEIGHT - PLAYER_HEIGHT)
+void Entity::MoveDown(/*SDL_Rect collider*/) {
+	if (y + PLAYER_HEIGHT < WINDOW_HEIGHT)
 		y += PLAYER_HEIGHT;
 		move -= 1;
 }
 
-void Entity::MoveLeft(SDL_Rect collider) {
-	if ((x-PLAYER_WIDTH) > 0)
+void Entity::MoveLeft(/*SDL_Rect collider*/) {
+	if (x > 0)
 		x -= PLAYER_WIDTH;
 		move -= 1;
 }
 
-void Entity::MoveRight(SDL_Rect collider) {
-	x += PLAYER_WIDTH;
-	move -= 1;
-	if (x > WINDOW_WIDTH - PLAYER_WIDTH || collisionCheck(boundaryBox, collider)) {
+void Entity::MoveRight(/*SDL_Rect collider*/) {
+	if (x + PLAYER_WIDTH < WINDOW_WIDTH)
+		x += PLAYER_WIDTH;
+		move -= 1;
+}
+	/*if (x > WINDOW_WIDTH - PLAYER_WIDTH || collisionCheck(boundaryBox, collider)) {
 		x -= PLAYER_WIDTH;
 		move += 1;
-		handleCollision();
+		//handleCollision();
 	}
 	/*if (collisionCheck(boundaryBox, collider)) {
 		handleCollision(Entity* e, collided);
-	}
+	}*/
 
-}*/
+
 
 /*void handleCollision() {
 
