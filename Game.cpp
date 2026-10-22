@@ -46,10 +46,10 @@ Game::Game() {
 	level = 1;
 	//map = new LoadTexture(WINDOW_WIDTH, WINDOW_HEIGHT);
 	
-	player = new Entity(0, WINDOW_HEIGHT / 2 - PLAYER_HEIGHT / 2, 5, 1, 1, 20, 10, 10, 9999999999, "tempplayer.png", { 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::player);
+	player = new Entity(0, WINDOW_HEIGHT / 2 - PLAYER_HEIGHT / 2, 5, 1, 1, 20, 10, 10, 9999999999, "WhatsApp Image 2026-10-13 at 16.58.09.jpeg", { 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::player);
 	
 	escape = new escapeTile(50, WINDOW_HEIGHT / 3 - PLAYER_HEIGHT / 3, 0, 0, 20, "theyretryingokay.png", { WINDOW_WIDTH - 5, WINDOW_HEIGHT - 5, PLAYER_WIDTH, PLAYER_HEIGHT}, ObjectType::escape);
-	enemy1 = new Entity(WINDOW_WIDTH - PADDLE_WIDTH - 20, WINDOW_HEIGHT / 2 - PADDLE_HEIGHT / 2, 5, 0, 0, 20, 20, 20, 4, "pinagaling.png", { WINDOW_WIDTH - PADDLE_WIDTH - 20, WINDOW_HEIGHT / 2 - PADDLE_HEIGHT / 2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
+	enemy1 = new Entity(WINDOW_WIDTH - PLAYER_WIDTH - 20, WINDOW_HEIGHT / 2 - PADDLE_HEIGHT / 2, 5, 0, 0, 20, 20, 20, 4, "pinagaling.png", { WINDOW_WIDTH - PADDLE_WIDTH - 20, WINDOW_HEIGHT / 2 - PADDLE_HEIGHT / 2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
 	temp = new Temp(WINDOW_WIDTH / 2 - BALL_SIZE / 2, WINDOW_HEIGHT / 2 - BALL_SIZE / 2, BALL_SPEED, BALL_SPEED);
 	//array of collidable objects in level. [0] is always player, [1] is always the escape tile
 	//Object* collidables[3] = { player, escape, enemy1 };
@@ -107,7 +107,7 @@ void Game::Run() {
 		}
 		else {
 			//playerturn
-
+			//currentState->
 			Input();
 			//enemyturn
 			temp->update(player->getX(), player->getY(), enemy1->getX(), enemy1->getY());
@@ -240,9 +240,9 @@ void Game::Render() {
 	renderTextureFromFile("tempmap.png", NULL, NULL);
 	SDL_FRect playerRect = { player->getX(), player->getY(), PLAYER_WIDTH, PLAYER_HEIGHT };
 	renderTextureFromFile(player->getAsset(), NULL, &playerRect);
-	SDL_FRect enemy1Rect = { enemy1->getX(), enemy1->getY(), PADDLE_WIDTH, PADDLE_HEIGHT };
+	SDL_FRect enemy1Rect = { enemy1->getX(), enemy1->getY(), PLAYER_WIDTH, PLAYER_HEIGHT };
 	renderTextureFromFile(enemy1->getAsset(), NULL, &enemy1Rect);
-	SDL_FRect escapeRect = { escape->getX(), escape->getY(), PADDLE_WIDTH, PADDLE_HEIGHT };
+	SDL_FRect escapeRect = { escape->getX(), escape->getY(), PLAYER_WIDTH, PLAYER_HEIGHT };
 	renderTextureFromFile(escape->getAsset(), NULL, &escapeRect);
 	SDL_FRect ballRect = { temp->getX(), temp->getY(), BALL_SIZE, BALL_SIZE };
 
