@@ -1,17 +1,17 @@
 #pragma once
-#include "Constants.h"
-#include <SDL3/SDL.h>
+#include "SDLWindow.h"
 #include "Object.h"
-#include <vector>
 
-
-class Entity : public Object {
+class Entity : public Object
+{
 public:
-	Entity(int x, int y, int speed, bool isTurn, bool isPlayer, int health, int avoid, int strength, int move, const std::string asset, SDL_Rect boundaryBox, ObjectType type) : x(x), y(y), speed(speed), isTurn(isTurn), isPlayer(isPlayer), health(health), avoid(avoid), strength(strength), move(move), asset(asset), boundaryBox(boundaryBox), type(type) {};
-	void MoveUp(/*std::vector<Object*> colliders*/);
-	void MoveDown(/*Object* colliders[]*/);
-	void MoveLeft(/*Object* colliders[] */ );
-	void MoveRight(/*Object* colliders[]*/);
+	Entity(int x, int y, int speed, bool isTurn, bool isPlayer, int health, int avoid, int strength, int move, const std::string asset, std::string voice, SDL_Rect boundaryBox, ObjectType type) : x(x), y(y), speed(speed), isTurn(isTurn), isPlayer(isPlayer), health(health), avoid(avoid), strength(strength), move(move), asset(asset), voice(voice), boundaryBox(boundaryBox), type(type) {};	
+	void MoveUp();
+	void MoveDown();
+	void MoveLeft();
+	void MoveRight();
+	void render(SDLWindow window);
+	void dialogue(SDLWindow window, std::string speech, bool pos, int delay);
 	int getX() const { return x; }
 	void setX(int xcoord) {
 		x = xcoord;
@@ -52,6 +52,10 @@ public:
 	void setAsset(const std::string ass) {
 		asset == ass;
 	}
+	std::string getVoice() { return voice; }
+	void setVoice(std::string voi) {
+		voice == voi;
+	}
 	SDL_Rect getBounds() { return boundaryBox; }
 	void setBounds(SDL_Rect bounds) {
 		boundaryBox = bounds;
@@ -71,6 +75,8 @@ private:
 	int strength;
 	int move;
 	const std::string asset;
+	std::string voice;
 	SDL_Rect boundaryBox;
 	ObjectType type;
 };
+

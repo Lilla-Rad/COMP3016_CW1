@@ -1,7 +1,8 @@
 #pragma once
 #include <SDL3/SDL.h>
-#include "Constants.h"
 #include <string>
+#include "Constants.h"
+#include "SDLWindow.h"
 
 class Object {
 public:
@@ -27,6 +28,7 @@ public:
 	void setType(ObjectType obj) {
 		type = obj;
 	}
+	void render(SDLWindow window);
 protected:
 	int x;
 	int y;
@@ -34,4 +36,3 @@ protected:
 	SDL_Rect boundaryBox;
 	ObjectType type;
 };
-

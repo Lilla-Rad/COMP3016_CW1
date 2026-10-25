@@ -1,5 +1,5 @@
 #include "Object.h"
-#include <SDL3_mixer/SDL_mixer.h>
+#include "SDLWindow.h"
 #include <iostream>
 
 bool Object::collisionCheck(SDL_Rect a, SDL_Rect b) {
@@ -35,6 +35,11 @@ bool Object::collisionCheck(SDL_Rect a, SDL_Rect b) {
 
 	return true;
 
+}
+
+void Object::render(SDLWindow window) {
+	SDL_FRect objRect = { getX(), getY(), PLAYER_WIDTH, PLAYER_HEIGHT };
+	window.renderTextureFromFile(getAsset(), NULL, &objRect);
 }
 
 

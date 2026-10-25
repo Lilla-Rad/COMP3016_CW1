@@ -19,45 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="boulderTile.cpp" />
-    <ClCompile Include="enemyTurnState.cpp" />
-    <ClCompile Include="escapeTile.cpp" />
-    <ClCompile Include="forestTile.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="gameOverState.cpp" />
-    <ClCompile Include="GameState.cpp" />
-    <ClCompile Include="gameWinState.cpp" />
-    <ClCompile Include="init.cpp" />
-    <ClCompile Include="levelOneState.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="Object.cpp" />
-    <ClCompile Include="playerTurnState.cpp" />
-    <ClCompile Include="Temp.cpp" />
-    <ClCompile Include="Tile.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="boulderTile.h" />
-    <ClInclude Include="Constants.h" />
-    <ClInclude Include="defs.h" />
-    <ClInclude Include="enemyTurnState.h" />
-    <ClInclude Include="escapeTile.h" />
-    <ClInclude Include="forestTile.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="gameOverState.h" />
-    <ClInclude Include="GameState.h" />
-    <ClInclude Include="gameWinState.h" />
-    <ClInclude Include="init.h" />
-    <ClInclude Include="levelOneState.h" />
-    <ClInclude Include="main.h" />
-    <ClInclude Include="Entity.h" />
-    <ClInclude Include="Object.h" />
-    <ClInclude Include="playerTurnState.h" />
-    <ClInclude Include="structs.h" />
-    <ClInclude Include="Temp.h" />
-    <ClInclude Include="Tile.h" />
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="assets\img\adachi-rei-machina-mori.png" />
     <Image Include="assets\img\hello-sdl3.bmp" />
     <Image Include="assets\img\pinagaling.png" />
@@ -68,10 +29,35 @@
     <Image Include="assets\img\whatsss.png" />
   </ItemGroup>
   <ItemGroup>
+    <Media Include="assets\mus\sfx\testvoice.mp3" />
+    <Media Include="assets\mus\sfx\testvoice2.mp3" />
     <Media Include="assets\mus\sfx\u_xg7ssi08yr-comical-kiss-2-381978.mp3" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\img\tempbg.avif" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Constants.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="ExitState.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameState.h" />
+    <ClInclude Include="LevelOneState.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="StateManager.h" />
+    <ClInclude Include="SDLWindow.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="ExitState.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="LevelOneState.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="StateManager.cpp" />
+    <ClCompile Include="SDLWindow.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
