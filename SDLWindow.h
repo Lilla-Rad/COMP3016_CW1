@@ -13,6 +13,7 @@ public:
 	void Clear();
 	void Present();
 	bool renderTextureFromFile(std::string path, const SDL_FRect* srcrect, const SDL_FRect* dstrect);
+	void boxRender(std::string info);
 	void cleanup(SDL_Window* window, SDL_Renderer* renderer, SDL_Texture* texture, MIX_Mixer* mixer);
 	SDL_Window* window;
 	SDL_Renderer* renderer;

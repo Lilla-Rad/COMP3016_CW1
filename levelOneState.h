@@ -7,24 +7,31 @@
 class LevelOneState : public GameState
 {
 public:
-    //Static accessor
-    static LevelOneState* get();
 
     //Transitions
     bool enter() override;
     bool exit() override;
 
     //Main loop functions
-    void eventHandling(SDL_Event& e, SDLWindow window) override;
-    void update() override;
+    void eventHandling(SDLWindow window, Game* manager) override;
+    void update(Game* manager) override;
     void Render(SDLWindow window) override;
+
+    static LevelOneState* Instance() {
+        return &stateLevelOne;
+    }
+
+
+protected:
+    LevelOneState(){ }
 
 private:
     //Static instance
     static LevelOneState stateLevelOne;
     Entity* player;
-    
-    //Private constructor
-    LevelOneState();
-
+    Entity* enemy1;
+    Entity* enemy2;
+    Entity* escape;
+    std::vector<Entity*> entities;
+    //std::vector<Tile*> tiles; list of interactable tiles
 };

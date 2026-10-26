@@ -1,15 +1,12 @@
 #include "ExitState.h"
 #include "Constants.h"
+#include <iostream>
 
 //Hollow exit state
-ExitState* ExitState::get()
-{
-    return &sExitState;
-}
+ExitState ExitState::stateExit;
 
 bool ExitState::enter()
 {
-
     return true;
 }
 
@@ -18,15 +15,15 @@ bool ExitState::exit()
     return true;
 }
 
-void ExitState::eventHandling(SDL_Event& e, SDLWindow window)
+void ExitState::eventHandling(SDLWindow window, Game* manager)
 {
-
+    window.cleanup(window.window, window.renderer, window.texture, window.mixer);
 
 }
 
-void ExitState::update()
+void ExitState::update(Game* manager)
 {
-
+    manager->Quit();
 }
 
 void ExitState::Render(SDLWindow window)
@@ -44,9 +41,4 @@ void ExitState::Render(SDLWindow window)
 
 }
 
-ExitState ExitState::sExitState;
 
-ExitState::ExitState()
-{
-
-}

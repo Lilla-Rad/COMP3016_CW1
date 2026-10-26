@@ -41,22 +41,22 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="ExitState.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameOverState.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="LevelOneState.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Object.h" />
-    <ClInclude Include="StateManager.h" />
     <ClInclude Include="SDLWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="ExitState.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameOverState.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="LevelOneState.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
-    <ClCompile Include="StateManager.cpp" />
     <ClCompile Include="SDLWindow.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -1,10 +1,13 @@
 #pragma once
 #include <string>
 #include <stdlib.h>
-
+const std::string GAME_TITLE = "ALL THE BETTER TO HUNT YOU WITH";
+const std::string WINDOW_ICON = "assets\\img\\tempplayer.png";
+const std::string BOX_TEXTURE = "adachi-rei-machina-mori.png";
 const int BASE_WIDTH = 640;
 const int BASE_HEIGHT = 360;
 const float SCALAR = 1.0;
+const int DIFFICULTY = 1;
 const int WINDOW_WIDTH = BASE_WIDTH * SCALAR;
 const int WINDOW_HEIGHT = BASE_HEIGHT * SCALAR;
 const int LVL1_WIDTH = WINDOW_WIDTH;

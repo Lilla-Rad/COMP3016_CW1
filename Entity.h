@@ -5,13 +5,15 @@
 class Entity : public Object
 {
 public:
-	Entity(int x, int y, int speed, bool isTurn, bool isPlayer, int health, int avoid, int strength, int move, const std::string asset, std::string voice, SDL_Rect boundaryBox, ObjectType type) : x(x), y(y), speed(speed), isTurn(isTurn), isPlayer(isPlayer), health(health), avoid(avoid), strength(strength), move(move), asset(asset), voice(voice), boundaryBox(boundaryBox), type(type) {};	
+	Entity(int x, int y, int speed, bool isTurn, int health, int avoid, int strength, int move, const std::string asset, std::string voice, SDL_Rect boundaryBox, ObjectType type) : x(x), y(y), speed(speed), isTurn(isTurn), health(health), avoid(avoid), strength(strength), move(move), asset(asset), voice(voice), boundaryBox(boundaryBox), type(type) {};	
 	void MoveUp();
 	void MoveDown();
 	void MoveLeft();
 	void MoveRight();
 	void render(SDLWindow window);
+	void playerInput(SDL_Event& e);
 	void dialogue(SDLWindow window, std::string speech, bool pos, int delay);
+	void Die();
 	int getX() const { return x; }
 	void setX(int xcoord) {
 		x = xcoord;
@@ -27,10 +29,6 @@ public:
 	bool getEntityTurn() { return isTurn; }
 	void setTurn(bool t) {
 		isTurn = t;
-	}
-	bool getEntityIdentity() { return isPlayer; }
-	void setEntityIdentity(bool i) {
-		isPlayer = i;
 	}
 	int getHealth() { return health; }
 	void setHealth(int h) {
@@ -69,7 +67,6 @@ private:
 	int y;
 	int speed;
 	bool isTurn;
-	bool isPlayer;
 	int health;
 	int avoid;
 	int strength;

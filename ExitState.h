@@ -4,22 +4,24 @@
 class ExitState : public GameState
 {
 public:
-    //Static accessor
-    static ExitState* get();
 
     //Transitions
     bool enter() override;
     bool exit() override;
 
     //Main loop functions
-    void eventHandling(SDL_Event& e, SDLWindow window) override;
-    void update() override;
+    void eventHandling(SDLWindow window, Game* manager) override;
+    void update(Game* manager) override;
     void Render(SDLWindow window) override;
 
-private:
-    //Static instance
-    static ExitState sExitState;
+    static ExitState* Instance() {
+        return &stateExit;
+    }
 
-    //Private constructor
-    ExitState();
+protected:
+    ExitState() {}
+
+private:
+    static ExitState stateExit;
+
 };
