@@ -8,6 +8,7 @@
 #include "Constants.h"
 #include "SDLWindow.h"
 
+
 Game::Game() {
 	SDL_Event event{};
 	SDL_zero(event);
@@ -62,40 +63,16 @@ void Game::PushState(GameState* state) {
 	game_states.back()->enter();
 }
 
-bool Game::collisionCheck(SDL_Rect a, SDL_Rect b) {
-	int minxA{ a.x };
-	int maxxA{ a.x + a.w };
-	int minyA{ a.y };
-	int maxyA{ a.y + a.h };
 
-	int minxB{ b.x };
-	int maxxB{ b.x + b.w };
-	int minyB{ b.y };
-	int maxyB{ b.y + b.h };
 
-	if (minxA == minxB && maxxA == maxxB && minyA == minyB && maxyA == maxyB) {
-		return false;
-	}
 
-	if (minxA >= maxxB) {
-		return false;
-	}
+/*void Game::cutscene(Entity* player) {
+	SDL_Delay(50);
+	player->MoveDown();
+	player->dialogue(window, "Phew... I think I lost them...", 1, 50);
+}*/
 
-	if (maxxA <= minxB) {
-		return false;
-	}
 
-	if (minyA >= maxyB) {
-		return false;
-	}
-
-	if (maxyA <= minyB) {
-		return false;
-	}
-
-	return true;
-
-}
 
 
 /*void Entity::EntityTurn(Entity* player) {
@@ -114,20 +91,67 @@ bool Game::collisionCheck(SDL_Rect a, SDL_Rect b) {
 	}
 }*/
 
-void Game::enemyTurn(std::vector<Entity*> enemies, Entity* player) {
+void Game::mouseHandling(Entity* entity) {
+	window.boxRender("Current health: " + std::to_string(entity->getHealth()));
+	SDL_RenderPresent(window.renderer);
+	SDL_Delay(500);
+}
+
+
+/*void Game::enemyTurn(std::vector<Entity*> enemies, Entity* player) {
+	window.boxRender("ENEMY TURN");
+	SDL_RenderPresent(window.renderer);
+	SDL_Delay(500);
 	player->setSpeed(0);
-	for (int i = 0; i < enemies.size(); ++i) {
+	for (int i = 1; i < enemies.size()-1; ++i) {
 		if (enemies[i]->getType() == ObjectType::enemy && enemies[i]->getHealth() > 0) {
+			/*std::cout << enemies[i]->getBounds().x;
+			std::cout << "\n";
+			std::cout << enemies[i]->getBounds().y;
+			std::cout << "\n";
+			std::cout << enemies[i]->getBounds().w;
+			std::cout << "\n";
+			std::cout << enemies[i]->getBounds().h;
+			std::cout << "\n";
 			for (int m = 0; m < enemies[i]->getMove(); ++m) {
 				//move towards player
 				//if collided with player, combat
-				//std::cout << "I'M WALKIN' 'ERE\n";
-				window.boxRender("enemy1 moves");
+				window.boxRender("Enemy " + std::to_string(i) + " moves");
+
+				int currentX = enemies[i]->getX();
+				int currentY = enemies[i]->getY();
+				int targetX = player->getX();
+				int targetY = player->getY();
+				//if enemy is to player's right
+				if (targetX < currentX) {
+					enemies[i]->MoveLeft();
+				}
+				//if enemy is to player's left
+				if (targetX > currentX){
+					enemies[i]->MoveRight();
+				}
+				//if enemy is above player
+				if (targetY > currentY) {
+					enemies[i]->MoveDown();
+				}
+				//if enemy is below player
+				if (targetY < currentY) {
+					enemies[i]->MoveUp(/*enemies, i);
+					
+				}
 				SDL_RenderPresent(window.renderer);
-				SDL_Delay(100);
+				SDL_Delay(500);
+
 			}
 		}
 	}
 	player->setTurn(1);
-	player->setMove(4);
-}
+	//player->setMove(4);
+	for (int i = 0; i < enemies.size(); ++i) {
+		enemies[i]->setMove(4);
+	}
+	window.boxRender("PLAYER TURN");
+	SDL_RenderPresent(window.renderer);
+	SDL_Delay(500);
+}*/
+

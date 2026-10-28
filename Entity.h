@@ -1,17 +1,25 @@
 #pragma once
 #include "SDLWindow.h"
 #include "Object.h"
+#include <vector>
 
 class Entity : public Object
 {
 public:
 	Entity(int x, int y, int speed, bool isTurn, int health, int avoid, int strength, int move, const std::string asset, std::string voice, SDL_Rect boundaryBox, ObjectType type) : x(x), y(y), speed(speed), isTurn(isTurn), health(health), avoid(avoid), strength(strength), move(move), asset(asset), voice(voice), boundaryBox(boundaryBox), type(type) {};	
-	void MoveUp();
-	void MoveDown();
-	void MoveLeft();
-	void MoveRight();
+	void MoveUp(std::vector<Entity*> entities, int position);
+	void MoveDown(std::vector<Entity*> entities, int position);
+	void MoveLeft(std::vector<Entity*> entities, int position);
+	void MoveRight(std::vector<Entity*> entities, int position);
 	void render(SDLWindow window);
-	void playerInput(SDL_Event& e);
+	bool collisionCheck(SDL_Rect a, SDL_Rect b);
+	void handleCollision(Entity* collided);
+	void playerInput(SDL_Event& e, std::vector<Entity*> entities);
+	void takeTurn(SDL_Event& e, std::vector<Entity*> entities, int position, SDLWindow window);
+	void combat(Entity* attacked);
+	void moveBoulder(Entity* boulder);
+	int checkForCollidables(std::vector<Entity*> entities, int position, int direction);
+	bool mouseCheck();
 	void dialogue(SDLWindow window, std::string speech, bool pos, int delay);
 	void Die();
 	int getX() const { return x; }

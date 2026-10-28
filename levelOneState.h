@@ -31,7 +31,18 @@ private:
     Entity* player;
     Entity* enemy1;
     Entity* enemy2;
+    Entity* boulder;
+    Entity* forest1;
+    Entity* forest2;
+    Entity* forest3;
+    Entity* poison1;
+    Entity* poison2;
     Entity* escape;
+    MIX_Track* track;
+    MIX_Track* track2;
     std::vector<Entity*> entities;
+    int tutorial;
+    bool first;
+    int check;
     //std::vector<Tile*> tiles; list of interactable tiles
 };

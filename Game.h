@@ -11,7 +11,7 @@ class Game
 {
 public:
 	Game();
-	//void Run();
+
 
 	void eventHandling();
 	void Update();
@@ -22,8 +22,9 @@ public:
 	void PopState();
 	void Empty();
 
+	void mouseHandling(Entity* entity);
 	void enemyTurn(std::vector<Entity*> enemies, Entity* player);
-	bool collisionCheck(SDL_Rect a, SDL_Rect b);
+	void cutscene(Entity* player);
 	bool Run() { return isRunning; }
 	void Quit() { isRunning = false; }
 

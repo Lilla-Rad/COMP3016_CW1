@@ -1,6 +1,8 @@
 #include "Entity.h"
 #include "SDLWindow.h"
 #include <iostream>
+#include <vector>
+#include <random>
 
 void Entity::render(SDLWindow window) {
 	SDL_FRect objRect = { getX(), getY(), PLAYER_WIDTH, PLAYER_HEIGHT };
@@ -8,32 +10,307 @@ void Entity::render(SDLWindow window) {
 
 }
 
-void Entity::MoveUp() {
-	if (y > 0)
+
+
+bool Entity::collisionCheck(SDL_Rect a, SDL_Rect b) {
+	int minxA{ a.x };
+	int maxxA{ a.x + a.w };
+	int minyA{ a.y };
+	int maxyA{ a.y + a.h };
+
+	int minxB{ b.x };
+	int maxxB{ b.x + b.w };
+	int minyB{ b.y };
+	int maxyB{ b.y + b.h };
+
+	/*if (minxA == minxB && maxxA == maxxB && minyA == minyB && maxyA == maxyB) {
+		return false;
+	}*/
+	if (minxA >= maxxB) {
+		return false;
+	}
+
+	if (maxxA <= minxB) {
+		return false;
+	}
+
+	if (minyA >= maxyB) {
+		return false;
+	}
+
+	if (maxyA <= minyB) {
+		return false;
+	}
+
+
+	return true;
+
+}
+
+
+void Entity::takeTurn(SDL_Event& e, std::vector<Entity*> entities, int position, SDLWindow window) {
+	if (getType() == ObjectType::player) {
+		playerInput(e, entities);
+	}
+	else {
+		if (getEntityTurn() == 1) {
+			for (int m = 0; m <= getMove(); ++m) {
+				int currentX = getX();
+				int currentY = getY();
+				int targetX = entities[0]->getX();
+				int targetY = entities[0]->getY();
+
+				//if enemy is to player's right
+				if (targetX < currentX) {
+					MoveLeft(entities, position);
+				}
+				//if enemy is to player's left
+				if (targetX > currentX) {
+					MoveRight(entities, position);
+				}
+				//if enemy is above player
+				if (targetY > currentY) {
+					MoveDown(entities, position);
+				}
+				//if enemy is below player
+				if (targetY < currentY) {
+					MoveUp(entities, position);
+				}
+
+			}
+			setTurn(0);
+		}
+		setMove(4);
+		
+	}
+	
+}
+
+
+
+//convert to state?
+void Entity::combat(Entity* victim) {
+	std::random_device seed;
+	std::mt19937 gen{ seed() };
+	int maxDamage;
+	maxDamage = (getStrength() * (100 - (victim->getAvoid()))) / 100;
+	std::uniform_int_distribution<> dist1{ 0, maxDamage };
+	int dodgechance = victim->getAvoid();
+	std::uniform_int_distribution<> dist2{ 0, dodgechance };
+	int damage = dist1(gen);
+	if (damage > victim->getHealth()) {
+		damage = victim->getHealth();
+	}
+	int dodge = dist2(gen);
+	if (damage > dodge) {
+		victim->setHealth(victim->getHealth() - damage);
+	}
+	setTurn(0);
+}
+
+void Entity::handleCollision(Entity* collided) {
+	if (getType() == ObjectType::enemy && collided->getType() == ObjectType::player) {
+		//return true;
+		combat(collided);
+	}
+	//if entitiesp[i] == objecttype::enemy 
+	//call combat function
+	//if boulder
+	//call moveboulder func
+}
+
+
+//check if there is anything adjacent, and if so return a value corresponding to the type of adjacent entity
+//return the first adjacent entity, ignore anything else (e.g. if there are multiple adjacent units
+//for i in entities{
+//check if there is anything to the left
+//setBounds{x-player_width
+//if collisionCgeck(getBounds, temp[i]->getBounds{
+//cannot move left
+//0 == check all directions, 1== check left, 2== check up, 3 == check right, 4 == check down
+//return 0 == cannot move, return 1 == adjacent boulder, return 2 == adjacent enemy
+
+
+int Entity::checkForCollidables(std::vector<Entity*> entities, int position, int direction) {
+	bool collided = false;
+	std::vector<Entity*> temp = entities;
+	SDL_Rect backup = getBounds();
+	temp.erase(temp.begin() + position);
+	/*switch (direction) {
+	case 0:*/
+	for (int i = 0; i < temp.size(); ++i) {
+		if (/*temp[i]->getType() == ObjectType::enemy || */temp[i]->getType() == ObjectType::boulder) {
+			
+			this->setBounds({ (this->getBounds().x) - PLAYER_WIDTH, this->getBounds().y,getBounds().h, getBounds().w });
+			if (collisionCheck(getBounds(), temp[i]->getBounds())) {
+				collided = true;
+			}
+			this->setBounds({ (this->getBounds().x) + (PLAYER_WIDTH*2), this->getBounds().y, this->getBounds().h, this->getBounds().w });
+			if (collisionCheck(getBounds(), temp[i]->getBounds())) {
+				collided = true;
+			}
+			this->setBounds({ (this->getBounds().x) - PLAYER_WIDTH, (this->getBounds().y) - PLAYER_HEIGHT, this->getBounds().h, this->getBounds().w });
+			if (collisionCheck(getBounds(), temp[i]->getBounds())) {
+				collided = true;
+			}
+			this->setBounds({ this->getBounds().x, (this->getBounds().y) + (PLAYER_HEIGHT*2), this->getBounds().h, this->getBounds().w });
+			if (collisionCheck(getBounds(), temp[i]->getBounds())) {
+				collided = true;
+			}
+			this->setBounds(backup);
+			if (collided) {
+				if (temp[i]->getType() == ObjectType::boulder) {
+					return 1;
+				}
+				else if (temp[i]->getType() == ObjectType::enemy) {
+					return 2;
+				}
+				break;
+			}
+			else {
+				return 3;
+			}
+		}
+	}
+		/*break;
+	case 1:
+		this->setBounds({ (this->getBounds().x) - PLAYER_WIDTH, this->getBounds().y, this->getBounds().h, this->getBounds().w });
+		break;
+	case 2:
+		this->setBounds({ this->getBounds().x, (this->getBounds().y) - PLAYER_HEIGHT, this->getBounds().h, this->getBounds().w });
+		break;
+	case 3:
+		this->setBounds({ (this->getBounds().x) + PLAYER_WIDTH, this->getBounds().y, this->getBounds().h, this->getBounds().w });
+		break;
+	case 4:
+		this->setBounds({ this->getBounds().x, (this->getBounds().y) + PLAYER_HEIGHT, this->getBounds().h, this->getBounds().w });
+		break;
+	}
+
+	for (int i = 0; i < temp.size(); ++i) {
+		if (temp[i]->getType() == ObjectType::enemy || temp[i]->getType() == ObjectType::boulder || temp[i]->getType() == ObjectType::player) {
+			collided = collisionCheck(getBounds(), temp[i]->getBounds());
+		}
+		this->setBounds(backup);
+		if (collided == true) {
+			std::cout << "i hit a deer with my car";
+			return 0;
+			break;
+		}
+		else {
+			return 5;
+		}
+	}*/
+}
+
+
+void Entity::MoveUp(std::vector<Entity*> entities, int position) {
+	y -= PLAYER_HEIGHT;
+	move -= 1;
+	this->setBounds({ this->getBounds().x, y, this->getBounds().h, this->getBounds().w });
+	std::vector<Entity*> temp = entities;
+	temp.erase(temp.begin() + position);
+	bool collided = false;
+	for (int i = 0; i < temp.size(); ++i) {
+		if (temp[i]->getType() == ObjectType::enemy || temp[i]->getType() == ObjectType::boulder || temp[i]->getType() == ObjectType::player) {
+			collided = collisionCheck(getBounds(), temp[i]->getBounds());
+		}
+		if (collided == true) {
+			handleCollision(temp[i]);
+			break;
+		}
+	}
+
+	if (y < 0 || collided) {
+		y += PLAYER_HEIGHT;
+		move += 1;
+	}
+	this->setBounds({ this->getBounds().x, y, this->getBounds().h, this->getBounds().w });
+	/*if (y > 0)
 		y -= PLAYER_HEIGHT;
 	this->setBounds({ this->getBounds().x, y, this->getBounds().h, this->getBounds().w });
-	move -= 1;
+	move -= 1;*/
 }
 
-void Entity::MoveDown() {
-	if (y + PLAYER_HEIGHT < BASE_HEIGHT - BOX_HEIGHT)
-		y += PLAYER_HEIGHT;
+void Entity::MoveDown(std::vector<Entity*> entities, int position) {
+	y += PLAYER_HEIGHT;
+	move -= 1;
 	this->setBounds({ this->getBounds().x, y, this->getBounds().h, this->getBounds().w });
-	move -= 1;
+	std::vector<Entity*> temp = entities;
+	temp.erase(temp.begin() + position);
+	bool collided = false;
+	for (int i = 0; i < temp.size(); ++i) {
+		if (temp[i]->getType() == ObjectType::enemy || temp[i]->getType() == ObjectType::boulder || temp[i]->getType() == ObjectType::player) {
+			collided = collisionCheck(getBounds(), temp[i]->getBounds());
+		}
+		if (collided == true) {
+			handleCollision(temp[i]);
+			break;
+		}
+	}
+
+	if (y + PLAYER_HEIGHT > BASE_HEIGHT - BOX_HEIGHT || collided) {
+		y -= PLAYER_HEIGHT;
+		move += 1;
+	}
+	this->setBounds({ this->getBounds().x, y, this->getBounds().h, this->getBounds().w });
+
+
 }
 
-void Entity::MoveLeft() {
-	if (x > 0)
-		x -= PLAYER_WIDTH;
+void Entity::MoveLeft(std::vector<Entity*> entities, int position) {
+	x -= PLAYER_WIDTH;
+	move -= 1;
 	this->setBounds({ x, this->getBounds().y, this->getBounds().h, this->getBounds().w });
-	move -= 1;
-}
+	std::vector<Entity*> temp = entities;
+	temp.erase(temp.begin() + position);
+	bool collided = false;
+	for (int i = 0; i < temp.size(); ++i) {
+		if (temp[i]->getType() == ObjectType::enemy || temp[i]->getType() == ObjectType::boulder || temp[i]->getType() == ObjectType::player) {
+			collided = collisionCheck(getBounds(), temp[i]->getBounds());
+		}
+		if (collided == true) {
+			handleCollision(temp[i]);
+			break;
+		}
+	}
 
-void Entity::MoveRight() {
-	if (x + PLAYER_WIDTH < BASE_WIDTH)
+	if (x < 0 || collided) {
 		x += PLAYER_WIDTH;
+		move += 1;
+	}
 	this->setBounds({ x, this->getBounds().y, this->getBounds().h, this->getBounds().w });
+
+	
+}
+
+void Entity::MoveRight(std::vector<Entity*> entities, int position) {
+	x += PLAYER_WIDTH;
 	move -= 1;
+	this->setBounds({ x, this->getBounds().y, this->getBounds().h, this->getBounds().w });
+	std::vector<Entity*> temp = entities;
+	temp.erase(temp.begin() + position);
+	bool collided = false;
+	for (int i = 0; i < temp.size(); ++i) {
+		if (temp[i]->getType() == ObjectType::enemy || temp[i]->getType() == ObjectType::boulder || temp[i]->getType() == ObjectType::player) {
+			collided = collisionCheck(getBounds(), temp[i]->getBounds());
+		}
+		if (collided == true) {
+			handleCollision(temp[i]);
+			break;
+		}
+	}
+
+
+	if (x + PLAYER_WIDTH > BASE_WIDTH || collided) {
+		x -= PLAYER_WIDTH;
+		move += 1;
+	}
+	this->setBounds({ x, this->getBounds().y, this->getBounds().h, this->getBounds().w });
+
+	/*x += PLAYER_WIDTH;
+	this->setBounds({ x, this->getBounds().y, this->getBounds().h, this->getBounds().w });
+	move -= 1;*/
 }
 
 void Entity::Die() {
@@ -42,26 +319,46 @@ void Entity::Die() {
 	}
 }
 
-void Entity::playerInput(SDL_Event& e) {
+bool Entity::mouseCheck() {
+	float mouseX = -1.f, mouseY = -1.f;
+	SDL_GetMouseState(&mouseX, &mouseY);
+	bool hoveringOnEntity = true;
+	if (mouseX < getBounds().x) {
+		hoveringOnEntity = false;
+	}
+	else if (mouseX > (getBounds().x + PLAYER_WIDTH)) {
+		hoveringOnEntity = false;
+	}
+	else if (mouseY < getBounds().y) {
+		hoveringOnEntity = false;
+	}
+	else if (mouseY > (getBounds().y + PLAYER_HEIGHT)) {
+		hoveringOnEntity = false;
+	}
+	return hoveringOnEntity;
+}
+
+//pass in entities vector? pass vector along to move functions? 
+void Entity::playerInput(SDL_Event& e, std::vector<Entity*> entities) {
 	if (getEntityTurn() == 1) {
 		const bool* state = SDL_GetKeyboardState(NULL);
 		if (state[SDL_SCANCODE_UP] && !(state[SDL_SCANCODE_RIGHT] || state[SDL_SCANCODE_LEFT])) {
 			setSpeed(5);
-			MoveUp();
-
-
+			MoveUp(entities, 0);
 		}
 		if (state[SDL_SCANCODE_DOWN] && !(state[SDL_SCANCODE_RIGHT] || state[SDL_SCANCODE_LEFT])) {
 			setSpeed(5);
-			MoveDown();
+			MoveDown(entities, 0);
+			
 		}
 		if (state[SDL_SCANCODE_RIGHT] && !(state[SDL_SCANCODE_UP] || state[SDL_SCANCODE_DOWN])) {
 			setSpeed(5);
-			MoveRight();
+			MoveRight(entities, 0);
 		}
 		if (state[SDL_SCANCODE_LEFT] && !(state[SDL_SCANCODE_UP] || state[SDL_SCANCODE_DOWN])) {
 			setSpeed(5);
-			MoveLeft();
+			MoveLeft(entities, 0);
+			
 		}
 		if (state[SDL_SCANCODE_LEFT] && state[SDL_SCANCODE_UP] || state[SDL_SCANCODE_LEFT] && state[SDL_SCANCODE_DOWN] || state[SDL_SCANCODE_RIGHT] && state[SDL_SCANCODE_UP] || state[SDL_SCANCODE_RIGHT] && state[SDL_SCANCODE_DOWN]) {
 			setSpeed(0);
@@ -82,7 +379,12 @@ void Entity::dialogue(SDLWindow window, std::string speech, bool pos, int delay)
 	MIX_Track* track = MIX_CreateTrack(mixer);
 	MIX_SetTrackAudio(track, talk);
 	SDL_SetRenderScale(window.renderer, SCALAR, SCALAR);
-	SDL_SetRenderDrawColor(window.renderer, 0, 0, 0, 255);
+	if (getType() == ObjectType::player) {
+		SDL_SetRenderDrawColor(window.renderer, 155, 0, 145, 255);
+	}
+	else {
+		SDL_SetRenderDrawColor(window.renderer, 155, 0, 20, 255);
+	}
 	if ((getX() + PLAYER_WIDTH) / SCALAR >= WINDOW_WIDTH / SCALAR || (getX() + ((len / 2) * 8)) / SCALAR >= WINDOW_WIDTH / SCALAR) {
 		xpos = WINDOW_WIDTH - (len * (8 * SCALAR));
 	}
@@ -120,4 +422,6 @@ void Entity::dialogue(SDLWindow window, std::string speech, bool pos, int delay)
 	SDL_RenderPresent(window.renderer);
 	SDL_SetRenderScale(window.renderer, SCALAR, SCALAR);
 	SDL_Delay(1000);
+	SDL_SetRenderDrawColor(window.renderer, 0, 0, 0, 255);
+
 }
