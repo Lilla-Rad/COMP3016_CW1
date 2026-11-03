@@ -83,7 +83,7 @@ void Entity::mouseHandling(SDLWindow window) {
 		window.boxRender("Entity");
 	}
 	SDL_RenderPresent(window.renderer);
-	SDL_Delay(1000);
+	SDL_Delay(3000);
 }
 
 void Entity::takeTurn(std::vector<Entity*> entities, int position) {
