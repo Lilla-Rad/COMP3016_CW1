@@ -51,6 +51,7 @@ private:
     int check;
     std::vector<Entity*> entities;
     MIX_Track* movesfx;
+    MIX_Track* damagesfx;
     MIX_Track* bgm;
     //std::vector<Tile*> tiles; list of interactable tiles
 };

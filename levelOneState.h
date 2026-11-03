@@ -41,7 +41,9 @@ private:
     Entity* poison1;
     Entity* poison2;
     Entity* escape;
+
     MIX_Track* movesfx;
+    MIX_Track* damagesfx;
     std::vector<Entity*> entities;
     bool poisonflag;
     int temp; 

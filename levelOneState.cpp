@@ -161,6 +161,7 @@ void LevelOneState::update(Game* manager, SDLWindow window)
                         int diff = temp - player->getHealth();
 
                         window.boxRender("PLAYER TAKES " + std::to_string(diff) + " DAMAGE IN COMBAT!");
+                        MIX_PlayTrack(damagesfx, 0);
                         SDL_RenderPresent(window.renderer);
                         SDL_Delay(2000);
                     }
@@ -168,6 +169,7 @@ void LevelOneState::update(Game* manager, SDLWindow window)
                     if (entities[i]->getHealth() < temp2) {
                         int diff2 = temp2 - entities[i]->getHealth();
                         window.boxRender("PLAYER DEALS " + std::to_string(diff2) + " TO Enemy " + std::to_string(i - 3) + " IN TURN!");
+                        MIX_PlayTrack(damagesfx, 0);
                         SDL_RenderPresent(window.renderer);
                         SDL_Delay(2000);
                     }
@@ -176,6 +178,7 @@ void LevelOneState::update(Game* manager, SDLWindow window)
                     player->setHealth(player->getHealth() - (player->getHealth() * 0.1));
                     bool poisonflag = true;
                     window.boxRender("PLAYER TAKES POISON DAMAGE!");
+                    MIX_PlayTrack(damagesfx, 0);
                     SDL_RenderPresent(window.renderer);
                     SDL_Delay(500);
                 }
@@ -213,7 +216,10 @@ void LevelOneState::Render(SDLWindow window)
     MIX_Audio* sfx = MIX_LoadAudio(window.mixer, sfxPath.c_str(), false);
     movesfx = MIX_CreateTrack(window.mixer);
     MIX_SetTrackAudio(movesfx, sfx);
-    
+    std::string sfx2Path = "assets//mus//sfx//damage.mp3";
+    MIX_Audio* sfx2 = MIX_LoadAudio(window.mixer, sfx2Path.c_str(), false);
+    damagesfx = MIX_CreateTrack(window.mixer);
+    MIX_SetTrackAudio(damagesfx, sfx2);
     SDL_RenderClear(window.renderer);
     SDL_SetRenderDrawColor(window.renderer, 0, 0, 0, 255);
     SDL_FRect mapRect = { 0, 0, WINDOW_WIDTH, MAP_HEIGHT };
