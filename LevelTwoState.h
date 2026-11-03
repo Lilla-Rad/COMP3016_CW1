@@ -41,7 +41,11 @@ private:
     Entity* poison7;
     Entity* poison8;
     Entity* escape;
-    Entity* weapon;
+
+    Entity* forest1;
+
+    Entity* forest2;
+    Entity* forest3;
     bool first;
     int check;
     std::vector<Entity*> entities;

@@ -20,11 +20,16 @@ bool LevelTwoState::enter()
     enemy2 = new Entity(PLAYER_WIDTH * 3, MAP_HEIGHT - PLAYER_HEIGHT, 5, 0, 20, 10, 10 * DIFFICULTY, 6, "enemyplaceholder.png", "testvoice2.mp3", { PLAYER_WIDTH * 3, MAP_HEIGHT - PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
     enemy3 = new Entity(PLAYER_WIDTH * 7, MAP_HEIGHT - (PLAYER_HEIGHT * 3), 5, 0, 20, 10, 30 * DIFFICULTY, 4, "enemyplaceholder.png", "testvoice2.mp3", { PLAYER_WIDTH * 7, MAP_HEIGHT - (PLAYER_HEIGHT * 3), PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
     poison1 = new Entity(PLAYER_WIDTH*5, 0, 0, 0, 0, 0, 0, 0, "temppoison.png", "", { PLAYER_WIDTH * 5, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
+    forest1 = new Entity(PLAYER_WIDTH * 5, PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "tempforest.png", "", { PLAYER_WIDTH * 5, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::forest);
+
     poison2 = new Entity(PLAYER_WIDTH * 10, 0, 0, 0, 0, 0, 0, 0, "temppoison.png", "", { PLAYER_WIDTH * 10, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
     poison3 = new Entity(PLAYER_WIDTH * 15, 0, 0, 0, 0, 0, 0, 0, "temppoison.png", "", {PLAYER_WIDTH * 15, 0, PLAYER_WIDTH, PLAYER_HEIGHT}, ObjectType::poison);
     poison4 = new Entity(PLAYER_WIDTH * 20, 0, 0, 0, 0, 0, 0, 0, "temppoison.png", "", { PLAYER_WIDTH * 20, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
     poison5 = new Entity(PLAYER_WIDTH * 4, PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "temppoison.png", "", { PLAYER_WIDTH * 4, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
     poison6 = new Entity(PLAYER_WIDTH * 8, PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "temppoison.png", "", { PLAYER_WIDTH * 8, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
+    forest2 = new Entity(PLAYER_WIDTH * 8, 0, 0, 0, 0, 0, 0, 0, "tempforest.png", "", { PLAYER_WIDTH * 8, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::forest);
+    forest3 = new Entity(PLAYER_WIDTH * 11, PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "tempforest.png", "", { PLAYER_WIDTH * 11, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::forest);
+
     poison7 = new Entity(PLAYER_WIDTH * 12, PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "temppoison.png", "", { PLAYER_WIDTH * 12, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
     poison8 = new Entity(PLAYER_WIDTH * 16, PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "temppoison.png", "", { PLAYER_WIDTH * 16, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
     //weapon = new Entity(PLAYER_WIDTH, 0, 0, 0, 0, 0, 0, 0, "temppoison.png", "", { PLAYER_WIDTH, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::tile);
@@ -38,6 +43,9 @@ bool LevelTwoState::enter()
     entities.push_back(enemy2);
     entities.push_back(enemy3);
     entities.push_back(poison1);
+    entities.push_back(forest1);
+    entities.push_back(forest2);
+    entities.push_back(forest3);
     entities.push_back(poison2);
     entities.push_back(poison3);
     entities.push_back(poison4);
@@ -242,7 +250,7 @@ void LevelTwoState::Render(SDLWindow window)
             window.boxRender("YOU ONLY HAVE " + std::to_string(player->getHealth()) + "HP LEFT!");
         }
         if (check == 0) {
-            window.boxRender("You have gotten stronger! Health up!");
+            window.boxRender("You've gotten stronger! Max health up!");
         }
         else {
             window.boxRender("Moves left: " + std::to_string(player->getMove()));

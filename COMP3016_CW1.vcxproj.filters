@@ -105,6 +105,9 @@
     <ClInclude Include="IntroState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LevelThreeState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -147,6 +150,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="IntroState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelThreeState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

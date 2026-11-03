@@ -15,9 +15,6 @@ bool LevelOneState::enter()
 {
     bool success = true;
 
-
-
-
     player = new Entity(WINDOW_WIDTH/2, 0+(PLAYER_HEIGHT*2), 5, 1, 20, 10, 5, 2, "tempplayer.png", "testvoice.mp3", {WINDOW_WIDTH / 2, 0 + (PLAYER_HEIGHT * 2), PLAYER_WIDTH, PLAYER_HEIGHT}, ObjectType::player);
     forest1 = new Entity(WINDOW_WIDTH - (PLAYER_WIDTH * 2), MAP_HEIGHT - PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "tempforest.png", "", { WINDOW_WIDTH - (PLAYER_WIDTH * 2), MAP_HEIGHT - PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::forest);
     forest2 = new Entity(PLAYER_WIDTH * 4, PLAYER_HEIGHT * 3, 0, 0, 0, 0, 0, 0, "tempforest.png", "", { PLAYER_WIDTH * 4, PLAYER_HEIGHT * 3, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::forest);
@@ -237,6 +234,7 @@ void LevelOneState::Render(SDLWindow window)
                 break;
             case 3:
                 window.boxRender("Moves left: " + std::to_string(player->getMove()));
+                break;
             }
         }
     }

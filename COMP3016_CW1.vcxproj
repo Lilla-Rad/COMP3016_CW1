@@ -46,6 +46,7 @@
     <ClInclude Include="GameWinState.h" />
     <ClInclude Include="IntroState.h" />
     <ClInclude Include="LevelOneState.h" />
+    <ClInclude Include="LevelThreeState.h" />
     <ClInclude Include="LevelTwoState.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Object.h" />
@@ -62,6 +63,7 @@
     <ClCompile Include="GameWinState.cpp" />
     <ClCompile Include="IntroState.cpp" />
     <ClCompile Include="LevelOneState.cpp" />
+    <ClCompile Include="LevelThreeState.cpp" />
     <ClCompile Include="LevelTwoState.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />

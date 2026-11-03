@@ -50,15 +50,18 @@ bool Entity::collisionCheck(SDL_Rect a, SDL_Rect b) {
 void Entity::mouseHandling(SDLWindow window) {
 	switch (getType()) {
 	case ObjectType::player:
-		window.boxRender("Current health: " + std::to_string(getHealth()));
+		window.boxRender("Current health: " + std::to_string(getHealth()) + " | Atk:" + std::to_string(getStrength()));
 		break;
 	case ObjectType::enemy:
 		switch (getStrength()) {
 		case 30:
-			window.boxRender("Paladin | Health: " + std::to_string(getHealth()) + " | Atk: " + std::to_string(getStrength()));
+			window.boxRender("Knight | Health:" + std::to_string(getHealth()) + " | Atk:" + std::to_string(getStrength()) + " | Move:" + std::to_string(getMove()));
+			break;
+		case 40:
+			window.boxRender("Paladin | Health:" + std::to_string(getHealth()) + " | Atk:" + std::to_string(getStrength()) + " | Move:" + std::to_string(getMove()));
 			break;
 		default:
-			window.boxRender("Knight | Health: " + std::to_string(getHealth()) + " | Atk: " + std::to_string(getStrength()));
+			window.boxRender("Soldier | Health:" + std::to_string(getHealth()) + " | Atk:" + std::to_string(getStrength()) + " | Move:" + std::to_string(getMove()));
 		}
 		break;
 	case ObjectType::forest:
@@ -126,7 +129,7 @@ void Entity::combat(Entity* victim) {
 		maxDamage = 0;
 	}
 	else {
-		maxDamage = (getStrength() * (100 - (victim->getAvoid()))) / 200;
+		maxDamage = (getStrength() * (100 - (victim->getAvoid()))) / 100;
 
 	}
 	std::uniform_int_distribution<> dist1{ 1, maxDamage };
