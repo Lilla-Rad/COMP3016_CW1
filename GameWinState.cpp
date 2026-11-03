@@ -13,7 +13,12 @@ bool GameWinState::enter()
     bool success = true;
 
     player = new Entity(WINDOW_WIDTH/2, 0, 5, 1, 20, 10, 10, 4, "whatsss.png", "rvoice.mp3", { WINDOW_WIDTH / 2,0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::player);
-
+    MIX_Mixer* mixer = MIX_CreateMixerDevice(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, NULL);
+    std::string musicPath = "assets//mus//bgm//gamewin.mp3";
+    MIX_Audio* bgm = MIX_LoadAudio(mixer, musicPath.c_str(), false);
+    track = MIX_CreateTrack(mixer);
+    MIX_SetTrackAudio(track, bgm);
+    MIX_PlayTrack(track, 0);
 
     return success;
 }
@@ -34,7 +39,7 @@ void GameWinState::eventHandling(SDLWindow window, Game* manager)
 }
 
 
-void GameWinState::update(Game* manager)
+void GameWinState::update(Game* manager, SDLWindow window)
 {
 
 }
@@ -50,7 +55,7 @@ void GameWinState::Render(SDLWindow window)
     SDL_SetRenderScale(window.renderer, SCALAR * 3, SCALAR * 3);
     SDL_RenderDebugText(window.renderer, WINDOW_WIDTH / 10, WINDOW_HEIGHT / 7, "YOU ESCAPED");
     SDL_SetRenderScale(window.renderer, SCALAR, SCALAR);
+    SDL_RenderDebugText(window.renderer, WINDOW_WIDTH/2, MAP_HEIGHT / 2, "You ran until they couldn't.");
     SDL_RenderPresent(window.renderer);
-
 
 }

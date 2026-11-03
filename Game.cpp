@@ -21,7 +21,7 @@ void Game::eventHandling() {
 }
 
 void Game::Update() {
-	game_states.back()->update(this);
+	game_states.back()->update(this, window);
 }
 
 void Game::Render() {
@@ -91,11 +91,7 @@ void Game::PushState(GameState* state) {
 	}
 }*/
 
-void Game::mouseHandling(Entity* entity) {
-	window.boxRender("Current health: " + std::to_string(entity->getHealth()));
-	SDL_RenderPresent(window.renderer);
-	SDL_Delay(500);
-}
+
 
 
 /*void Game::enemyTurn(std::vector<Entity*> enemies, Entity* player) {

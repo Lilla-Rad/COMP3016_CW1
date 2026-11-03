@@ -12,11 +12,13 @@ public:
     bool enter() override;
     bool exit() override;
 
+    //void pauseState() override;
+    //void resumeState() override;
     //Main loop functions
     void eventHandling(SDLWindow window, Game* manager) override;
-    void update(Game* manager) override;
+    void update(Game* manager, SDLWindow window) override;
     void Render(SDLWindow window) override;
-
+    void update2(SDLWindow window);
     static LevelOneState* Instance() {
         return &stateLevelOne;
     }
@@ -32,17 +34,17 @@ private:
     Entity* enemy1;
     Entity* enemy2;
     Entity* boulder;
+    //Entity* boulder2;
     Entity* forest1;
     Entity* forest2;
     Entity* forest3;
     Entity* poison1;
     Entity* poison2;
     Entity* escape;
-    MIX_Track* track;
-    MIX_Track* track2;
+    MIX_Track* movesfx;
     std::vector<Entity*> entities;
-    int tutorial;
-    bool first;
-    int check;
+    bool poisonflag;
+    int temp; 
+    int temp2;
     //std::vector<Tile*> tiles; list of interactable tiles
 };

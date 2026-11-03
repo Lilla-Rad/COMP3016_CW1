@@ -44,11 +44,15 @@
     <ClInclude Include="GameOverState.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameWinState.h" />
+    <ClInclude Include="IntroState.h" />
     <ClInclude Include="LevelOneState.h" />
+    <ClInclude Include="LevelTwoState.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="SDLWindow.h" />
+    <ClInclude Include="Tile.h" />
     <ClInclude Include="TitleScreenState.h" />
+    <ClInclude Include="TutorialState.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Entity.cpp" />
@@ -56,11 +60,15 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameOverState.cpp" />
     <ClCompile Include="GameWinState.cpp" />
+    <ClCompile Include="IntroState.cpp" />
     <ClCompile Include="LevelOneState.cpp" />
+    <ClCompile Include="LevelTwoState.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="SDLWindow.cpp" />
+    <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TitleScreenState.cpp" />
+    <ClCompile Include="TutorialState.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

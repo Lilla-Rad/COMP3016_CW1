@@ -9,7 +9,7 @@ public:
 	virtual bool enter() = 0;
 	virtual bool exit() = 0;
 	virtual void eventHandling(SDLWindow window, Game* manager) = 0;
-	virtual void update(Game* manager) = 0;
+	virtual void update(Game* manager, SDLWindow window) = 0;
 	virtual void Render(SDLWindow window) = 0;
 
 	void ChangeState(Game* manager, GameState* state) {

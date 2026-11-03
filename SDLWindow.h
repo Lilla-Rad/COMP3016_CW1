@@ -2,6 +2,7 @@
 #include <string>
 #include <SDL3/SDL.h>
 #include <SDL3_mixer/SDL_mixer.h>
+//#include "Tile.h"
 
 class SDLWindow
 {
@@ -19,7 +20,8 @@ public:
 	SDL_Renderer* renderer;
 	SDL_Texture* texture;
 	MIX_Mixer* mixer;
-
+	/*bool loadTiles(Tile* tiles[]);
+	bool setTiles(Tile* tiles[]);*/
 
 };
 

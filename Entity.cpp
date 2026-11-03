@@ -47,42 +47,71 @@ bool Entity::collisionCheck(SDL_Rect a, SDL_Rect b) {
 
 }
 
-
-void Entity::takeTurn(SDL_Event& e, std::vector<Entity*> entities, int position, SDLWindow window) {
-	if (getType() == ObjectType::player) {
-		playerInput(e, entities);
-	}
-	else {
-		if (getEntityTurn() == 1) {
-			for (int m = 0; m <= getMove(); ++m) {
-				int currentX = getX();
-				int currentY = getY();
-				int targetX = entities[0]->getX();
-				int targetY = entities[0]->getY();
-
-				//if enemy is to player's right
-				if (targetX < currentX) {
-					MoveLeft(entities, position);
-				}
-				//if enemy is to player's left
-				if (targetX > currentX) {
-					MoveRight(entities, position);
-				}
-				//if enemy is above player
-				if (targetY > currentY) {
-					MoveDown(entities, position);
-				}
-				//if enemy is below player
-				if (targetY < currentY) {
-					MoveUp(entities, position);
-				}
-
-			}
-			setTurn(0);
+void Entity::mouseHandling(SDLWindow window) {
+	switch (getType()) {
+	case ObjectType::player:
+		window.boxRender("Current health: " + std::to_string(getHealth()));
+		break;
+	case ObjectType::enemy:
+		switch (getStrength()) {
+		case 30:
+			window.boxRender("Paladin | Health: " + std::to_string(getHealth()) + " | Atk: " + std::to_string(getStrength()));
+			break;
+		default:
+			window.boxRender("Knight | Health: " + std::to_string(getHealth()) + " | Atk: " + std::to_string(getStrength()));
 		}
-		setMove(4);
-		
+		break;
+	case ObjectType::forest:
+		window.boxRender("Forest tile (+60 Avoid)");
+		break;
+	case ObjectType::boulder:
+		window.boxRender("Boulder");
+		break;
+	case ObjectType::escape:
+		window.boxRender("Escape tile");
+		break;
+	case ObjectType::poison:
+		window.boxRender("Poison tile");
+		break;
+	case ObjectType::tile:
+		window.boxRender("Sharp stick (+15 Atk)");
+		break;
+	default:
+		window.boxRender("Entity");
 	}
+	SDL_RenderPresent(window.renderer);
+	SDL_Delay(1000);
+}
+
+void Entity::takeTurn(std::vector<Entity*> entities, int position) {
+	if (getEntityTurn() == 1) {
+		for (int m = 0; m <= getMove(); ++m) {
+			int currentX = getX();
+			int currentY = getY();
+			int targetX = entities[0]->getX();
+			int targetY = entities[0]->getY();
+
+			//if enemy is to player's right
+			if (targetX < currentX) {
+				MoveLeft(entities, position);
+			}
+			//if enemy is to player's left
+			if (targetX > currentX) {
+				MoveRight(entities, position);
+			}
+			//if enemy is above player
+			if (targetY > currentY) {
+				MoveDown(entities, position);
+			}
+			//if enemy is below player
+			if (targetY < currentY) {
+				MoveUp(entities, position);
+			}
+
+		}
+		setTurn(0);
+	}
+	setMove(4);
 	
 }
 
@@ -93,8 +122,14 @@ void Entity::combat(Entity* victim) {
 	std::random_device seed;
 	std::mt19937 gen{ seed() };
 	int maxDamage;
-	maxDamage = (getStrength() * (100 - (victim->getAvoid()))) / 100;
-	std::uniform_int_distribution<> dist1{ 0, maxDamage };
+	if (victim->getAvoid() > 60) {
+		maxDamage = 0;
+	}
+	else {
+		maxDamage = (getStrength() * (100 - (victim->getAvoid()))) / 200;
+
+	}
+	std::uniform_int_distribution<> dist1{ 1, maxDamage };
 	int dodgechance = victim->getAvoid();
 	std::uniform_int_distribution<> dist2{ 0, dodgechance };
 	int damage = dist1(gen);
@@ -102,8 +137,14 @@ void Entity::combat(Entity* victim) {
 		damage = victim->getHealth();
 	}
 	int dodge = dist2(gen);
+	if (victim->getAvoid() > 60) {
+		damage = 0;
+	}
 	if (damage > dodge) {
 		victim->setHealth(victim->getHealth() - damage);
+	}
+	if (victim->getStrength() >= 10) {
+		setHealth(getHealth() - damage / 3);
 	}
 	setTurn(0);
 }
@@ -111,6 +152,9 @@ void Entity::combat(Entity* victim) {
 void Entity::handleCollision(Entity* collided) {
 	if (getType() == ObjectType::enemy && collided->getType() == ObjectType::player) {
 		//return true;
+		combat(collided);
+	}
+	else if (getType() == ObjectType::player && collided->getType() == ObjectType::enemy && getStrength() >= 10) {
 		combat(collided);
 	}
 	//if entitiesp[i] == objecttype::enemy 
@@ -135,11 +179,16 @@ int Entity::checkForCollidables(std::vector<Entity*> entities, int position, int
 	bool collided = false;
 	std::vector<Entity*> temp = entities;
 	SDL_Rect backup = getBounds();
-	temp.erase(temp.begin() + position);
+	if (position == 0) {
+		temp.erase(temp.begin());
+	}
+	else {
+		temp.erase(temp.begin() + position);
+	}
 	/*switch (direction) {
 	case 0:*/
 	for (int i = 0; i < temp.size(); ++i) {
-		if (/*temp[i]->getType() == ObjectType::enemy || */temp[i]->getType() == ObjectType::boulder) {
+		if (temp[i]->getType() == ObjectType::boulder) {
 			
 			this->setBounds({ (this->getBounds().x) - PLAYER_WIDTH, this->getBounds().y,getBounds().h, getBounds().w });
 			if (collisionCheck(getBounds(), temp[i]->getBounds())) {
@@ -160,10 +209,10 @@ int Entity::checkForCollidables(std::vector<Entity*> entities, int position, int
 			this->setBounds(backup);
 			if (collided) {
 				if (temp[i]->getType() == ObjectType::boulder) {
+					if (direction == 1) {
+						temp[i]->MoveLeft(entities, i + 1);
+					}
 					return 1;
-				}
-				else if (temp[i]->getType() == ObjectType::enemy) {
-					return 2;
 				}
 				break;
 			}
@@ -172,35 +221,6 @@ int Entity::checkForCollidables(std::vector<Entity*> entities, int position, int
 			}
 		}
 	}
-		/*break;
-	case 1:
-		this->setBounds({ (this->getBounds().x) - PLAYER_WIDTH, this->getBounds().y, this->getBounds().h, this->getBounds().w });
-		break;
-	case 2:
-		this->setBounds({ this->getBounds().x, (this->getBounds().y) - PLAYER_HEIGHT, this->getBounds().h, this->getBounds().w });
-		break;
-	case 3:
-		this->setBounds({ (this->getBounds().x) + PLAYER_WIDTH, this->getBounds().y, this->getBounds().h, this->getBounds().w });
-		break;
-	case 4:
-		this->setBounds({ this->getBounds().x, (this->getBounds().y) + PLAYER_HEIGHT, this->getBounds().h, this->getBounds().w });
-		break;
-	}
-
-	for (int i = 0; i < temp.size(); ++i) {
-		if (temp[i]->getType() == ObjectType::enemy || temp[i]->getType() == ObjectType::boulder || temp[i]->getType() == ObjectType::player) {
-			collided = collisionCheck(getBounds(), temp[i]->getBounds());
-		}
-		this->setBounds(backup);
-		if (collided == true) {
-			std::cout << "i hit a deer with my car";
-			return 0;
-			break;
-		}
-		else {
-			return 5;
-		}
-	}*/
 }
 
 
@@ -346,21 +366,21 @@ void Entity::playerInput(SDL_Event& e, std::vector<Entity*> entities) {
 			setSpeed(5);
 			MoveUp(entities, 0);
 		}
-		if (state[SDL_SCANCODE_DOWN] && !(state[SDL_SCANCODE_RIGHT] || state[SDL_SCANCODE_LEFT])) {
+		else if (state[SDL_SCANCODE_DOWN] && !(state[SDL_SCANCODE_RIGHT] || state[SDL_SCANCODE_LEFT])) {
 			setSpeed(5);
 			MoveDown(entities, 0);
-			
+
 		}
-		if (state[SDL_SCANCODE_RIGHT] && !(state[SDL_SCANCODE_UP] || state[SDL_SCANCODE_DOWN])) {
+		else if (state[SDL_SCANCODE_RIGHT] && !(state[SDL_SCANCODE_UP] || state[SDL_SCANCODE_DOWN])) {
 			setSpeed(5);
 			MoveRight(entities, 0);
 		}
-		if (state[SDL_SCANCODE_LEFT] && !(state[SDL_SCANCODE_UP] || state[SDL_SCANCODE_DOWN])) {
+		else if (state[SDL_SCANCODE_LEFT] && !(state[SDL_SCANCODE_UP] || state[SDL_SCANCODE_DOWN])) {
 			setSpeed(5);
 			MoveLeft(entities, 0);
-			
+
 		}
-		if (state[SDL_SCANCODE_LEFT] && state[SDL_SCANCODE_UP] || state[SDL_SCANCODE_LEFT] && state[SDL_SCANCODE_DOWN] || state[SDL_SCANCODE_RIGHT] && state[SDL_SCANCODE_UP] || state[SDL_SCANCODE_RIGHT] && state[SDL_SCANCODE_DOWN]) {
+		else if (state[SDL_SCANCODE_LEFT] && state[SDL_SCANCODE_UP] || state[SDL_SCANCODE_LEFT] && state[SDL_SCANCODE_DOWN] || state[SDL_SCANCODE_RIGHT] && state[SDL_SCANCODE_UP] || state[SDL_SCANCODE_RIGHT] && state[SDL_SCANCODE_DOWN]) {
 			setSpeed(0);
 		}
 	}
@@ -382,6 +402,13 @@ void Entity::dialogue(SDLWindow window, std::string speech, bool pos, int delay)
 	if (getType() == ObjectType::player) {
 		SDL_SetRenderDrawColor(window.renderer, 155, 0, 145, 255);
 	}
+	else if (getType() == ObjectType::tile && !(pos)) {
+		SDL_SetRenderScale(window.renderer, SCALAR * 3, SCALAR * 3);
+		SDL_SetRenderDrawColor(window.renderer, 255, 255, 255, 255);
+	}
+	else if (getType() == ObjectType::tile && pos) {
+		SDL_SetRenderDrawColor(window.renderer, 0, 0, 0, 255);
+	}
 	else {
 		SDL_SetRenderDrawColor(window.renderer, 155, 0, 20, 255);
 	}
@@ -391,20 +418,22 @@ void Entity::dialogue(SDLWindow window, std::string speech, bool pos, int delay)
 	else if (getX() / SCALAR == 0 || (getX() - ((len / 2) * 8) + PLAYER_WIDTH) / SCALAR < 0) {
 		xpos = 0;
 	}
+	else if (getType() == ObjectType::tile) {
+		xpos = WINDOW_WIDTH/60;
+	}
 	else {
 		xpos = getX() - ((len / 2) * 8) + (PLAYER_WIDTH / 2);
 	}
 	if (getY() == 0 || pos) {
 		ypos = getY() + PLAYER_HEIGHT;
 	}
+	else if (getType() == ObjectType::tile) {
+		ypos = WINDOW_HEIGHT / 7;
+	}
 	else {
 		ypos = getY() - PLAYER_HEIGHT / 2;
 	}
 	if (!(0 <= xpos <= WINDOW_WIDTH) || !(0 <= ypos <= WINDOW_HEIGHT)) {
-		MIX_Track* trackb = MIX_CreateTrack(mixer);
-		MIX_Audio* kys = MIX_LoadAudio(mixer, "assets//mus//sfx//ppop-online-audio-converter.mp3", false);
-		MIX_SetTrackAudio(trackb, kys);
-		MIX_PlayTrack(trackb, 0);
 		xpos = 0 + (WINDOW_WIDTH / 7.0);
 		ypos = 0 + ((WINDOW_HEIGHT / 1.6) - (8 * len));
 

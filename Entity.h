@@ -15,11 +15,11 @@ public:
 	bool collisionCheck(SDL_Rect a, SDL_Rect b);
 	void handleCollision(Entity* collided);
 	void playerInput(SDL_Event& e, std::vector<Entity*> entities);
-	void takeTurn(SDL_Event& e, std::vector<Entity*> entities, int position, SDLWindow window);
+	void takeTurn(std::vector<Entity*> entities, int position);
 	void combat(Entity* attacked);
-	void moveBoulder(Entity* boulder);
 	int checkForCollidables(std::vector<Entity*> entities, int position, int direction);
 	bool mouseCheck();
+	void mouseHandling(SDLWindow window);
 	void dialogue(SDLWindow window, std::string speech, bool pos, int delay);
 	void Die();
 	int getX() const { return x; }

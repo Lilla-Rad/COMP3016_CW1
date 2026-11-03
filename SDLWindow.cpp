@@ -33,6 +33,23 @@ bool SDLWindow::Init() {
 				SDL_Log("SDL_mixer failed to create mixer! SDL_mixer error: %s\n", SDL_GetError());
 				success = false;
 			}
+			else {
+				std::string musicPath = "assets//mus//bgm//placeholdertitle.mp3";
+				if (MIX_Audio* bgm = MIX_LoadAudio(mixer, musicPath.c_str(), false); bgm == nullptr) {
+					SDL_Log("SDL_mixer failed to load title track! SDL_mixer error: %s\n", SDL_GetError());
+				}
+				else {
+					if (MIX_Track* title = MIX_CreateTrack(mixer); title == nullptr) {
+						SDL_Log("SDL_mixer failed to create title track! SDL_mixer error: %s\n", SDL_GetError());
+					}
+					else {
+						MIX_SetTrackAudio(title, bgm);
+						MIX_PlayTrack(title, 0);
+					}
+				}
+			}
+			
+
 		}
 	}
 	return success;

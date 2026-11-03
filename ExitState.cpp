@@ -21,7 +21,7 @@ void ExitState::eventHandling(SDLWindow window, Game* manager)
 
 }
 
-void ExitState::update(Game* manager)
+void ExitState::update(Game* manager, SDLWindow window)
 {
     manager->Quit();
 }

@@ -12,13 +12,11 @@ bool GameOverState::enter()
 {
     bool success = true;
     MIX_Mixer* mixer = MIX_CreateMixerDevice(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, NULL);
-    if (MIX_StopAllTracks(mixer, 10)) {
-        std::string musicPath = "assets//mus//bgm//placeholdergo.mp3";
-        MIX_Audio* bgm = MIX_LoadAudio(mixer, musicPath.c_str(), false);
-        MIX_Track* track = MIX_CreateTrack(mixer);
-        MIX_SetTrackAudio(track, bgm);
-        MIX_PlayTrack(track, 0);
-    }
+    std::string musicPath = "assets//mus//bgm//gameover.mp3";
+    MIX_Audio* bgm = MIX_LoadAudio(mixer, musicPath.c_str(), false);
+    track = MIX_CreateTrack(mixer);
+    MIX_SetTrackAudio(track, bgm);
+    MIX_PlayTrack(track, 0);
     
     return success;
 }
@@ -38,7 +36,7 @@ void GameOverState::eventHandling(SDLWindow window, Game* manager)
     }
 }
 
-void GameOverState::update(Game* manager)
+void GameOverState::update(Game* manager, SDLWindow window)
 {
 
 }
