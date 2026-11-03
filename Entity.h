@@ -1,9 +1,9 @@
 #pragma once
 #include "SDLWindow.h"
-#include "Object.h"
 #include <vector>
+#include "Constants.h"
 
-class Entity : public Object
+class Entity
 {
 public:
 	Entity(int x, int y, int speed, bool isTurn, int health, int avoid, int strength, int move, const std::string asset, std::string voice, SDL_Rect boundaryBox, ObjectType type) : x(x), y(y), speed(speed), isTurn(isTurn), health(health), avoid(avoid), strength(strength), move(move), asset(asset), voice(voice), boundaryBox(boundaryBox), type(type) {};	

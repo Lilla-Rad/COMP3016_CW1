@@ -41,13 +41,10 @@ private:
     Entity* poison7;
     Entity* poison8;
     Entity* escape;
-
     Entity* forest1;
-
     Entity* forest2;
     Entity* forest3;
     Entity* weapon;
-    bool first;
     int check;
     std::vector<Entity*> entities;
     MIX_Track* movesfx;

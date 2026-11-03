@@ -57,7 +57,7 @@ void IntroState::Render(SDLWindow window)
     }
     else if (intro == 2) {
         SDL_RenderDebugText(window.renderer, WINDOW_WIDTH / 60, 32, "THE KING HAS DECREED IT:");
-        SDL_RenderDebugText(window.renderer, WINDOW_WIDTH / 60, WINDOW_HEIGHT / 7, "YOU ARE TO DIE");
+        SDL_RenderDebugText(window.renderer, WINDOW_WIDTH / 60, WINDOW_HEIGHT / 7, "YOU ARE TO DIE.");
         intro += 1;
 
     }

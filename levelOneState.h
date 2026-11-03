@@ -12,13 +12,10 @@ public:
     bool enter() override;
     bool exit() override;
 
-    //void pauseState() override;
-    //void resumeState() override;
     //Main loop functions
     void eventHandling(SDLWindow window, Game* manager) override;
     void update(Game* manager, SDLWindow window) override;
     void Render(SDLWindow window) override;
-    void update2(SDLWindow window);
     static LevelOneState* Instance() {
         return &stateLevelOne;
     }

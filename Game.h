@@ -18,11 +18,8 @@ public:
 	void Render();
 
 	void ChangeState(GameState* state);
-	void PushState(GameState* state);
-	void PopState();
 	void Empty();
 
-	void enemyTurn(std::vector<Entity*> enemies, Entity* player);
 	bool Run() { return isRunning; }
 	void Quit() { isRunning = false; }
 

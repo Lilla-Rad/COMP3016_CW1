@@ -19,8 +19,8 @@ bool LevelOneState::enter()
     forest1 = new Entity(WINDOW_WIDTH - (PLAYER_WIDTH * 2), MAP_HEIGHT - PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "foresttile.png", "", { WINDOW_WIDTH - (PLAYER_WIDTH * 2), MAP_HEIGHT - PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::forest);
     forest2 = new Entity(PLAYER_WIDTH * 4, PLAYER_HEIGHT * 3, 0, 0, 0, 0, 0, 0, "foresttile.png", "", { PLAYER_WIDTH * 4, PLAYER_HEIGHT * 3, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::forest);
     forest3 = new Entity(WINDOW_WIDTH - (PLAYER_WIDTH * 4), PLAYER_HEIGHT * 3, 0, 0, 0, 0, 0, 0, "foresttile.png", "", { WINDOW_WIDTH - (PLAYER_WIDTH * 4), PLAYER_HEIGHT * 3, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::forest);
-    enemy1 = new Entity(0, MAP_HEIGHT / 2, 5, 0, 20, 10, 10 * DIFFICULTY, 6, "soldiersprite.png", "testvoice2.mp3", {0, MAP_HEIGHT / 2, PLAYER_WIDTH, PLAYER_HEIGHT}, ObjectType::enemy);
-    enemy2 = new Entity(PLAYER_WIDTH*3, MAP_HEIGHT-PLAYER_HEIGHT, 5, 0, 20, 10, 10 * DIFFICULTY, 6, "soldiersprite.png", "testvoice2.mp3", { PLAYER_WIDTH*3, MAP_HEIGHT-PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
+    enemy1 = new Entity(0, MAP_HEIGHT / 2, 5, 0, 20, 10, 10 * DIFFICULTY, 4, "soldiersprite.png", "testvoice2.mp3", {0, MAP_HEIGHT / 2, PLAYER_WIDTH, PLAYER_HEIGHT}, ObjectType::enemy);
+    enemy2 = new Entity(PLAYER_WIDTH*3, MAP_HEIGHT-PLAYER_HEIGHT, 5, 0, 20, 10, 10 * DIFFICULTY, 4, "soldiersprite.png", "testvoice2.mp3", { PLAYER_WIDTH*3, MAP_HEIGHT-PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
     boulder = new Entity(WINDOW_WIDTH - PLAYER_WIDTH, MAP_HEIGHT - (PLAYER_HEIGHT*2), 0, 0, 0, 0, 0, 0, "boulder.png", "", { WINDOW_WIDTH - PLAYER_WIDTH, MAP_HEIGHT - PLAYER_HEIGHT * 2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::boulder);
 
 
@@ -78,6 +78,9 @@ void LevelOneState::eventHandling(SDLWindow window, Game* manager)
             if (e.key.key == SDLK_UP || e.key.key == SDLK_DOWN || e.key.key == SDLK_LEFT || e.key.key == SDLK_RIGHT) {
                 MIX_PlayTrack(movesfx, 0);
             }
+            if (player->collisionCheck(player->getBounds(), escape->getBounds())) {
+                manager->ChangeState(LevelTwoState::Instance());
+            }
             
         }
         if ((e.type == SDL_EVENT_KEY_DOWN) && (e.key.key == SDLK_RETURN))
@@ -127,10 +130,7 @@ void LevelOneState::update(Game* manager, SDLWindow window)
         }
         for (int i = 0; i < entities.size(); ++i) {
             if (entities[i]->getType() == ObjectType::forest && (player->collisionCheck(player->getBounds(), entities[i]->getBounds()))) {
-                player->setAvoid(80);
-            }
-            else {
-                player->setAvoid(10);
+                player->setAvoid(70);
             }
         }
         if (player->getMove() <= 0) {
@@ -143,7 +143,7 @@ void LevelOneState::update(Game* manager, SDLWindow window)
                 }
                 entities[i]->setTurn(1);
                 if (entities[i]->getType() == ObjectType::forest && (player->collisionCheck(player->getBounds(), entities[i]->getBounds()))) {
-                    player->setAvoid(80);
+                    player->setAvoid(70);
                 }
                 if (entities[i]->getType() == ObjectType::enemy && entities[i]->getHealth() > 0 && entities[i]->getEntityTurn() == 1) {
                     window.boxRender("ENEMY TURN");
@@ -199,6 +199,7 @@ void LevelOneState::update(Game* manager, SDLWindow window)
                 window.boxRender("PLAYER TURN");
                 SDL_RenderPresent(window.renderer);
                 SDL_Delay(500);
+                player->setAvoid(10);
                 player->setTurn(1);
                 MIX_PlayTrack(movesfx, 0);
 
@@ -249,8 +250,6 @@ void LevelOneState::Render(SDLWindow window)
         entities[i]->render(window);
 
     }
-
-    //maybe render in reverse order? render player on top of terrain ideally
 
 
     SDL_RenderPresent(window.renderer); 

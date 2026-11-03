@@ -46,7 +46,6 @@ private:
 
     Entity* forest2;
     Entity* forest3;
-    bool first;
     int check;
     std::vector<Entity*> entities;
     MIX_Track* movesfx;

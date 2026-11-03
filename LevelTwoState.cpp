@@ -1,6 +1,5 @@
 #include "LevelTwoState.h"
 #include <iostream>
-#include "Object.h"
 #include "Constants.h"
 #include "SDLWindow.h"
 #include "GameOverState.h"
@@ -15,10 +14,10 @@ bool LevelTwoState::enter()
 {
     bool success = true;
 
-    player = new Entity(0, 0, 5, 1, 30, 20, 5, 2, "celestriasprite.png", "testvoice.mp3", { 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::player);
-    enemy1 = new Entity(0, MAP_HEIGHT / 2, 5, 0, 20, 10, 10 * DIFFICULTY, 6, "soldiersprite.png", "testvoice2.mp3", { 0, MAP_HEIGHT / 2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
-    enemy2 = new Entity(PLAYER_WIDTH * 3, MAP_HEIGHT - PLAYER_HEIGHT, 5, 0, 20, 10, 10 * DIFFICULTY, 6, "soldiersprite.png", "testvoice2.mp3", { PLAYER_WIDTH * 3, MAP_HEIGHT - PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
-    enemy3 = new Entity(PLAYER_WIDTH * 7, MAP_HEIGHT - (PLAYER_HEIGHT * 3), 5, 0, 20, 10, 30 * DIFFICULTY, 4, "knightsprite.png", "testvoice2.mp3", { PLAYER_WIDTH * 7, MAP_HEIGHT - (PLAYER_HEIGHT * 3), PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
+    player = new Entity(0, 0, 5, 1, 30, 20, 5, 3, "celestriasprite.png", "testvoice.mp3", { 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::player);
+    enemy1 = new Entity(0, (MAP_HEIGHT / 2) + PLAYER_HEIGHT, 5, 0, 20, 10, 8 * DIFFICULTY, 4, "soldiersprite.png", "testvoice2.mp3", {0, (MAP_HEIGHT / 2) + PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT}, ObjectType::enemy);
+    enemy2 = new Entity(PLAYER_WIDTH * 3, MAP_HEIGHT - PLAYER_HEIGHT, 5, 0, 20, 10, 8 * DIFFICULTY, 4, "soldiersprite.png", "testvoice2.mp3", { PLAYER_WIDTH * 3, MAP_HEIGHT - PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
+    enemy3 = new Entity(PLAYER_WIDTH * 7, MAP_HEIGHT - (PLAYER_HEIGHT * 3), 5, 0, 20, 10, 30 * DIFFICULTY, 3, "knightsprite.png", "testvoice2.mp3", { PLAYER_WIDTH * 7, MAP_HEIGHT - (PLAYER_HEIGHT * 3), PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
     poison1 = new Entity(PLAYER_WIDTH*5, 0, 0, 0, 0, 0, 0, 0, "poisontile.png", "", { PLAYER_WIDTH * 5, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
     forest1 = new Entity(PLAYER_WIDTH * 5, PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "foresttile.png", "", { PLAYER_WIDTH * 5, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::forest);
 
@@ -53,7 +52,6 @@ bool LevelTwoState::enter()
     entities.push_back(poison7);
     entities.push_back(poison8);
     entities.push_back(escape);
-    first = false;
     check = 0;
     return success;
 }
@@ -85,20 +83,23 @@ void LevelTwoState::eventHandling(SDLWindow window, Game* manager)
             }
         }
         else if (e.type == SDL_EVENT_KEY_DOWN && player->getMove() >= 0 && player->getEntityTurn() == 1) {
+
             player->playerInput(e, entities);
             if (e.key.key == SDLK_UP || e.key.key == SDLK_DOWN || e.key.key == SDLK_LEFT || e.key.key == SDLK_RIGHT) {
                 MIX_PlayTrack(movesfx, 0);
             }
-
+            if (player->collisionCheck(player->getBounds(), escape->getBounds())) {
+                manager->ChangeState(LevelThreeState::Instance());
+            }
         }
         if ((e.type == SDL_EVENT_KEY_DOWN) && (e.key.key == SDLK_RETURN))
         {
             std::string status;
-            if (player->getHealth() == 20) {
-                status = "I'm scared... but I have to get out of here.";
+            if (player->getHealth() == 30) {
+                status = "I have to get out of here!";
             }
-            else if (player->getHealth() <= 10) {
-                status = "Will I make it?";
+            else if (player->getHealth() <= 15) {
+                status = "I have to make it!!";
 
             }
             else if (player->getHealth() <= 5) {
@@ -139,9 +140,6 @@ void LevelTwoState::update(Game* manager, SDLWindow window)
             if (entities[i]->getType() == ObjectType::forest && (player->collisionCheck(player->getBounds(), entities[i]->getBounds()))) {
                 player->setAvoid(80);
             }
-            else {
-                player->setAvoid(10);
-            }
         }
         if (player->getMove() <= 0) {
             //enemyturn
@@ -152,9 +150,6 @@ void LevelTwoState::update(Game* manager, SDLWindow window)
                     break;
                 }
                 entities[i]->setTurn(1);
-                if (entities[i]->getType() == ObjectType::forest && (player->collisionCheck(player->getBounds(), entities[i]->getBounds()))) {
-                    player->setAvoid(80);
-                }
                 if (entities[i]->getType() == ObjectType::enemy && entities[i]->getHealth() > 0 && entities[i]->getEntityTurn() == 1) {
                     window.boxRender("ENEMY TURN");
                     SDL_RenderPresent(window.renderer);
@@ -211,6 +206,7 @@ void LevelTwoState::update(Game* manager, SDLWindow window)
                 window.boxRender("PLAYER TURN");
                 SDL_RenderPresent(window.renderer);
                 SDL_Delay(500);
+                player->setAvoid(20);
                 player->setTurn(1);
                 MIX_PlayTrack(movesfx, 0);
 

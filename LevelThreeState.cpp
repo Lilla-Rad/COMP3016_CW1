@@ -1,6 +1,5 @@
 #include "LevelThreeState.h"
 #include <iostream>
-#include "Object.h"
 #include "Constants.h"
 #include "SDLWindow.h"
 #include "GameOverState.h"
@@ -15,8 +14,8 @@ bool LevelThreeState::enter()
 {
     bool success = true;
 
-    player = new Entity(0, MAP_HEIGHT/2, 5, 1, 35, 20, 5, 2, "celestriasprite.png", "testvoice.mp3", { 0, MAP_HEIGHT/2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::player);
-    enemy1 = new Entity(0, 0, 5, 0, 20, 10, 40 * DIFFICULTY, 2, "paladinsprite.png", "testvoice2.mp3", { 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
+    player = new Entity(0, MAP_HEIGHT/2, 5, 1, 35, 20, 5, 4, "celestriasprite.png", "testvoice.mp3", { 0, MAP_HEIGHT/2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::player);
+    enemy1 = new Entity(0, 0, 5, 0, 20, 10, 40 * DIFFICULTY, 1, "paladinsprite.png", "testvoice2.mp3", { 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
     poison1 = new Entity(PLAYER_WIDTH * 6, (MAP_HEIGHT / 2) + PLAYER_HEIGHT*2, 0, 0, 0, 0, 0, 0, "poisontile.png", "", { PLAYER_WIDTH * 6, (MAP_HEIGHT / 2) + PLAYER_HEIGHT * 2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
     forest1 = new Entity(PLAYER_WIDTH * 5, PLAYER_HEIGHT*2, 0, 0, 0, 0, 0, 0, "foresttile.png", "", { PLAYER_WIDTH * 5, PLAYER_HEIGHT * 2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::forest);
 
@@ -50,7 +49,6 @@ bool LevelThreeState::enter()
     entities.push_back(poison8);
     entities.push_back(weapon);
     entities.push_back(escape);
-    first = false;
     check = 0;
     return success;
 }
@@ -82,6 +80,9 @@ void LevelThreeState::eventHandling(SDLWindow window, Game* manager)
             }
         }
         else if (e.type == SDL_EVENT_KEY_DOWN && player->getMove() >= 0 && player->getEntityTurn() == 1) {
+            if (player->collisionCheck(player->getBounds(), escape->getBounds())) {
+                manager->ChangeState(GameWinState::Instance());
+            }
             player->playerInput(e, entities);
             if (e.key.key == SDLK_UP || e.key.key == SDLK_DOWN || e.key.key == SDLK_LEFT || e.key.key == SDLK_RIGHT) {
                 MIX_PlayTrack(movesfx, 0);
@@ -100,11 +101,11 @@ void LevelThreeState::eventHandling(SDLWindow window, Game* manager)
         if ((e.type == SDL_EVENT_KEY_DOWN) && (e.key.key == SDLK_RETURN))
         {
             std::string status;
-            if (player->getHealth() == 20) {
-                status = "I'm scared... but I have to get out of here.";
+            if (player->getHealth() == 35) {
+                status = "I can do this!!";
             }
-            else if (player->getHealth() <= 10) {
-                status = "Will I make it?";
+            else if (player->getHealth() <= 17) {
+                status = "I can do this.";
 
             }
             else if (player->getHealth() <= 5) {
@@ -144,9 +145,6 @@ void LevelThreeState::update(Game* manager, SDLWindow window)
         for (int i = 0; i < entities.size(); ++i) {
             if (entities[i]->getType() == ObjectType::forest && (player->collisionCheck(player->getBounds(), entities[i]->getBounds()))) {
                 player->setAvoid(80);
-            }
-            else {
-                player->setAvoid(10);
             }
         }
         if (player->getMove() <= 0) {
@@ -214,7 +212,7 @@ void LevelThreeState::update(Game* manager, SDLWindow window)
                 player->setMove(2);
                 SDL_RenderPresent(window.renderer);
                 SDL_Delay(1000);
-
+                player->setAvoid(20);
                 window.boxRender("PLAYER TURN");
                 SDL_RenderPresent(window.renderer);
                 SDL_Delay(500);

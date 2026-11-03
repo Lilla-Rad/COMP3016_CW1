@@ -114,7 +114,16 @@ void Entity::takeTurn(std::vector<Entity*> entities, int position) {
 		}
 		setTurn(0);
 	}
-	setMove(4);
+	switch (getStrength()) {
+		case 30:
+			setMove(3);
+			break;
+		case 40:
+			setMove(2);
+			break;
+		default:
+			setMove(4);
+	}
 	
 }
 
@@ -157,6 +166,9 @@ void Entity::handleCollision(Entity* collided) {
 		//return true;
 		combat(collided);
 	}
+	else if (getType() == ObjectType::enemy && collided->getType() == ObjectType::poison) {
+		setHealth(getHealth() - (getHealth() * 0.1));
+	}
 	else if (getType() == ObjectType::player && collided->getType() == ObjectType::enemy && getStrength() >= 10) {
 		combat(collided);
 	}
@@ -188,8 +200,6 @@ int Entity::checkForCollidables(std::vector<Entity*> entities, int position, int
 	else {
 		temp.erase(temp.begin() + position);
 	}
-	/*switch (direction) {
-	case 0:*/
 	for (int i = 0; i < temp.size(); ++i) {
 		if (temp[i]->getType() == ObjectType::boulder) {
 			
