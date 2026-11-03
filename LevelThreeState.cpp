@@ -85,13 +85,13 @@ void LevelThreeState::eventHandling(SDLWindow window, Game* manager)
             player->playerInput(e, entities);
             if (e.key.key == SDLK_UP || e.key.key == SDLK_DOWN || e.key.key == SDLK_LEFT || e.key.key == SDLK_RIGHT) {
                 MIX_PlayTrack(movesfx, 0);
-                /*if (player->collisionCheck(player->getBounds(), weapon->getBounds())) {
+                if (player->collisionCheck(player->getBounds(), weapon->getBounds())) {
                     entities.erase(entities.end() - 2);
                     player->setStrength(player->getStrength() + 15);
                     window.boxRender("YOU HAVE FOUND A WEAPON! ATK UP!");
                     SDL_RenderPresent(window.renderer);
                     SDL_Delay(500);
-                }*/
+                }
             }
 
         }
@@ -128,7 +128,6 @@ void LevelThreeState::eventHandling(SDLWindow window, Game* manager)
 void LevelThreeState::update(Game* manager, SDLWindow window)
 {
 
-    //check = player->checkForCollidables(entities, 0, 0);
     if (player->getHealth() <= 0) {
         window.boxRender("YOU HAVE DIED!");
         SDL_RenderPresent(window.renderer);
@@ -217,7 +216,6 @@ void LevelThreeState::update(Game* manager, SDLWindow window)
                 MIX_PlayTrack(movesfx, 0);
 
             }
-            //manager->enemyTurn(entities, player);
         }
     }
 }
@@ -236,7 +234,6 @@ void LevelThreeState::Render(SDLWindow window)
     SDL_FRect mapRect = { 0, 0, WINDOW_WIDTH, MAP_HEIGHT };
     window.renderTextureFromFile("temperermap.png", NULL, &mapRect);
     SDL_FRect boxRect = { 0, MAP_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT };
-    //move mouse handling into an entity method? do after collision
     if (player->getHealth() <= 0) {
         window.boxRender("YOU HAVE DIED!");
     }
@@ -264,9 +261,6 @@ void LevelThreeState::Render(SDLWindow window)
         entities[i]->render(window);
 
     }
-
-    //maybe render in reverse order? render player on top of terrain ideally
-
 
     SDL_RenderPresent(window.renderer);
 

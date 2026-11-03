@@ -5,7 +5,7 @@
 #include "SDLWindow.h"
 #include "GameOverState.h"
 #include "ExitState.h"
-#include "GameWinState.h"
+#include "LevelThreeState.h"
 #include <vector>
 
 
@@ -32,7 +32,6 @@ bool LevelTwoState::enter()
 
     poison7 = new Entity(PLAYER_WIDTH * 12, PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "temppoison.png", "", { PLAYER_WIDTH * 12, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
     poison8 = new Entity(PLAYER_WIDTH * 16, PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "temppoison.png", "", { PLAYER_WIDTH * 16, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
-    //weapon = new Entity(PLAYER_WIDTH, 0, 0, 0, 0, 0, 0, 0, "temppoison.png", "", { PLAYER_WIDTH, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::tile);
 
     
     escape = new Entity(WINDOW_WIDTH - PLAYER_WIDTH, MAP_HEIGHT /2, 0, 0, 0, 0, 0, 0, "tempescape.png", "", { WINDOW_WIDTH - PLAYER_WIDTH, MAP_HEIGHT/2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::escape);
@@ -53,7 +52,6 @@ bool LevelTwoState::enter()
     entities.push_back(poison6);
     entities.push_back(poison7);
     entities.push_back(poison8);
-    //entities.push_back(weapon);
     entities.push_back(escape);
     first = false;
     check = 0;
@@ -90,13 +88,6 @@ void LevelTwoState::eventHandling(SDLWindow window, Game* manager)
             player->playerInput(e, entities);
             if (e.key.key == SDLK_UP || e.key.key == SDLK_DOWN || e.key.key == SDLK_LEFT || e.key.key == SDLK_RIGHT) {
                 MIX_PlayTrack(movesfx, 0);
-                /*if (player->collisionCheck(player->getBounds(), weapon->getBounds())) {
-                    entities.erase(entities.end() - 2);
-                    player->setStrength(player->getStrength() + 15);
-                    window.boxRender("YOU HAVE FOUND A WEAPON! ATK UP!");
-                    SDL_RenderPresent(window.renderer);
-                    SDL_Delay(500);
-                }*/
             }
 
         }
@@ -133,7 +124,6 @@ void LevelTwoState::eventHandling(SDLWindow window, Game* manager)
 void LevelTwoState::update(Game* manager, SDLWindow window)
 {
 
-    //check = player->checkForCollidables(entities, 0, 0);
     if (player->getHealth() <= 0) {
         window.boxRender("YOU HAVE DIED!");
         SDL_RenderPresent(window.renderer);
@@ -143,7 +133,7 @@ void LevelTwoState::update(Game* manager, SDLWindow window)
     }
     else {
         if (player->collisionCheck(player->getBounds(), escape->getBounds())) {
-            manager->ChangeState(GameWinState::Instance());
+            manager->ChangeState(LevelThreeState::Instance());
         }
         for (int i = 0; i < entities.size(); ++i) {
             if (entities[i]->getType() == ObjectType::forest && (player->collisionCheck(player->getBounds(), entities[i]->getBounds()))) {
@@ -222,7 +212,6 @@ void LevelTwoState::update(Game* manager, SDLWindow window)
                 MIX_PlayTrack(movesfx, 0);
 
             }
-            //manager->enemyTurn(entities, player);
         }
     }
 }

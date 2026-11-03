@@ -55,7 +55,7 @@ void GameWinState::Render(SDLWindow window)
     SDL_SetRenderScale(window.renderer, SCALAR * 3, SCALAR * 3);
     SDL_RenderDebugText(window.renderer, WINDOW_WIDTH / 10, WINDOW_HEIGHT / 7, "YOU ESCAPED");
     SDL_SetRenderScale(window.renderer, SCALAR, SCALAR);
-    SDL_RenderDebugText(window.renderer, WINDOW_WIDTH/2, MAP_HEIGHT / 2, "You ran until they couldn't.");
+    SDL_RenderDebugText(window.renderer, WINDOW_WIDTH/2- (PLAYER_WIDTH*3)-(PLAYER_WIDTH/4), (MAP_HEIGHT / 2) + PLAYER_HEIGHT, "You ran until they couldn't.");
     SDL_RenderPresent(window.renderer);
 
 }
