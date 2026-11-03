@@ -50,8 +50,8 @@ void GameWinState::Render(SDLWindow window)
     
     SDL_RenderClear(window.renderer);
     SDL_FRect windowRect = { 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT };
-    window.renderTextureFromFile("placeholderwin.jpg", NULL, &windowRect);
-    SDL_SetRenderDrawColor(window.renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+    window.renderTextureFromFile("winscreen.png", NULL, &windowRect);
+    SDL_SetRenderDrawColor(window.renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
     SDL_SetRenderScale(window.renderer, SCALAR * 3, SCALAR * 3);
     SDL_RenderDebugText(window.renderer, WINDOW_WIDTH / 10, WINDOW_HEIGHT / 7, "YOU ESCAPED");
     SDL_SetRenderScale(window.renderer, SCALAR, SCALAR);

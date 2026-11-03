@@ -2,8 +2,8 @@
 #include <string>
 #include <stdlib.h>
 const std::string GAME_TITLE = "ALL THE BETTER TO HUNT YOU WITH";
-const std::string WINDOW_ICON = "assets\\img\\tempplayer.png";
-const std::string BOX_TEXTURE = "placeholdertext.jpg";
+const std::string WINDOW_ICON = "assets\\img\\celestriasprite.png";
+const std::string BOX_TEXTURE = "banerr.png";
 const int BASE_WIDTH = 640;
 const int BASE_HEIGHT = 360;
 const float SCALAR = 1.0;

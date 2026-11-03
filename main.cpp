@@ -1,10 +1,10 @@
 #include "main.h"
 #include "Game.h"
-#include "GameOverState.h"
+#include "TitleScreenState.h"
 
 int main(int argc, char* argv[]) {
 	Game game{};
-	game.ChangeState(GameOverState::Instance());
+	game.ChangeState(TitleScreenState::Instance());
 	while (game.Run()) {
 		game.eventHandling();
 		game.Update();

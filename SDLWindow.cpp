@@ -44,7 +44,7 @@ bool SDLWindow::Init() {
 					}
 					else {
 						MIX_SetTrackAudio(title, bgm);
-						//MIX_PlayTrack(title, 0);
+						MIX_PlayTrack(title, 0);
 					}
 				}
 			}

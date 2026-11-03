@@ -403,7 +403,7 @@ void Entity::dialogue(SDLWindow window, std::string speech, bool pos, int delay)
 	MIX_SetTrackAudio(track, talk);
 	SDL_SetRenderScale(window.renderer, SCALAR, SCALAR);
 	if (getType() == ObjectType::player) {
-		SDL_SetRenderDrawColor(window.renderer, 155, 0, 145, 255);
+		SDL_SetRenderDrawColor(window.renderer, 85, 0, 70, 255);
 	}
 	else if (getType() == ObjectType::tile && !(pos)) {
 		SDL_SetRenderScale(window.renderer, SCALAR * 3, SCALAR * 3);

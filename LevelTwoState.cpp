@@ -15,26 +15,26 @@ bool LevelTwoState::enter()
 {
     bool success = true;
 
-    player = new Entity(0, 0, 5, 1, 30, 20, 5, 2, "tempplayer.png", "testvoice.mp3", { 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::player);
-    enemy1 = new Entity(0, MAP_HEIGHT / 2, 5, 0, 20, 10, 10 * DIFFICULTY, 6, "enemyplaceholder.png", "testvoice2.mp3", { 0, MAP_HEIGHT / 2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
-    enemy2 = new Entity(PLAYER_WIDTH * 3, MAP_HEIGHT - PLAYER_HEIGHT, 5, 0, 20, 10, 10 * DIFFICULTY, 6, "enemyplaceholder.png", "testvoice2.mp3", { PLAYER_WIDTH * 3, MAP_HEIGHT - PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
-    enemy3 = new Entity(PLAYER_WIDTH * 7, MAP_HEIGHT - (PLAYER_HEIGHT * 3), 5, 0, 20, 10, 30 * DIFFICULTY, 4, "enemyplaceholder.png", "testvoice2.mp3", { PLAYER_WIDTH * 7, MAP_HEIGHT - (PLAYER_HEIGHT * 3), PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
-    poison1 = new Entity(PLAYER_WIDTH*5, 0, 0, 0, 0, 0, 0, 0, "temppoison.png", "", { PLAYER_WIDTH * 5, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
-    forest1 = new Entity(PLAYER_WIDTH * 5, PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "tempforest.png", "", { PLAYER_WIDTH * 5, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::forest);
+    player = new Entity(0, 0, 5, 1, 30, 20, 5, 2, "celestriasprite.png", "testvoice.mp3", { 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::player);
+    enemy1 = new Entity(0, MAP_HEIGHT / 2, 5, 0, 20, 10, 10 * DIFFICULTY, 6, "soldiersprite.png", "testvoice2.mp3", { 0, MAP_HEIGHT / 2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
+    enemy2 = new Entity(PLAYER_WIDTH * 3, MAP_HEIGHT - PLAYER_HEIGHT, 5, 0, 20, 10, 10 * DIFFICULTY, 6, "soldiersprite.png", "testvoice2.mp3", { PLAYER_WIDTH * 3, MAP_HEIGHT - PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
+    enemy3 = new Entity(PLAYER_WIDTH * 7, MAP_HEIGHT - (PLAYER_HEIGHT * 3), 5, 0, 20, 10, 30 * DIFFICULTY, 4, "knightsprite.png", "testvoice2.mp3", { PLAYER_WIDTH * 7, MAP_HEIGHT - (PLAYER_HEIGHT * 3), PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
+    poison1 = new Entity(PLAYER_WIDTH*5, 0, 0, 0, 0, 0, 0, 0, "poisontile.png", "", { PLAYER_WIDTH * 5, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
+    forest1 = new Entity(PLAYER_WIDTH * 5, PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "foresttile.png", "", { PLAYER_WIDTH * 5, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::forest);
 
-    poison2 = new Entity(PLAYER_WIDTH * 10, 0, 0, 0, 0, 0, 0, 0, "temppoison.png", "", { PLAYER_WIDTH * 10, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
-    poison3 = new Entity(PLAYER_WIDTH * 15, 0, 0, 0, 0, 0, 0, 0, "temppoison.png", "", {PLAYER_WIDTH * 15, 0, PLAYER_WIDTH, PLAYER_HEIGHT}, ObjectType::poison);
-    poison4 = new Entity(PLAYER_WIDTH * 20, 0, 0, 0, 0, 0, 0, 0, "temppoison.png", "", { PLAYER_WIDTH * 20, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
-    poison5 = new Entity(PLAYER_WIDTH * 4, PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "temppoison.png", "", { PLAYER_WIDTH * 4, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
-    poison6 = new Entity(PLAYER_WIDTH * 8, PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "temppoison.png", "", { PLAYER_WIDTH * 8, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
-    forest2 = new Entity(PLAYER_WIDTH * 8, 0, 0, 0, 0, 0, 0, 0, "tempforest.png", "", { PLAYER_WIDTH * 8, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::forest);
-    forest3 = new Entity(PLAYER_WIDTH * 11, PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "tempforest.png", "", { PLAYER_WIDTH * 11, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::forest);
+    poison2 = new Entity(PLAYER_WIDTH * 10, 0, 0, 0, 0, 0, 0, 0, "poisontile.png", "", { PLAYER_WIDTH * 10, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
+    poison3 = new Entity(PLAYER_WIDTH * 15, 0, 0, 0, 0, 0, 0, 0, "poisontile.png", "", {PLAYER_WIDTH * 15, 0, PLAYER_WIDTH, PLAYER_HEIGHT}, ObjectType::poison);
+    poison4 = new Entity(PLAYER_WIDTH * 20, 0, 0, 0, 0, 0, 0, 0, "poisontile.png", "", { PLAYER_WIDTH * 20, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
+    poison5 = new Entity(PLAYER_WIDTH * 4, PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "poisontile.png", "", { PLAYER_WIDTH * 4, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
+    poison6 = new Entity(PLAYER_WIDTH * 8, PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "poisontile.png", "", { PLAYER_WIDTH * 8, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
+    forest2 = new Entity(PLAYER_WIDTH * 8, 0, 0, 0, 0, 0, 0, 0, "foresttile.png", "", { PLAYER_WIDTH * 8, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::forest);
+    forest3 = new Entity(PLAYER_WIDTH * 11, PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "foresttile.png", "", { PLAYER_WIDTH * 11, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::forest);
 
-    poison7 = new Entity(PLAYER_WIDTH * 12, PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "temppoison.png", "", { PLAYER_WIDTH * 12, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
-    poison8 = new Entity(PLAYER_WIDTH * 16, PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "temppoison.png", "", { PLAYER_WIDTH * 16, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
+    poison7 = new Entity(PLAYER_WIDTH * 12, PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "poisontile.png", "", { PLAYER_WIDTH * 12, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
+    poison8 = new Entity(PLAYER_WIDTH * 16, PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "poisontile.png", "", { PLAYER_WIDTH * 16, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
 
     
-    escape = new Entity(WINDOW_WIDTH - PLAYER_WIDTH, MAP_HEIGHT /2, 0, 0, 0, 0, 0, 0, "tempescape.png", "", { WINDOW_WIDTH - PLAYER_WIDTH, MAP_HEIGHT/2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::escape);
+    escape = new Entity(WINDOW_WIDTH - PLAYER_WIDTH, MAP_HEIGHT /2, 0, 0, 0, 0, 0, 0, "escapetile.png", "", { WINDOW_WIDTH - PLAYER_WIDTH, MAP_HEIGHT/2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::escape);
 
 
     entities.push_back(player);;
@@ -228,7 +228,7 @@ void LevelTwoState::Render(SDLWindow window)
     SDL_RenderClear(window.renderer);
     SDL_SetRenderDrawColor(window.renderer, 0, 0, 0, 255);
     SDL_FRect mapRect = { 0, 0, WINDOW_WIDTH, MAP_HEIGHT };
-    window.renderTextureFromFile("temperermap.png", NULL, &mapRect);
+    window.renderTextureFromFile("dirtmap.png", NULL, &mapRect);
     SDL_FRect boxRect = { 0, MAP_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT };
     //move mouse handling into an entity method? do after collision
     if (player->getHealth() <= 0) {
