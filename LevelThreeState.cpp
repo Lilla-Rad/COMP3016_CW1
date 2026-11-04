@@ -15,7 +15,7 @@ bool LevelThreeState::enter()
     bool success = true;
 
     player = new Entity(0, MAP_HEIGHT/2, 5, 1, 35, 20, 5, 4, "celestriasprite.png", "testvoice.mp3", { 0, MAP_HEIGHT/2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::player);
-    enemy1 = new Entity(0, 0, 5, 0, 20, 10, 40 * DIFFICULTY, 1, "paladinsprite.png", "testvoice2.mp3", { 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
+    enemy1 = new Entity(0, 0, 5, 0, 40, 10, 40 * DIFFICULTY, 1, "paladinsprite.png", "testvoice2.mp3", { 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
     poison1 = new Entity(PLAYER_WIDTH * 6, (MAP_HEIGHT / 2) + PLAYER_HEIGHT*2, 0, 0, 0, 0, 0, 0, "poisontile.png", "", { PLAYER_WIDTH * 6, (MAP_HEIGHT / 2) + PLAYER_HEIGHT * 2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
     forest1 = new Entity(PLAYER_WIDTH * 5, PLAYER_HEIGHT*2, 0, 0, 0, 0, 0, 0, "foresttile.png", "", { PLAYER_WIDTH * 5, PLAYER_HEIGHT * 2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::forest);
 
@@ -50,16 +50,28 @@ bool LevelThreeState::enter()
     entities.push_back(weapon);
     entities.push_back(escape);
     check = 0;
+
+    for (int i = 0; i < entities.size(); ++i) {
+        if (entities[i] == nullptr) {
+            success = false;
+        }
+    }
+
     return success;
 }
 
 bool LevelThreeState::exit()
 {
+    for (int i = 0; i < entities.size(); ++i) {
+        delete entities[i];
+    }
+    std::vector<Entity*>().swap(entities);
     return true;
 }
 
 void LevelThreeState::eventHandling(SDLWindow window, Game* manager)
-{
+{ 
+    SDL_PumpEvents();
     SDL_Event e;
     if (SDL_PollEvent(&e)) {
         if (e.type == SDL_EVENT_MOUSE_MOTION) {
@@ -91,13 +103,14 @@ void LevelThreeState::eventHandling(SDLWindow window, Game* manager)
                     entities.erase(entities.end() - 2);
                     player->setStrength(player->getStrength() + 15);
                     window.boxRender("YOU HAVE FOUND A WEAPON! ATK UP!");
+                    enemy1->setMove(6);
                     MIX_StopAllTracks(window.mixer, 0);
                     loop = SDL_CreateProperties();
                     SDL_SetNumberProperty(loop, MIX_PROP_PLAY_LOOPS_NUMBER, -1);
                     MIX_PlayTrack(bgm, loop);
                     SDL_DestroyProperties(loop);
                     SDL_RenderPresent(window.renderer);
-                    SDL_Delay(500);
+                    SDL_Delay(1000);
                 }
             }
 
@@ -105,15 +118,20 @@ void LevelThreeState::eventHandling(SDLWindow window, Game* manager)
         if ((e.type == SDL_EVENT_KEY_DOWN) && (e.key.key == SDLK_RETURN))
         {
             std::string status;
-            if (player->getHealth() == 35) {
-                status = "I can do this!!";
+            if (player->getAsset() == "celestriabloody.png") {
+                status = "...";
             }
-            else if (player->getHealth() <= 17) {
-                status = "I can do this.";
+            else {
+                if (player->getHealth() == 35) {
+                    status = "I can do this!!";
+                }
+                else if (player->getHealth() <= 17) {
+                    status = "I can do this.";
 
-            }
-            else if (player->getHealth() <= 5) {
-                status = "It's cold...";
+                }
+                else if (player->getHealth() <= 5) {
+                    status = "It's cold...";
+                }
             }
             player->dialogue(window, status, 0, 20);
 
@@ -134,7 +152,7 @@ void LevelThreeState::eventHandling(SDLWindow window, Game* manager)
 
 void LevelThreeState::update(Game* manager, SDLWindow window)
 {
-
+    SDL_FlushEvents(0x300, 0x400);
     if (player->getHealth() <= 0) {
         window.boxRender("YOU HAVE DIED!");
         SDL_RenderPresent(window.renderer);
@@ -153,11 +171,20 @@ void LevelThreeState::update(Game* manager, SDLWindow window)
             }
         }
         if (player->getMove() <= 0) {
-
+            if (player->collisionCheck(player->getBounds(), escape->getBounds())) {
+                MIX_StopAllTracks(window.mixer, 0);
+                manager->ChangeState(GameWinState::Instance());
+            }
             //enemyturn
             player->setTurn(0);
-            //pause this state, push state enemy turn onto stack and then resume? maybe?
-            for (int i = 1; i < entities.size() - 1; ++i) {
+            int size;
+            if (player->getAsset() == "celestriabloody.png") {
+                size = entities.size() - 2;
+            }
+            else {
+                size = entities.size() - 1;
+            }
+            for (int i = 1; i < size; ++i) {
                 if (player->getHealth() <= 0) {
                     break;
                 }
@@ -192,6 +219,17 @@ void LevelThreeState::update(Game* manager, SDLWindow window)
                         MIX_PlayTrack(damagesfx, 0);
                         SDL_RenderPresent(window.renderer);
                         SDL_Delay(2000);
+                        if (entities[i]->getHealth() <= 0) {
+                            window.boxRender("PLAYER MANAGES TO KILL Enemy " + std::to_string(i) + "!");
+                            SDL_RenderPresent(window.renderer);
+                            entities.erase(entities.begin() + i);
+                            MIX_StopAllTracks(window.mixer, 0);
+                            player->setAsset("celestriabloody.png");
+                            window.boxRender("PLAYER MANAGES TO KILL Enemy " + std::to_string(i) + "!");
+                            MIX_PlayTrack(killsfx, 0);
+                            SDL_RenderPresent(window.renderer);
+                            SDL_Delay(2500);
+                        }
                     }
                 }
                 if (entities[i]->getType() == ObjectType::poison && player->collisionCheck(player->getBounds(), entities[i]->getBounds())) {
@@ -202,9 +240,6 @@ void LevelThreeState::update(Game* manager, SDLWindow window)
                     SDL_RenderPresent(window.renderer);
                     SDL_Delay(500);
                 }
-
-
-
             }
             if (player->getHealth() <= 0) {
                 window.boxRender("YOU HAVE DIED!");
@@ -214,6 +249,10 @@ void LevelThreeState::update(Game* manager, SDLWindow window)
                 manager->ChangeState(GameOverState::Instance());
             }
             else {
+                if (player->collisionCheck(player->getBounds(), escape->getBounds())) {
+                    MIX_StopAllTracks(window.mixer, 0);
+                    manager->ChangeState(GameWinState::Instance());
+                }
                 player->setMove(2);
                 SDL_RenderPresent(window.renderer);
                 SDL_Delay(1000);
@@ -232,20 +271,6 @@ void LevelThreeState::update(Game* manager, SDLWindow window)
 
 void LevelThreeState::Render(SDLWindow window)
 {
-
-    std::string sfxPath = "assets//mus//sfx//move.mp3";
-    MIX_Audio* sfx = MIX_LoadAudio(window.mixer, sfxPath.c_str(), false);
-    movesfx = MIX_CreateTrack(window.mixer);
-    MIX_SetTrackAudio(movesfx, sfx);
-    std::string musicPath = "assets//mus//bgm//placeholderbattle.mp3";
-    MIX_Audio* mus = MIX_LoadAudio(window.mixer, musicPath.c_str(), false);
-    bgm = MIX_CreateTrack(window.mixer);
-    MIX_SetTrackAudio(bgm, mus);
-
-    std::string sfx2Path = "assets//mus//sfx//damage.mp3";
-    MIX_Audio* sfx2 = MIX_LoadAudio(window.mixer, sfx2Path.c_str(), false);
-    damagesfx = MIX_CreateTrack(window.mixer);
-    MIX_SetTrackAudio(damagesfx, sfx2);
     SDL_RenderClear(window.renderer);
     SDL_SetRenderDrawColor(window.renderer, 0, 0, 0, 255);
     SDL_FRect mapRect = { 0, 0, WINDOW_WIDTH, MAP_HEIGHT };
@@ -276,12 +301,30 @@ void LevelThreeState::Render(SDLWindow window)
 
     for (int i = entities.size() - 1; i >= 0; --i) {
         entities[i]->render(window);
-
     }
 
     SDL_RenderPresent(window.renderer);
 
     if (check == 0) {
+        std::string sfxPath = "assets//mus//sfx//move.mp3";
+        MIX_Audio* sfx = MIX_LoadAudio(window.mixer, sfxPath.c_str(), false);
+        movesfx = MIX_CreateTrack(window.mixer);
+        MIX_SetTrackAudio(movesfx, sfx);
+
+        std::string musicPath = "assets//mus//bgm//placeholderbattle.mp3";
+        MIX_Audio* mus = MIX_LoadAudio(window.mixer, musicPath.c_str(), false);
+        bgm = MIX_CreateTrack(window.mixer);
+        MIX_SetTrackAudio(bgm, mus);
+
+        std::string sfx2Path = "assets//mus//sfx//damage.mp3";
+        MIX_Audio* sfx2 = MIX_LoadAudio(window.mixer, sfx2Path.c_str(), false);
+        damagesfx = MIX_CreateTrack(window.mixer);
+        MIX_SetTrackAudio(damagesfx, sfx2);
+
+        std::string sfx3Path = "assets//mus//sfx//kill.mp3";
+        MIX_Audio* sfx3 = MIX_LoadAudio(window.mixer, sfx3Path.c_str(), false);
+        killsfx = MIX_CreateTrack(window.mixer);
+        MIX_SetTrackAudio(killsfx, sfx3);
         SDL_Delay(2000);
         check += 1;
     }

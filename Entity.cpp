@@ -10,8 +10,6 @@ void Entity::render(SDLWindow window) {
 
 }
 
-
-
 bool Entity::collisionCheck(SDL_Rect a, SDL_Rect b) {
 	int minxA{ a.x };
 	int maxxA{ a.x + a.w };
@@ -23,9 +21,6 @@ bool Entity::collisionCheck(SDL_Rect a, SDL_Rect b) {
 	int minyB{ b.y };
 	int maxyB{ b.y + b.h };
 
-	/*if (minxA == minxB && maxxA == maxxB && minyA == minyB && maxyA == maxyB) {
-		return false;
-	}*/
 	if (minxA >= maxxB) {
 		return false;
 	}
@@ -117,7 +112,7 @@ void Entity::mouseHandling(SDLWindow window) {
 		window.boxRender("Entity");
 	}
 	SDL_RenderPresent(window.renderer);
-	SDL_Delay(4000);
+	SDL_Delay(3000);
 }
 
 void Entity::takeTurn(std::vector<Entity*> entities, int position) {
@@ -127,22 +122,62 @@ void Entity::takeTurn(std::vector<Entity*> entities, int position) {
 			int currentY = getY();
 			int targetX = entities[0]->getX();
 			int targetY = entities[0]->getY();
+			//if enemy is right next to player, 25% chance they might move elsewhere (failsafe against boxing the player in)
+			if (targetX == currentX - PLAYER_WIDTH || targetX == currentX + PLAYER_WIDTH || targetY == currentY - PLAYER_HEIGHT || targetY == currentY + PLAYER_HEIGHT) {
+				std::random_device seed;
+				std::mt19937 gen{ seed() };
+				std::uniform_int_distribution<> dist{ 1, 16 };
+				int move = dist(gen);
+				switch (move) {
+				case 1:
+					MoveLeft(entities, position);
+					break;
+				case 2:
+					MoveUp(entities, position);
+					break;
+				case 3:
+					MoveRight(entities, position);
+					break;
+				case 4:
+					MoveDown(entities, position);
+					break;
+				default:
+					//if enemy is to player's right
+					if (targetX < currentX) {
+						MoveLeft(entities, position);
+					}
+					//if enemy is to player's left
+					if (targetX > currentX) {
+						MoveRight(entities, position);
+					}
+					//if enemy is above player
+					if (targetY > currentY) {
+						MoveDown(entities, position);
+					}
+					//if enemy is below player
+					if (targetY < currentY) {
+						MoveUp(entities, position);
+					}
+				}
+			}
+			else {
 
-			//if enemy is to player's right
-			if (targetX < currentX) {
-				MoveLeft(entities, position);
-			}
-			//if enemy is to player's left
-			if (targetX > currentX) {
-				MoveRight(entities, position);
-			}
-			//if enemy is above player
-			if (targetY > currentY) {
-				MoveDown(entities, position);
-			}
-			//if enemy is below player
-			if (targetY < currentY) {
-				MoveUp(entities, position);
+				//if enemy is to player's right
+				if (targetX < currentX) {
+					MoveLeft(entities, position);
+				}
+				//if enemy is to player's left
+				if (targetX > currentX) {
+					MoveRight(entities, position);
+				}
+				//if enemy is above player
+				if (targetY > currentY) {
+					MoveDown(entities, position);
+				}
+				//if enemy is below player
+				if (targetY < currentY) {
+					MoveUp(entities, position);
+				}
 			}
 
 		}
@@ -161,20 +196,11 @@ void Entity::takeTurn(std::vector<Entity*> entities, int position) {
 	
 }
 
-
-
-//convert to state?
 void Entity::combat(Entity* victim) {
 	std::random_device seed;
 	std::mt19937 gen{ seed() };
 	int maxDamage;
-	if (victim->getAvoid() > 60) {
-		maxDamage = 0;
-	}
-	else {
-		maxDamage = (getStrength() * (100 - (victim->getAvoid()))) / 100;
-
-	}
+	maxDamage = (getStrength() * (100 - (victim->getAvoid()))) / 100;
 	std::uniform_int_distribution<> dist1{ 1, maxDamage };
 	int dodgechance = victim->getAvoid();
 	std::uniform_int_distribution<> dist2{ 0, dodgechance };
@@ -190,14 +216,13 @@ void Entity::combat(Entity* victim) {
 		victim->setHealth(victim->getHealth() - damage);
 	}
 	if (victim->getStrength() >= 10) {
-		setHealth(getHealth() - damage / 3);
+		setHealth(getHealth() - damage / 2);
 	}
 	setTurn(0);
 }
 
 void Entity::handleCollision(Entity* collided) {
 	if (getType() == ObjectType::enemy && collided->getType() == ObjectType::player) {
-		//return true;
 		combat(collided);
 	}
 	else if (getType() == ObjectType::enemy && collided->getType() == ObjectType::poison) {
@@ -206,24 +231,11 @@ void Entity::handleCollision(Entity* collided) {
 	else if (getType() == ObjectType::player && collided->getType() == ObjectType::enemy && getStrength() >= 10) {
 		combat(collided);
 	}
-	//if entitiesp[i] == objecttype::enemy 
-	//call combat function
-	//if boulder
-	//call moveboulder func
 }
 
 
 //check if there is anything adjacent, and if so return a value corresponding to the type of adjacent entity
 //return the first adjacent entity, ignore anything else (e.g. if there are multiple adjacent units
-//for i in entities{
-//check if there is anything to the left
-//setBounds{x-player_width
-//if collisionCgeck(getBounds, temp[i]->getBounds{
-//cannot move left
-//0 == check all directions, 1== check left, 2== check up, 3 == check right, 4 == check down
-//return 0 == cannot move, return 1 == adjacent boulder, return 2 == adjacent enemy
-
-
 int Entity::checkForCollidables(std::vector<Entity*> entities, int position, int direction) {
 	bool collided = false;
 	std::vector<Entity*> temp = entities;
@@ -293,10 +305,6 @@ void Entity::MoveUp(std::vector<Entity*> entities, int position) {
 		move += 1;
 	}
 	this->setBounds({ this->getBounds().x, y, this->getBounds().h, this->getBounds().w });
-	/*if (y > 0)
-		y -= PLAYER_HEIGHT;
-	this->setBounds({ this->getBounds().x, y, this->getBounds().h, this->getBounds().w });
-	move -= 1;*/
 }
 
 void Entity::MoveDown(std::vector<Entity*> entities, int position) {
@@ -375,9 +383,6 @@ void Entity::MoveRight(std::vector<Entity*> entities, int position) {
 	}
 	this->setBounds({ x, this->getBounds().y, this->getBounds().h, this->getBounds().w });
 
-	/*x += PLAYER_WIDTH;
-	this->setBounds({ x, this->getBounds().y, this->getBounds().h, this->getBounds().w });
-	move -= 1;*/
 }
 
 void Entity::Die() {

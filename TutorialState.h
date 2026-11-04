@@ -40,8 +40,6 @@ private:
     std::vector<Entity*> entities;
     int tutorial;
     MIX_Track* movesfx;
-    uint64_t prev;
-    uint64_t now;
 
 };
 

@@ -20,7 +20,7 @@ public:
 	void ChangeState(GameState* state);
 	void Empty();
 
-	bool Run() { return isRunning; }
+	bool Run() const { return isRunning; }
 	void Quit() { isRunning = false; }
 
 	SDL_Event event;

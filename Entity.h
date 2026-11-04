@@ -1,12 +1,13 @@
 #pragma once
 #include "SDLWindow.h"
 #include <vector>
+#include <string>
 #include "Constants.h"
 
 class Entity
 {
 public:
-	Entity(int x, int y, int speed, bool isTurn, int health, int avoid, int strength, int move, const std::string asset, std::string voice, SDL_Rect boundaryBox, ObjectType type) : x(x), y(y), speed(speed), isTurn(isTurn), health(health), avoid(avoid), strength(strength), move(move), asset(asset), voice(voice), boundaryBox(boundaryBox), type(type) {};	
+	Entity(int x, int y, int speed, bool isTurn, int health, int avoid, int strength, int move, std::string asset, std::string voice, SDL_Rect boundaryBox, ObjectType type) : x(x), y(y), speed(speed), isTurn(isTurn), health(health), avoid(avoid), strength(strength), move(move), asset(asset), voice(voice), boundaryBox(boundaryBox), type(type) {};	
 	void MoveUp(std::vector<Entity*> entities, int position);
 	void MoveDown(std::vector<Entity*> entities, int position);
 	void MoveLeft(std::vector<Entity*> entities, int position);
@@ -54,9 +55,9 @@ public:
 	void setMove(int m) {
 		move = m;
 	}
-	const std::string getAsset() { return asset; }
-	void setAsset(const std::string ass) {
-		asset == ass;
+	std::string getAsset() { return asset; }
+	void setAsset(std::string ass) {
+		asset = std::move(ass);
 	}
 	std::string getVoice() { return voice; }
 	void setVoice(std::string voi) {
@@ -79,7 +80,7 @@ private:
 	int avoid;
 	int strength;
 	int move;
-	const std::string asset;
+	std::string asset;
 	std::string voice;
 	SDL_Rect boundaryBox;
 	ObjectType type;

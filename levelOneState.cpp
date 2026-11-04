@@ -39,18 +39,28 @@ bool LevelOneState::enter()
     entities.push_back(poison1);
     entities.push_back(poison2);
     entities.push_back(escape);
-    bool first = false;
-    int check = 3;
+    check = 0;
+
+    for (int i = 0; i < entities.size(); ++i) {
+        if (entities[i] == nullptr) {
+            success = false;
+        }
+    }
     return success;
 }
 
 bool LevelOneState::exit()
 {
+    for (int i = 0; i < entities.size(); ++i) {
+        delete entities[i];
+    }
+    std::vector<Entity*>().swap(entities);
     return true;
 }
 
 void LevelOneState::eventHandling(SDLWindow window, Game* manager)
 {
+    SDL_PumpEvents();
     SDL_Event e;
     if (SDL_PollEvent(&e)) {
         if (e.type == SDL_EVENT_MOUSE_MOTION) {
@@ -116,7 +126,7 @@ void LevelOneState::eventHandling(SDLWindow window, Game* manager)
 
 void LevelOneState::update(Game* manager, SDLWindow window)
 {
-    //check = player->checkForCollidables(entities, 0, 0);
+    SDL_FlushEvents(0x300, 0x400);
     if (player->getHealth() <= 0) {
         window.boxRender("YOU HAVE DIED!");
         SDL_RenderPresent(window.renderer);
@@ -136,7 +146,6 @@ void LevelOneState::update(Game* manager, SDLWindow window)
         if (player->getMove() <= 0) {
             //enemyturn
             player->setTurn(0);
-            //pause this state, push state enemy turn onto stack and then resume? maybe?
             for (int i = 1; i < entities.size() - 1; ++i) {
                 if (player->getHealth() <= 0) {
                     break;
@@ -176,7 +185,6 @@ void LevelOneState::update(Game* manager, SDLWindow window)
                 }
                 if (entities[i]->getType() == ObjectType::poison && player->collisionCheck(player->getBounds(), entities[i]->getBounds())) {
                     player->setHealth(player->getHealth() - (player->getHealth() * 0.1));
-                    bool poisonflag = true;
                     window.boxRender("PLAYER TAKES POISON DAMAGE!");
                     MIX_PlayTrack(damagesfx, 0);
                     SDL_RenderPresent(window.renderer);
@@ -212,20 +220,11 @@ void LevelOneState::update(Game* manager, SDLWindow window)
 
 void LevelOneState::Render(SDLWindow window)
 {
-    std::string sfxPath = "assets//mus//sfx//move.mp3";
-    MIX_Audio* sfx = MIX_LoadAudio(window.mixer, sfxPath.c_str(), false);
-    movesfx = MIX_CreateTrack(window.mixer);
-    MIX_SetTrackAudio(movesfx, sfx);
-    std::string sfx2Path = "assets//mus//sfx//damage.mp3";
-    MIX_Audio* sfx2 = MIX_LoadAudio(window.mixer, sfx2Path.c_str(), false);
-    damagesfx = MIX_CreateTrack(window.mixer);
-    MIX_SetTrackAudio(damagesfx, sfx2);
     SDL_RenderClear(window.renderer);
     SDL_SetRenderDrawColor(window.renderer, 0, 0, 0, 255);
     SDL_FRect mapRect = { 0, 0, WINDOW_WIDTH, MAP_HEIGHT };
     window.renderTextureFromFile("dirtmap.png", NULL, &mapRect);
     SDL_FRect boxRect = { 0, MAP_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT };
-    //move mouse handling into an entity method? do after collision
     if (player->getHealth() <= 0) {
         window.boxRender("YOU HAVE DIED!");
     }
@@ -247,12 +246,21 @@ void LevelOneState::Render(SDLWindow window)
 
     for (int i = entities.size() - 1; i >= 0; --i) {
         entities[i]->render(window);
-
     }
-
 
     SDL_RenderPresent(window.renderer); 
 
+    if (check == 0) {
+        std::string sfxPath = "assets//mus//sfx//move.mp3";
+        MIX_Audio* sfx = MIX_LoadAudio(window.mixer, sfxPath.c_str(), false);
+        movesfx = MIX_CreateTrack(window.mixer);
+        MIX_SetTrackAudio(movesfx, sfx);
+        std::string sfx2Path = "assets//mus//sfx//damage.mp3";
+        MIX_Audio* sfx2 = MIX_LoadAudio(window.mixer, sfx2Path.c_str(), false);
+        damagesfx = MIX_CreateTrack(window.mixer);
+        MIX_SetTrackAudio(damagesfx, sfx2);
+        check += 1;
+    }
 }
 
 

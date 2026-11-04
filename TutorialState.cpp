@@ -14,7 +14,7 @@ bool TutorialState::enter()
     forest1 = new Entity(WINDOW_WIDTH - (PLAYER_WIDTH * 2), MAP_HEIGHT - PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "foresttile.png", "", { WINDOW_WIDTH - (PLAYER_WIDTH * 2), MAP_HEIGHT - PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::forest);
     forest2 = new Entity(PLAYER_WIDTH * 4, PLAYER_HEIGHT * 3, 0, 0, 0, 0, 0, 0, "foresttile.png", "", { PLAYER_WIDTH * 4, PLAYER_HEIGHT * 3, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::forest);
     forest3 = new Entity(WINDOW_WIDTH - (PLAYER_WIDTH * 4), PLAYER_HEIGHT * 3, 0, 0, 0, 0, 0, 0, "foresttile.png", "", { WINDOW_WIDTH - (PLAYER_WIDTH * 4), PLAYER_HEIGHT * 3, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::forest);
-    enemy1 = new Entity(/*WINDOW_WIDTH - PLAYER_WIDTH*/0, MAP_HEIGHT / 2, 5, 0, 20, 20, 20 * DIFFICULTY, 6, "soldiersprite.png", "testvoice2.mp3", { 0, MAP_HEIGHT / 2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
+    enemy1 = new Entity(0, MAP_HEIGHT / 2, 5, 0, 20, 20, 20 * DIFFICULTY, 6, "soldiersprite.png", "testvoice2.mp3", { 0, MAP_HEIGHT / 2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
     enemy2 = new Entity(PLAYER_WIDTH * 3, MAP_HEIGHT - PLAYER_HEIGHT, 5, 0, 20, 20, 20 * DIFFICULTY, 6, "soldiersprite.png", "testvoice2.mp3", { PLAYER_WIDTH * 3, MAP_HEIGHT - PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
     boulder = new Entity(WINDOW_WIDTH - PLAYER_WIDTH, MAP_HEIGHT - (PLAYER_HEIGHT * 2), 0, 0, 0, 0, 0, 0, "boulder.png", "", { WINDOW_WIDTH - PLAYER_WIDTH, MAP_HEIGHT - PLAYER_HEIGHT * 2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::boulder);
 
@@ -34,6 +34,13 @@ bool TutorialState::enter()
     entities.push_back(poison2);
     entities.push_back(escape);
     int tutorial = 0;
+    
+    for (int i = 0; i < entities.size(); ++i) {
+        if (entities[i] == nullptr) {
+            success = false;
+        }
+    }
+
     return success;
 }
 
@@ -53,11 +60,9 @@ void TutorialState::eventHandling(SDLWindow window, Game* manager)
     SDL_Event e;
     while (SDL_PollEvent(&e)) {
         if (e.type == SDL_EVENT_QUIT || e.type == SDL_EVENT_KEY_DOWN && e.key.key == SDLK_ESCAPE) {
-            exit();
             manager->ChangeState(ExitState::Instance());
         }
         else if (e.type == SDL_EVENT_KEY_DOWN && tutorial >= 10) {
-            exit();
             manager->ChangeState(LevelOneState::Instance());
         }
 
@@ -68,17 +73,18 @@ void TutorialState::eventHandling(SDLWindow window, Game* manager)
 
 void TutorialState::update(Game* manager, SDLWindow window)
 {
-
+    if (tutorial == 0) {
+        std::string sfxPath = "assets//mus//sfx//move.mp3";
+        MIX_Audio* sfx = MIX_LoadAudio(window.mixer, sfxPath.c_str(), false);
+        movesfx = MIX_CreateTrack(window.mixer);
+        MIX_SetTrackAudio(movesfx, sfx);
+    }
 }
 
 
 
 void TutorialState::Render(SDLWindow window)
 {
-    std::string sfxPath = "assets//mus//sfx//move.mp3";
-    MIX_Audio* sfx = MIX_LoadAudio(window.mixer, sfxPath.c_str(), false);
-    movesfx = MIX_CreateTrack(window.mixer);
-    MIX_SetTrackAudio(movesfx, sfx);
     SDL_RenderClear(window.renderer);
     SDL_SetRenderDrawColor(window.renderer, 0, 0, 0, 255);
     SDL_FRect mapRect = { 0, 0, WINDOW_WIDTH, MAP_HEIGHT };
@@ -90,6 +96,8 @@ void TutorialState::Render(SDLWindow window)
     else {
         window.boxRender("");
     }
+
+    //render in reverse order to render player on top of terrain
     if (tutorial > 9) {
         for (int i = entities.size() - 1; i >= 0; --i) {
             entities[i]->render(window);
@@ -108,9 +116,9 @@ void TutorialState::Render(SDLWindow window)
 
 
     SDL_RenderPresent(window.renderer);
-    prev = now;
+
     switch (tutorial) {
-    case 0:
+    case 0: 
         tutorial += 1;
         break;
     case 1:

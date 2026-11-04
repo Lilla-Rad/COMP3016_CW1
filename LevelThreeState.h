@@ -30,8 +30,6 @@ private:
     static LevelThreeState stateLevelThree;
     Entity* player;
     Entity* enemy1;
-    Entity* enemy2;
-    Entity* enemy3;
     Entity* poison1;
     Entity* poison2;
     Entity* poison3;
@@ -49,6 +47,7 @@ private:
     std::vector<Entity*> entities;
     MIX_Track* movesfx;
     MIX_Track* damagesfx;
+    MIX_Track* killsfx;
     MIX_Track* bgm;
     SDL_PropertiesID loop;
     //std::vector<Tile*> tiles; list of interactable tiles

@@ -41,9 +41,7 @@ private:
 
     MIX_Track* movesfx;
     MIX_Track* damagesfx;
+    int check;
     std::vector<Entity*> entities;
-    bool poisonflag;
-    int temp; 
-    int temp2;
     //std::vector<Tile*> tiles; list of interactable tiles
 };

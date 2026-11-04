@@ -101,23 +101,6 @@ void SDLWindow::boxRender(std::string info) {
 }
 
 
-/*SDLWindow::~SDLWindow()
-{
-	SDL_DestroyWindow(window);
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyTexture(texture);
-	//MIX_DestroyMixer(mixer);
-	exit(1);
-}*/
-
-void SDLWindow::Clear() {
-	SDL_RenderClear(renderer);
-}
-
-void SDLWindow::Present() {
-	SDL_RenderPresent(renderer);
-}
-
 void SDLWindow::cleanup(SDL_Window* window, SDL_Renderer* renderer, SDL_Texture* texture, MIX_Mixer* mixer) {
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
