@@ -15,12 +15,12 @@ bool LevelOneState::enter()
 {
     bool success = true;
 
-    player = new Entity(WINDOW_WIDTH/2, 0+(PLAYER_HEIGHT*2), 5, 1, 20, 10, 5, 2, "celestriasprite.png", "testvoice.mp3", {WINDOW_WIDTH / 2, 0 + (PLAYER_HEIGHT * 2), PLAYER_WIDTH, PLAYER_HEIGHT}, ObjectType::player);
+    player = new Entity(WINDOW_WIDTH/2, 0+(PLAYER_HEIGHT*2), 5, 1, 20, 10, 5, 2, "celestriasprite.png", "celestriavoice.mp3", {WINDOW_WIDTH / 2, 0 + (PLAYER_HEIGHT * 2), PLAYER_WIDTH, PLAYER_HEIGHT}, ObjectType::player);
     forest1 = new Entity(WINDOW_WIDTH - (PLAYER_WIDTH * 2), MAP_HEIGHT - PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "foresttile.png", "", { WINDOW_WIDTH - (PLAYER_WIDTH * 2), MAP_HEIGHT - PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::forest);
     forest2 = new Entity(PLAYER_WIDTH * 4, PLAYER_HEIGHT * 3, 0, 0, 0, 0, 0, 0, "foresttile.png", "", { PLAYER_WIDTH * 4, PLAYER_HEIGHT * 3, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::forest);
     forest3 = new Entity(WINDOW_WIDTH - (PLAYER_WIDTH * 4), PLAYER_HEIGHT * 3, 0, 0, 0, 0, 0, 0, "foresttile.png", "", { WINDOW_WIDTH - (PLAYER_WIDTH * 4), PLAYER_HEIGHT * 3, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::forest);
-    enemy1 = new Entity(0, MAP_HEIGHT / 2, 5, 0, 20, 10, 10 * DIFFICULTY, 4, "soldiersprite.png", "testvoice2.mp3", {0, MAP_HEIGHT / 2, PLAYER_WIDTH, PLAYER_HEIGHT}, ObjectType::enemy);
-    enemy2 = new Entity(PLAYER_WIDTH*3, MAP_HEIGHT-PLAYER_HEIGHT, 5, 0, 20, 10, 10 * DIFFICULTY, 4, "soldiersprite.png", "testvoice2.mp3", { PLAYER_WIDTH*3, MAP_HEIGHT-PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
+    enemy1 = new Entity(0, MAP_HEIGHT / 2, 5, 0, 20, 10, 10 * DIFFICULTY, 4, "soldiersprite.png", "enemyvoice.mp3", {0, MAP_HEIGHT / 2, PLAYER_WIDTH, PLAYER_HEIGHT}, ObjectType::enemy);
+    enemy2 = new Entity(PLAYER_WIDTH*3, MAP_HEIGHT-PLAYER_HEIGHT, 5, 0, 20, 10, 10 * DIFFICULTY, 4, "soldiersprite.png", "enemyvoice.mp3", { PLAYER_WIDTH*3, MAP_HEIGHT-PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
     boulder = new Entity(WINDOW_WIDTH - PLAYER_WIDTH, MAP_HEIGHT - (PLAYER_HEIGHT*2), 0, 0, 0, 0, 0, 0, "boulder.png", "", { WINDOW_WIDTH - PLAYER_WIDTH, MAP_HEIGHT - PLAYER_HEIGHT * 2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::boulder);
 
 

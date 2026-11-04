@@ -14,10 +14,10 @@ bool LevelTwoState::enter()
 {
     bool success = true;
 
-    player = new Entity(0, 0, 5, 1, 30, 20, 5, 3, "celestriasprite.png", "testvoice.mp3", { 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::player);
-    enemy1 = new Entity(0, (MAP_HEIGHT / 2) + PLAYER_HEIGHT, 5, 0, 20, 10, 8 * DIFFICULTY, 4, "soldiersprite.png", "testvoice2.mp3", {0, (MAP_HEIGHT / 2) + PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT}, ObjectType::enemy);
-    enemy2 = new Entity(PLAYER_WIDTH * 3, MAP_HEIGHT - PLAYER_HEIGHT, 5, 0, 20, 10, 8 * DIFFICULTY, 4, "soldiersprite.png", "testvoice2.mp3", { PLAYER_WIDTH * 3, MAP_HEIGHT - PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
-    enemy3 = new Entity(PLAYER_WIDTH * 7, MAP_HEIGHT - (PLAYER_HEIGHT * 3), 5, 0, 20, 10, 30 * DIFFICULTY, 3, "knightsprite.png", "testvoice2.mp3", { PLAYER_WIDTH * 7, MAP_HEIGHT - (PLAYER_HEIGHT * 3), PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
+    player = new Entity(0, 0, 5, 1, 30, 20, 5, 3, "celestriasprite.png", "celestriavoice.mp3", { 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::player);
+    enemy1 = new Entity(0, (MAP_HEIGHT / 2) + PLAYER_HEIGHT, 5, 0, 20, 10, 8 * DIFFICULTY, 4, "soldiersprite.png", "enemyvoice.mp3", {0, (MAP_HEIGHT / 2) + PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT}, ObjectType::enemy);
+    enemy2 = new Entity(PLAYER_WIDTH * 3, MAP_HEIGHT - PLAYER_HEIGHT, 5, 0, 20, 10, 8 * DIFFICULTY, 4, "soldiersprite.png", "enemyvoice.mp3", { PLAYER_WIDTH * 3, MAP_HEIGHT - PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
+    enemy3 = new Entity(PLAYER_WIDTH * 7, MAP_HEIGHT - (PLAYER_HEIGHT * 3), 5, 0, 20, 10, 30 * DIFFICULTY, 3, "knightsprite.png", "enemyvoice.mp3", { PLAYER_WIDTH * 7, MAP_HEIGHT - (PLAYER_HEIGHT * 3), PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
     poison1 = new Entity(PLAYER_WIDTH*5, 0, 0, 0, 0, 0, 0, 0, "poisontile.png", "", { PLAYER_WIDTH * 5, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
     forest1 = new Entity(PLAYER_WIDTH * 5, PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "foresttile.png", "", { PLAYER_WIDTH * 5, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::forest);
 

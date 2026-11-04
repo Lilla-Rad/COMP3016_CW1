@@ -14,8 +14,8 @@ bool LevelThreeState::enter()
 {
     bool success = true;
 
-    player = new Entity(0, MAP_HEIGHT/2, 5, 1, 35, 20, 5, 4, "celestriasprite.png", "testvoice.mp3", { 0, MAP_HEIGHT/2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::player);
-    enemy1 = new Entity(0, 0, 5, 0, 40, 10, 40 * DIFFICULTY, 1, "paladinsprite.png", "testvoice2.mp3", { 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
+    player = new Entity(0, MAP_HEIGHT/2, 5, 1, 35, 20, 5, 4, "celestriasprite.png", "celestriavoice.mp3", { 0, MAP_HEIGHT/2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::player);
+    enemy1 = new Entity(0, 0, 5, 0, 40, 10, 40 * DIFFICULTY, 1, "paladinsprite.png", "enemyvoice.mp3", { 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
     poison1 = new Entity(PLAYER_WIDTH * 6, (MAP_HEIGHT / 2) + PLAYER_HEIGHT*2, 0, 0, 0, 0, 0, 0, "poisontile.png", "", { PLAYER_WIDTH * 6, (MAP_HEIGHT / 2) + PLAYER_HEIGHT * 2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
     forest1 = new Entity(PLAYER_WIDTH * 5, PLAYER_HEIGHT*2, 0, 0, 0, 0, 0, 0, "foresttile.png", "", { PLAYER_WIDTH * 5, PLAYER_HEIGHT * 2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::forest);
 

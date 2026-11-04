@@ -45,6 +45,12 @@
     <Media Include="assets\mus\bgm\title.mp3">
       <Filter>Resource Files</Filter>
     </Media>
+    <Media Include="assets\mus\sfx\celestriavoice.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="assets\mus\sfx\enemyvoice.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">

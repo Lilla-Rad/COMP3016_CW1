@@ -23,7 +23,9 @@
     <Media Include="assets\mus\bgm\gameover.mp3" />
     <Media Include="assets\mus\bgm\gamewin.mp3" />
     <Media Include="assets\mus\bgm\title.mp3" />
+    <Media Include="assets\mus\sfx\celestriavoice.mp3" />
     <Media Include="assets\mus\sfx\damage.mp3" />
+    <Media Include="assets\mus\sfx\enemyvoice.mp3" />
     <Media Include="assets\mus\sfx\introvoice.mp3" />
     <Media Include="assets\mus\sfx\kill.mp3" />
     <Media Include="assets\mus\sfx\move.mp3" />
