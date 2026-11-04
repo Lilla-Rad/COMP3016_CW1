@@ -19,6 +19,7 @@ public:
 	SDL_Renderer* renderer;
 	SDL_Texture* texture;
 	MIX_Mixer* mixer;
+	SDL_PropertiesID options;
 
 };
 

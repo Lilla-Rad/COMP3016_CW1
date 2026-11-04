@@ -25,6 +25,5 @@ protected:
 
 private:
     static TitleScreenState stateTitleScreen;
-    MIX_Track* title;
 
 };

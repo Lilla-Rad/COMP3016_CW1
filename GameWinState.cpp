@@ -18,7 +18,10 @@ bool GameWinState::enter()
     MIX_Audio* bgm = MIX_LoadAudio(mixer, musicPath.c_str(), false);
     track = MIX_CreateTrack(mixer);
     MIX_SetTrackAudio(track, bgm);
-    MIX_PlayTrack(track, 0);
+    loop = SDL_CreateProperties();
+    SDL_SetNumberProperty(loop, MIX_PROP_PLAY_LOOPS_NUMBER, -1);
+    MIX_PlayTrack(track, loop);
+    SDL_DestroyProperties(loop);
 
     return success;
 }

@@ -11,7 +11,7 @@ IntroState IntroState::stateIntro;
 
 bool IntroState::enter()
 {
-    enemy = new Entity(WINDOW_WIDTH / 2, 0, 5, 1, 20, 10, 10, 4, "whatsss.png", "introvoice.mp3", { WINDOW_WIDTH / 2,0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::tile);
+    enemy = new Entity(WINDOW_WIDTH / 2, 0, 5, 1, 20, 10, 10, 4, "", "introvoice.mp3", { WINDOW_WIDTH / 2,0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::tile);
     intro = 0;
     bool success = true;
     return success;

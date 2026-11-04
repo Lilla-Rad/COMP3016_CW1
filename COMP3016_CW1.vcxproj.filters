@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Media Include="assets\mus\sfx\u_xg7ssi08yr-comical-kiss-2-381978.mp3">
-      <Filter>Resource Files</Filter>
-    </Media>
     <Media Include="assets\mus\sfx\testvoice.mp3">
       <Filter>Resource Files</Filter>
     </Media>

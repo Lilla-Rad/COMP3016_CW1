@@ -9,7 +9,6 @@ TutorialState TutorialState::stateTutorial;
 bool TutorialState::enter()
 {
     bool success = true;
-    uint64_t prev = SDL_GetTicks();
 
     player = new Entity(WINDOW_WIDTH / 2, 0, 5, 1, 20, 10, 10, 4, "celestriasprite.png", "testvoice.mp3", { WINDOW_WIDTH / 2, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::player);
     forest1 = new Entity(WINDOW_WIDTH - (PLAYER_WIDTH * 2), MAP_HEIGHT - PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "foresttile.png", "", { WINDOW_WIDTH - (PLAYER_WIDTH * 2), MAP_HEIGHT - PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::forest);
@@ -18,7 +17,6 @@ bool TutorialState::enter()
     enemy1 = new Entity(/*WINDOW_WIDTH - PLAYER_WIDTH*/0, MAP_HEIGHT / 2, 5, 0, 20, 20, 20 * DIFFICULTY, 6, "soldiersprite.png", "testvoice2.mp3", { 0, MAP_HEIGHT / 2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
     enemy2 = new Entity(PLAYER_WIDTH * 3, MAP_HEIGHT - PLAYER_HEIGHT, 5, 0, 20, 20, 20 * DIFFICULTY, 6, "soldiersprite.png", "testvoice2.mp3", { PLAYER_WIDTH * 3, MAP_HEIGHT - PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
     boulder = new Entity(WINDOW_WIDTH - PLAYER_WIDTH, MAP_HEIGHT - (PLAYER_HEIGHT * 2), 0, 0, 0, 0, 0, 0, "boulder.png", "", { WINDOW_WIDTH - PLAYER_WIDTH, MAP_HEIGHT - PLAYER_HEIGHT * 2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::boulder);
-    //boulder2 = new Entity(WINDOW_WIDTH /2 , MAP_HEIGHT/2, 0, 0, 0, 0, 0, 0, "boulder.png", "", { WINDOW_WIDTH /2, MAP_HEIGHT / 2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::boulder);
 
     poison1 = new Entity(WINDOW_WIDTH - (PLAYER_WIDTH * 3), MAP_HEIGHT - PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "poisontile.png", "", { WINDOW_WIDTH - (PLAYER_WIDTH * 3), MAP_HEIGHT - PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
     poison2 = new Entity(WINDOW_WIDTH - (PLAYER_WIDTH * 2), MAP_HEIGHT - (PLAYER_HEIGHT * 2), 0, 0, 0, 0, 0, 0, "poisontile.png", "", { WINDOW_WIDTH - (PLAYER_WIDTH * 2), MAP_HEIGHT - (PLAYER_HEIGHT * 2), PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
@@ -32,7 +30,6 @@ bool TutorialState::enter()
     entities.push_back(enemy1);
     entities.push_back(enemy2);
     entities.push_back(boulder);
-    //entities.push_back(boulder2);
     entities.push_back(poison1);
     entities.push_back(poison2);
     entities.push_back(escape);
@@ -42,6 +39,10 @@ bool TutorialState::enter()
 
 bool TutorialState::exit()
 {
+    for (int i = 0; i < entities.size(); ++i) {
+        delete entities[i];
+    }
+    std::vector<Entity*>().swap(entities);
     return true;
 }
 
@@ -49,14 +50,14 @@ bool TutorialState::exit()
 
 void TutorialState::eventHandling(SDLWindow window, Game* manager)
 {
-    uint64_t now = SDL_GetTicks();
-    float deltaTime = now - prev / 1000.0f;
     SDL_Event e;
     while (SDL_PollEvent(&e)) {
         if (e.type == SDL_EVENT_QUIT || e.type == SDL_EVENT_KEY_DOWN && e.key.key == SDLK_ESCAPE) {
+            exit();
             manager->ChangeState(ExitState::Instance());
         }
         else if (e.type == SDL_EVENT_KEY_DOWN && tutorial >= 10) {
+            exit();
             manager->ChangeState(LevelOneState::Instance());
         }
 

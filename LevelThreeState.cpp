@@ -81,6 +81,7 @@ void LevelThreeState::eventHandling(SDLWindow window, Game* manager)
         }
         else if (e.type == SDL_EVENT_KEY_DOWN && player->getMove() >= 0 && player->getEntityTurn() == 1) {
             if (player->collisionCheck(player->getBounds(), escape->getBounds())) {
+                MIX_StopAllTracks(window.mixer, 0);
                 manager->ChangeState(GameWinState::Instance());
             }
             player->playerInput(e, entities);
@@ -91,7 +92,10 @@ void LevelThreeState::eventHandling(SDLWindow window, Game* manager)
                     player->setStrength(player->getStrength() + 15);
                     window.boxRender("YOU HAVE FOUND A WEAPON! ATK UP!");
                     MIX_StopAllTracks(window.mixer, 0);
-                    MIX_PlayTrack(bgm, 0);
+                    loop = SDL_CreateProperties();
+                    SDL_SetNumberProperty(loop, MIX_PROP_PLAY_LOOPS_NUMBER, -1);
+                    MIX_PlayTrack(bgm, loop);
+                    SDL_DestroyProperties(loop);
                     SDL_RenderPresent(window.renderer);
                     SDL_Delay(500);
                 }
@@ -140,6 +144,7 @@ void LevelThreeState::update(Game* manager, SDLWindow window)
     }
     else {
         if (player->collisionCheck(player->getBounds(), escape->getBounds())) {
+            MIX_StopAllTracks(window.mixer, 0);
             manager->ChangeState(GameWinState::Instance());
         }
         for (int i = 0; i < entities.size(); ++i) {
@@ -236,6 +241,7 @@ void LevelThreeState::Render(SDLWindow window)
     MIX_Audio* mus = MIX_LoadAudio(window.mixer, musicPath.c_str(), false);
     bgm = MIX_CreateTrack(window.mixer);
     MIX_SetTrackAudio(bgm, mus);
+
     std::string sfx2Path = "assets//mus//sfx//damage.mp3";
     MIX_Audio* sfx2 = MIX_LoadAudio(window.mixer, sfx2Path.c_str(), false);
     damagesfx = MIX_CreateTrack(window.mixer);

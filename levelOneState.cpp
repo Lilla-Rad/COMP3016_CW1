@@ -204,7 +204,6 @@ void LevelOneState::update(Game* manager, SDLWindow window)
                 MIX_PlayTrack(movesfx, 0);
 
             }
-            //manager->enemyTurn(entities, player);
         }
     }
 

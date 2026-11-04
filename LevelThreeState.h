@@ -50,5 +50,6 @@ private:
     MIX_Track* movesfx;
     MIX_Track* damagesfx;
     MIX_Track* bgm;
+    SDL_PropertiesID loop;
     //std::vector<Tile*> tiles; list of interactable tiles
 };

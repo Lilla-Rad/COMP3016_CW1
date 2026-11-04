@@ -25,5 +25,6 @@ protected:
 private:
     static GameOverState stateGameOver;
     MIX_Track* track;
+    SDL_PropertiesID loop;
 
 };

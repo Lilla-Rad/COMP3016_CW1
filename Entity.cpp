@@ -48,11 +48,45 @@ bool Entity::collisionCheck(SDL_Rect a, SDL_Rect b) {
 }
 
 void Entity::mouseHandling(SDLWindow window) {
+	//DL_FRect movemapRect;
+	int x = getX() - (PLAYER_WIDTH * getMove());
+	int y = getY() - (PLAYER_HEIGHT * getMove());
+	int width = (2 * (PLAYER_WIDTH * getMove())) + PLAYER_WIDTH;
+	int height = 2 * (PLAYER_HEIGHT * getMove()) + PLAYER_HEIGHT;
+	SDL_FRect movemapRect = { x, y, width, height };
 	switch (getType()) {
 	case ObjectType::player:
+		switch (getMove()) {
+		case 1:
+			window.renderTextureFromFile("playermove1.png", NULL, &movemapRect);
+			break;
+		case 2:
+			window.renderTextureFromFile("playermove2.png", NULL, &movemapRect);
+			break;
+		case 3:
+			window.renderTextureFromFile("playermove3.png", NULL, &movemapRect);
+			break;
+		case 4:
+			window.renderTextureFromFile("playermove4.png", NULL, &movemapRect);
+			break;
+		}
 		window.boxRender("Current health: " + std::to_string(getHealth()) + " | Atk:" + std::to_string(getStrength()));
 		break;
 	case ObjectType::enemy:
+		switch (getMove()) {
+		case 1:
+			window.renderTextureFromFile("enemymove1.png", NULL, &movemapRect);
+			break;
+		case 2:
+			window.renderTextureFromFile("enemymove2.png", NULL, &movemapRect);
+			break;
+		case 3:
+			window.renderTextureFromFile("enemymove3.png", NULL, &movemapRect);
+			break;
+		case 4:
+			window.renderTextureFromFile("enemymove4.png", NULL, &movemapRect);
+			break;
+		}
 		switch (getStrength()) {
 		case 30:
 			window.boxRender("Knight | Health:" + std::to_string(getHealth()) + " | Atk:" + std::to_string(getStrength()) + " | Move:" + std::to_string(getMove()));
@@ -83,7 +117,7 @@ void Entity::mouseHandling(SDLWindow window) {
 		window.boxRender("Entity");
 	}
 	SDL_RenderPresent(window.renderer);
-	SDL_Delay(3000);
+	SDL_Delay(4000);
 }
 
 void Entity::takeTurn(std::vector<Entity*> entities, int position) {

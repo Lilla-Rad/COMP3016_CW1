@@ -21,7 +21,6 @@
   <ItemGroup>
     <Media Include="assets\mus\sfx\testvoice.mp3" />
     <Media Include="assets\mus\sfx\testvoice2.mp3" />
-    <Media Include="assets\mus\sfx\u_xg7ssi08yr-comical-kiss-2-381978.mp3" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h" />

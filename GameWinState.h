@@ -24,4 +24,5 @@ private:
     static GameWinState stateGameWin;
     Entity* player;
     MIX_Track* track;
+    SDL_PropertiesID loop;
 };

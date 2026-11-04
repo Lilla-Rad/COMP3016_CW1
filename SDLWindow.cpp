@@ -24,6 +24,7 @@ bool SDLWindow::Init() {
 			SDL_Log("Could not set window icon! SDL error: %s\n", SDL_GetError());
 			success = false;
 		}
+		SDL_free(iconSur);
 		if (MIX_Init() == false) {
 			SDL_Log("Could not initialise mixer! SDL_mixer error: %s\n", SDL_GetError());
 			success = false;
@@ -37,14 +38,24 @@ bool SDLWindow::Init() {
 				std::string musicPath = "assets//mus//bgm//placeholdertitle.mp3";
 				if (MIX_Audio* bgm = MIX_LoadAudio(mixer, musicPath.c_str(), false); bgm == nullptr) {
 					SDL_Log("SDL_mixer failed to load title track! SDL_mixer error: %s\n", SDL_GetError());
+					success = false;
 				}
 				else {
 					if (MIX_Track* title = MIX_CreateTrack(mixer); title == nullptr) {
 						SDL_Log("SDL_mixer failed to create title track! SDL_mixer error: %s\n", SDL_GetError());
+						success = false;
 					}
 					else {
+						options = SDL_CreateProperties();
+						if (!options) {
+							SDL_Log("SDL_mixer failed to create playback options! SDL_mixer error: %s\n", SDL_GetError());
+							success = false;
+						}
+						SDL_SetNumberProperty(options, MIX_PROP_PLAY_LOOPS_NUMBER, -1);
 						MIX_SetTrackAudio(title, bgm);
-						MIX_PlayTrack(title, 0);
+						MIX_PlayTrack(title, options);
+						SDL_DestroyProperties(options);
+
 					}
 				}
 			}
@@ -76,7 +87,6 @@ bool SDLWindow::renderTextureFromFile(std::string path, const SDL_FRect* srcrect
 		else {
 			SDL_RenderTexture(renderer, texture, srcrect, dstrect);
 		}
-
 		SDL_DestroySurface(loadedSurface);
 	}
 	return texture != nullptr;
