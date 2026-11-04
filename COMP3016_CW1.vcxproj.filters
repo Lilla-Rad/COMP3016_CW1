@@ -21,6 +21,30 @@
     <Media Include="assets\mus\sfx\testvoice2.mp3">
       <Filter>Resource Files</Filter>
     </Media>
+    <Media Include="assets\mus\sfx\damage.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="assets\mus\sfx\introvoice.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="assets\mus\sfx\kill.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="assets\mus\sfx\move.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="assets\mus\bgm\battle.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="assets\mus\bgm\gameover.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="assets\mus\bgm\gamewin.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="assets\mus\bgm\title.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -109,5 +133,70 @@
     <ClCompile Include="LevelThreeState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\img\boulder.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\img\celestriabloody.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\img\celestriasprite.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\img\dirtmap.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\img\enemymove1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\img\enemymove2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\img\enemymove3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\img\enemymove4.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\img\escapetile.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\img\foresttile.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\img\knightsprite.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\img\paladinsprite.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\img\playermove1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\img\playermove2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\img\playermove3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\img\playermove4.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\img\poisontile.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\img\sharpstick.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\img\soldiersprite.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\img\winscreen.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\img\temptitle.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

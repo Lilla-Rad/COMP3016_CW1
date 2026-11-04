@@ -19,6 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <Media Include="assets\mus\bgm\battle.mp3" />
+    <Media Include="assets\mus\bgm\gameover.mp3" />
+    <Media Include="assets\mus\bgm\gamewin.mp3" />
+    <Media Include="assets\mus\bgm\title.mp3" />
+    <Media Include="assets\mus\sfx\damage.mp3" />
+    <Media Include="assets\mus\sfx\introvoice.mp3" />
+    <Media Include="assets\mus\sfx\kill.mp3" />
+    <Media Include="assets\mus\sfx\move.mp3" />
     <Media Include="assets\mus\sfx\testvoice.mp3" />
     <Media Include="assets\mus\sfx\testvoice2.mp3" />
   </ItemGroup>
@@ -53,6 +61,29 @@
     <ClCompile Include="SDLWindow.cpp" />
     <ClCompile Include="TitleScreenState.cpp" />
     <ClCompile Include="TutorialState.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\img\boulder.png" />
+    <Image Include="assets\img\celestriabloody.png" />
+    <Image Include="assets\img\celestriasprite.png" />
+    <Image Include="assets\img\dirtmap.png" />
+    <Image Include="assets\img\enemymove1.png" />
+    <Image Include="assets\img\enemymove2.png" />
+    <Image Include="assets\img\enemymove3.png" />
+    <Image Include="assets\img\enemymove4.png" />
+    <Image Include="assets\img\escapetile.png" />
+    <Image Include="assets\img\foresttile.png" />
+    <Image Include="assets\img\knightsprite.png" />
+    <Image Include="assets\img\paladinsprite.png" />
+    <Image Include="assets\img\playermove1.png" />
+    <Image Include="assets\img\playermove2.png" />
+    <Image Include="assets\img\playermove3.png" />
+    <Image Include="assets\img\playermove4.png" />
+    <Image Include="assets\img\poisontile.png" />
+    <Image Include="assets\img\sharpstick.png" />
+    <Image Include="assets\img\soldiersprite.png" />
+    <Image Include="assets\img\temptitle.png" />
+    <Image Include="assets\img\winscreen.png" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

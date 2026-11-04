@@ -65,7 +65,7 @@ void Entity::mouseHandling(SDLWindow window) {
 			window.renderTextureFromFile("playermove4.png", NULL, &movemapRect);
 			break;
 		}
-		window.boxRender("Current health: " + std::to_string(getHealth()) + " | Atk:" + std::to_string(getStrength()));
+		window.boxRender("Health: " + std::to_string(getHealth()) + " | Atk: " + std::to_string(getStrength()) + " | Avoid: " + std::to_string(getAvoid()));
 		break;
 	case ObjectType::enemy:
 		switch (getMove()) {
