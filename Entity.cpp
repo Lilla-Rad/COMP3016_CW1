@@ -209,9 +209,6 @@ void Entity::combat(Entity* victim) {
 		damage = victim->getHealth();
 	}
 	int dodge = dist2(gen);
-	if (victim->getAvoid() > 60) {
-		damage = 0;
-	}
 	if (damage > dodge) {
 		victim->setHealth(victim->getHealth() - damage);
 	}

@@ -70,12 +70,31 @@ void LevelTwoState::eventHandling(SDLWindow window, Game* manager)
     SDL_PumpEvents();
     SDL_Event e;
     if (SDL_PollEvent(&e)) {
+        if (player->getMove() <= 0) {
+            player->setTurn(0);
+        }
         if (e.type == SDL_EVENT_MOUSE_MOTION) {
             for (int i = 0; i < entities.size(); ++i) {
                 if (entities[i]->mouseCheck()) {
                     entities[i]->mouseHandling(window);
                 }
             }
+        }
+        if ((e.type == SDL_EVENT_KEY_DOWN) && (e.key.key == SDLK_RETURN))
+        {
+            std::string status;
+            if (player->getHealth() >= 20) {
+                status = "I have to get out of here!";
+            }
+            else if (player->getHealth() <= 15) {
+                status = "I have to make it!!";
+
+            }
+            else if (player->getHealth() <= 5) {
+                status = "It's cold...";
+            }
+            player->dialogue(window, status, 0, 20);
+
         }
         if ((e.type == SDL_EVENT_KEY_DOWN) && (e.key.key == SDLK_K) && (player->getMove() == 2) && (player->getEntityTurn() == 1)) {
             if (player->checkForCollidables(entities, 0, 0) == 1) {
@@ -97,28 +116,13 @@ void LevelTwoState::eventHandling(SDLWindow window, Game* manager)
                 manager->ChangeState(LevelThreeState::Instance());
             }
         }
-        if ((e.type == SDL_EVENT_KEY_DOWN) && (e.key.key == SDLK_RETURN))
-        {
-            std::string status;
-            if (player->getHealth() == 30) {
-                status = "I have to get out of here!";
-            }
-            else if (player->getHealth() <= 15) {
-                status = "I have to make it!!";
-
-            }
-            else if (player->getHealth() <= 5) {
-                status = "It's cold...";
-            }
-            player->dialogue(window, status, 0, 20);
-
-        }
         if ((e.type == SDL_EVENT_KEY_DOWN) && (e.key.key == SDLK_SPACE))
         {
             window.boxRender("ENDING TURN EARLY...");
             SDL_RenderPresent(window.renderer);
             SDL_Delay(500);
             player->setMove(0);
+            player->setTurn(0);
 
         }
         if (e.type == SDL_EVENT_QUIT || e.type == SDL_EVENT_KEY_DOWN && e.key.key == SDLK_ESCAPE) {
@@ -146,7 +150,7 @@ void LevelTwoState::update(Game* manager, SDLWindow window)
                 player->setAvoid(80);
             }
         }
-        if (player->getMove() <= 0) {
+        if (player->getEntityTurn() == 0) {
             //enemyturn
             player->setTurn(0);
             for (int i = 1; i < entities.size() - 1; ++i) {
@@ -241,6 +245,9 @@ void LevelTwoState::Render(SDLWindow window)
             window.boxRender("Moves left: " + std::to_string(player->getMove()));
 
         }
+    }
+    else {
+        window.boxRender("ENEMY TURN");
     }
 
     for (int i = entities.size() - 1; i >= 0; --i) {

@@ -24,11 +24,11 @@ bool TutorialState::enter()
     escape = new Entity(WINDOW_WIDTH - PLAYER_WIDTH, MAP_HEIGHT - PLAYER_HEIGHT, 0, 0, 0, 0, 0, 0, "escapetile.png", "", { WINDOW_WIDTH - PLAYER_WIDTH, MAP_HEIGHT - PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::escape);
 
     entities.push_back(player);
+    entities.push_back(enemy1);
+    entities.push_back(enemy2);
     entities.push_back(forest1);
     entities.push_back(forest2);
     entities.push_back(forest3);
-    entities.push_back(enemy1);
-    entities.push_back(enemy2);
     entities.push_back(boulder);
     entities.push_back(poison1);
     entities.push_back(poison2);
@@ -73,18 +73,20 @@ void TutorialState::eventHandling(SDLWindow window, Game* manager)
 
 void TutorialState::update(Game* manager, SDLWindow window)
 {
-    if (tutorial == 0) {
-        std::string sfxPath = "assets//mus//sfx//move.mp3";
-        MIX_Audio* sfx = MIX_LoadAudio(window.mixer, sfxPath.c_str(), false);
-        movesfx = MIX_CreateTrack(window.mixer);
-        MIX_SetTrackAudio(movesfx, sfx);
-    }
+
 }
 
 
 
 void TutorialState::Render(SDLWindow window)
 {
+    if (tutorial == 0) {
+        std::string sfxPath = "assets//mus//sfx//move.mp3";
+        MIX_Audio* sfx = MIX_LoadAudio(window.mixer, sfxPath.c_str(), false);
+        movesfx = MIX_CreateTrack(window.mixer);
+        MIX_SetTrackAudio(movesfx, sfx);
+    }
+
     SDL_RenderClear(window.renderer);
     SDL_SetRenderDrawColor(window.renderer, 0, 0, 0, 255);
     SDL_FRect mapRect = { 0, 0, WINDOW_WIDTH, MAP_HEIGHT };

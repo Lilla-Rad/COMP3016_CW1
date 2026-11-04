@@ -44,11 +44,11 @@ private:
     Entity* forest3;
     Entity* weapon;
     int check;
+    bool pickup;
     std::vector<Entity*> entities;
     MIX_Track* movesfx;
     MIX_Track* damagesfx;
     MIX_Track* killsfx;
     MIX_Track* bgm;
     SDL_PropertiesID loop;
-    //std::vector<Tile*> tiles; list of interactable tiles
 };

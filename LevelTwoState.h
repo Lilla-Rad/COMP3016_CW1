@@ -50,5 +50,4 @@ private:
     std::vector<Entity*> entities;
     MIX_Track* movesfx;
     MIX_Track* damagesfx;
-    //std::vector<Tile*> tiles; list of interactable tiles
 };

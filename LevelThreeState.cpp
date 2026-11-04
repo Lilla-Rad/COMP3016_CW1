@@ -15,7 +15,7 @@ bool LevelThreeState::enter()
     bool success = true;
 
     player = new Entity(0, MAP_HEIGHT/2, 5, 1, 35, 20, 5, 4, "celestriasprite.png", "celestriavoice.mp3", { 0, MAP_HEIGHT/2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::player);
-    enemy1 = new Entity(0, 0, 5, 0, 40, 10, 40 * DIFFICULTY, 1, "paladinsprite.png", "enemyvoice.mp3", { 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
+    enemy1 = new Entity(0, 0, 5, 0, 1, 10, 40 * DIFFICULTY, 1, "paladinsprite.png", "enemyvoice.mp3", { 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::enemy);
     poison1 = new Entity(PLAYER_WIDTH * 6, (MAP_HEIGHT / 2) + PLAYER_HEIGHT*2, 0, 0, 0, 0, 0, 0, "poisontile.png", "", { PLAYER_WIDTH * 6, (MAP_HEIGHT / 2) + PLAYER_HEIGHT * 2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::poison);
     forest1 = new Entity(PLAYER_WIDTH * 5, PLAYER_HEIGHT*2, 0, 0, 0, 0, 0, 0, "foresttile.png", "", { PLAYER_WIDTH * 5, PLAYER_HEIGHT * 2, PLAYER_WIDTH, PLAYER_HEIGHT }, ObjectType::forest);
 
@@ -50,6 +50,7 @@ bool LevelThreeState::enter()
     entities.push_back(weapon);
     entities.push_back(escape);
     check = 0;
+    pickup = false;
 
     for (int i = 0; i < entities.size(); ++i) {
         if (entities[i] == nullptr) {
@@ -74,46 +75,15 @@ void LevelThreeState::eventHandling(SDLWindow window, Game* manager)
     SDL_PumpEvents();
     SDL_Event e;
     if (SDL_PollEvent(&e)) {
+        if (player->getMove() <= 0) {
+            player->setTurn(0);
+        }
         if (e.type == SDL_EVENT_MOUSE_MOTION) {
             for (int i = 0; i < entities.size(); ++i) {
                 if (entities[i]->mouseCheck()) {
                     entities[i]->mouseHandling(window);
                 }
             }
-        }
-        if ((e.type == SDL_EVENT_KEY_DOWN) && (e.key.key == SDLK_K) && (player->getMove() == 2) && (player->getEntityTurn() == 1)) {
-            if (player->checkForCollidables(entities, 0, 0) == 1) {
-                boulder->MoveRight(entities, 10);
-                MIX_PlayTrack(movesfx, 0);
-                player->setMove(0);
-            }
-            else if (player->checkForCollidables(entities, 0, 0) == 2) {
-                player->checkForCollidables(entities, 0, 0);
-            }
-        }
-        else if (e.type == SDL_EVENT_KEY_DOWN && player->getMove() >= 0 && player->getEntityTurn() == 1) {
-            if (player->collisionCheck(player->getBounds(), escape->getBounds())) {
-                MIX_StopAllTracks(window.mixer, 0);
-                manager->ChangeState(GameWinState::Instance());
-            }
-            player->playerInput(e, entities);
-            if (e.key.key == SDLK_UP || e.key.key == SDLK_DOWN || e.key.key == SDLK_LEFT || e.key.key == SDLK_RIGHT) {
-                MIX_PlayTrack(movesfx, 0);
-                if (player->collisionCheck(player->getBounds(), weapon->getBounds())) {
-                    entities.erase(entities.end() - 2);
-                    player->setStrength(player->getStrength() + 15);
-                    window.boxRender("YOU'VE FOUND A WEAPON! ATK UP!");
-                    enemy1->setMove(6);
-                    MIX_StopAllTracks(window.mixer, 0);
-                    loop = SDL_CreateProperties();
-                    SDL_SetNumberProperty(loop, MIX_PROP_PLAY_LOOPS_NUMBER, -1);
-                    MIX_PlayTrack(bgm, loop);
-                    SDL_DestroyProperties(loop);
-                    SDL_RenderPresent(window.renderer);
-                    SDL_Delay(2000);
-                }
-            }
-
         }
         if ((e.type == SDL_EVENT_KEY_DOWN) && (e.key.key == SDLK_RETURN))
         {
@@ -136,12 +106,48 @@ void LevelThreeState::eventHandling(SDLWindow window, Game* manager)
             player->dialogue(window, status, 0, 20);
 
         }
+        if (player->collisionCheck(player->getBounds(), weapon->getBounds()) && !pickup) {
+            entities.erase(entities.end() - 2);
+            player->setStrength(player->getStrength() + 15);
+            window.boxRender("YOU'VE FOUND A WEAPON! ATK UP!");
+            enemy1->setMove(6);
+            MIX_StopAllTracks(window.mixer, 0);
+            loop = SDL_CreateProperties();
+            SDL_SetNumberProperty(loop, MIX_PROP_PLAY_LOOPS_NUMBER, -1);
+            MIX_PlayTrack(bgm, loop);
+            SDL_DestroyProperties(loop);
+            SDL_RenderPresent(window.renderer);
+            SDL_Delay(2000);
+            pickup = true;
+        }
+        if ((e.type == SDL_EVENT_KEY_DOWN) && (e.key.key == SDLK_K) && (player->getMove() == 2) && (player->getEntityTurn() == 1)) {
+            if (player->checkForCollidables(entities, 0, 0) == 1) {
+                boulder->MoveRight(entities, 10);
+                MIX_PlayTrack(movesfx, 0);
+                player->setMove(0);
+            }
+            else if (player->checkForCollidables(entities, 0, 0) == 2) {
+                player->checkForCollidables(entities, 0, 0);
+            }
+        }
+        else if (e.type == SDL_EVENT_KEY_DOWN && player->getMove() >= 0 && player->getEntityTurn() == 1) {
+            if (player->collisionCheck(player->getBounds(), escape->getBounds())) {
+                MIX_StopAllTracks(window.mixer, 0);
+                manager->ChangeState(GameWinState::Instance());
+            }
+            player->playerInput(e, entities);
+            if (e.key.key == SDLK_UP || e.key.key == SDLK_DOWN || e.key.key == SDLK_LEFT || e.key.key == SDLK_RIGHT) {
+                MIX_PlayTrack(movesfx, 0);
+            }
+
+        }
         if ((e.type == SDL_EVENT_KEY_DOWN) && (e.key.key == SDLK_SPACE))
         {
             window.boxRender("ENDING TURN EARLY...");
             SDL_RenderPresent(window.renderer);
             SDL_Delay(500);
             player->setMove(0);
+            player->setTurn(0);
 
         }
         if (e.type == SDL_EVENT_QUIT || e.type == SDL_EVENT_KEY_DOWN && e.key.key == SDLK_ESCAPE) {
@@ -170,7 +176,7 @@ void LevelThreeState::update(Game* manager, SDLWindow window)
                 player->setAvoid(80);
             }
         }
-        if (player->getMove() <= 0) {
+        if (player->getEntityTurn() == 0) {
             if (player->collisionCheck(player->getBounds(), escape->getBounds())) {
                 MIX_StopAllTracks(window.mixer, 0);
                 manager->ChangeState(GameWinState::Instance());
@@ -218,6 +224,8 @@ void LevelThreeState::update(Game* manager, SDLWindow window)
                         window.boxRender("PLAYER MANAGES TO DEAL " + std::to_string(diff2) + " TO Enemy " + std::to_string(i) + "!");
                         MIX_PlayTrack(damagesfx, 0);
                         SDL_RenderPresent(window.renderer);
+                        window.boxRender("PLAYER MANAGES TO DEAL " + std::to_string(diff2) + " TO Enemy " + std::to_string(i) + "!");
+                        SDL_RenderPresent(window.renderer);
                         SDL_Delay(2000);
                         if (entities[i]->getHealth() <= 0) {
                             window.boxRender("PLAYER MANAGES TO KILL Enemy " + std::to_string(i) + "!");
@@ -226,8 +234,8 @@ void LevelThreeState::update(Game* manager, SDLWindow window)
                             MIX_StopAllTracks(window.mixer, 0);
                             player->setAsset("celestriabloody.png");
                             window.boxRender("PLAYER MANAGES TO KILL Enemy " + std::to_string(i) + "!");
-                            MIX_PlayTrack(killsfx, 0);
                             SDL_RenderPresent(window.renderer);
+                            MIX_PlayTrack(killsfx, 0);
                             SDL_Delay(2500);
                         }
                     }
@@ -297,6 +305,9 @@ void LevelThreeState::Render(SDLWindow window)
             }
 
         }
+    }
+    else {
+        window.boxRender("ENEMY TURN");
     }
 
     for (int i = entities.size() - 1; i >= 0; --i) {
