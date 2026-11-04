@@ -31,7 +31,6 @@ private:
     Entity* enemy1;
     Entity* enemy2;
     Entity* boulder;
-    //Entity* boulder2;
     Entity* forest1;
     Entity* forest2;
     Entity* forest3;
@@ -43,5 +42,4 @@ private:
     MIX_Track* damagesfx;
     int check;
     std::vector<Entity*> entities;
-    //std::vector<Tile*> tiles; list of interactable tiles
 };
