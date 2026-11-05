@@ -60,7 +60,7 @@ public:
 	}
 	std::string getVoice() { return voice; }
 	void setVoice(std::string voi) {
-		voice == voi;
+		voice == std::move(voi);
 	}
 	SDL_Rect getBounds() { return boundaryBox; }
 	void setBounds(SDL_Rect bounds) {
