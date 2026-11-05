@@ -118,6 +118,7 @@ Moving a boulder uses up the player's entire turn, but may make safer paths acce
 During the player's turn, they may hover over any unit to view their movement radius and basic stats.
 
 <img src="https://file.garden/Zmr4jtTYzC9bqrh3/playerhover.png" width="500"><img src="https://file.garden/Zmr4jtTYzC9bqrh3/enemyhover.png" width="500">
+
 <sub>[Figs. 10&11: Hovering over the player ](https://drive.google.com/file/d/1kcWd8wI-Fcjl_XwhljBTp71jS7LD97Bw/view?usp=sharing)[vs an enemy unit](https://drive.google.com/file/d/1PMuc-qsPNGi3WhxJ9ao5K-fPQoLVUcaR/view?usp=sharing)</sub>
 
 This is implemented once again using SDL3's PollEvent() method, which, when a mouse motion event is detected, calls the Entity method mouseCheck() for each entity on the field and subsequently mouseHandling() if the cursor is detected to be hovering over an entity.
