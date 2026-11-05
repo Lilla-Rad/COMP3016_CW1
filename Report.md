@@ -25,6 +25,8 @@
 
 Extract EXECUTABLE.zip from the submitted .zip archive and run "COMP3016_CW1.exe".
 
+Use arrow keys to move and spacebar to end your turn early.
+
 ## Week 2 Proposal and Deviations
 
 ### Proposal
@@ -60,11 +62,12 @@ As no Generative AI was used, no AI Development Log can be provided.
 
 I made use of the game state programming pattern; each level is its own Game State, alongside the title screen, intro, tutorial, game over, and game win screens.
 
-<img width="578" height="307" alt="Game State class" src="https://file.garden/Zmr4jtTYzC9bqrh3/gamestate.png" />
-<sub>Fig. 3: Game State class</sub>
+<img width="578" height="300" alt="Game State class" src="https://file.garden/Zmr4jtTYzC9bqrh3/gamestate.png" />
+<sup>Fig. 3: Game State class</sup>
+<br><br>
 <img width="482" height="513" alt="image" src="https://file.garden/Zmr4jtTYzC9bqrh3/statehandling.png" />
-<sub>Fig. 4: State handling in Game class</sub>
-
+<sup>Fig. 4: State handling in Game class</sup>
+<br><br>
 The Game() class acts as a state manager, entering and exiting states and popping them off the state stack when necessary.
 
 ## Game Mechanics
@@ -74,7 +77,8 @@ The Game() class acts as a state manager, entering and exiting states and poppin
 Player movement is coded using SDL3's PollEvent() method: during a player's turn, whilst a given level state's eventHandling() is running, the player pressing the arrow keys calls the Entity class' playerInput() method, which calls the appropriate Move method as long as the player isn't attempting to move diagonally.  
 
 <img src="https://file.garden/Zmr4jtTYzC9bqrh3/moveup.png">
-<sub>Fig. 5: MoveUp() Entity method</sub>
+<sup>Fig. 5: MoveUp() Entity method</sup>  
+<br><br>
 
 Collision is checked for in every movement method, which creates a temporary copy of the entities vector from a given map (bar the entity calling the function), and runs collisionCheck() for all entities on the field that would trigger a collision (forest, poison, and the later weapon tiles are excluded from this check). This prevents the player (and enemy units) from stepping on boulder tiles or tiles containing enemies. 
 
@@ -83,22 +87,25 @@ Collision is checked for in every movement method, which creates a temporary cop
 Combat is automatically called upon collision between an enemy and player unit during an enemy's turn. It is a method of the Entity() class, and utilises the \<random\> library.
 
 <img src="https://file.garden/Zmr4jtTYzC9bqrh3/combat.png">
-<sub>Fig. 6: combat() Entity method</sub>
-
+<sup>Fig. 6: combat() Entity method</sup>
+<br><br>
 The method calculates the maximum damage the attacking unit is capable of, then randomly chooses a number between that and 1 using the Mersenne Twister 19937 generator, then does the same using the attacked unit's avoid stat as a maximum. If the randomised damage exceeds the health of the attacked unit, it will default to said unit's current health. 
 
 If the value of damage exceeds the attacked unit's randomised avoid, the hit will connect and the attacked unit will lose health corresponding to the damage value. If the attacked unit's strength exceeds 10, they are able to counter half the damage regardless of the first hit connecting. As the player is incapable of initiating a combat encounter, this is the only way they can deal damage during later levels. 
 
 ### Terrain Interactions
 
-Terrain interactions are implemented depending on the type of tile; Forest and Poison tiles affect the player at the end of their turn during a given level state's Update() method, whilst Boulder tiles can only be interacted with if the player is adjacent to one at the start of their turn.
+Terrain interactions are implemented based on the type of tile; Forest and Poison tiles affect the player at the end of their turn during a given level state's Update() method, while Boulder tiles can only be interacted with if the player is adjacent to one at the start of their turn.
 
 <img src="https://file.garden/Zmr4jtTYzC9bqrh3/Screenshot%202026-11-05%20145456.png">
-<sub>Fig. 7: Game State class</sub>
+<sup>Fig. 7: Forest tile collision check in Update()</sup>
+<br><br>
 <img src="https://file.garden/Zmr4jtTYzC9bqrh3/Screenshot%202026-11-05%20144850.png">
-<sub>Fig. 3: Game State class</sub>
+<sup>Fig. 8: Poison tile collision check in Update()</sup>
+<br><br>
 <img src="https://file.garden/Zmr4jtTYzC9bqrh3/Screenshot%202026-11-05%20144757.png">
-<sub>Fig. 3: Game State class</sub>
+<sup>Fig. 9: Boulder tile movement during eventHandling()</sup>
+<br><br>
 
 Moving a boulder uses up the player's entire turn, but may make safer paths accessible.
 
@@ -107,49 +114,102 @@ Moving a boulder uses up the player's entire turn, but may make safer paths acce
 During the player's turn, they may hover over any unit to view their movement radius and basic stats.
 
 <img src="https://file.garden/Zmr4jtTYzC9bqrh3/playerhover.png" width="500"><img src="https://file.garden/Zmr4jtTYzC9bqrh3/enemyhover.png" width="500">
+<sub>[Figs. 10&11: Hovering over the player ](https://drive.google.com/file/d/1kcWd8wI-Fcjl_XwhljBTp71jS7LD97Bw/view?usp=sharing)[vs an enemy unit](https://drive.google.com/file/d/1PMuc-qsPNGi3WhxJ9ao5K-fPQoLVUcaR/view?usp=sharing)</sub>
 
 This is implemented once again using SDL3's PollEvent() method, which, when a mouse motion event is detected, calls the Entity method mouseCheck() for each entity on the field and subsequently mouseHandling() if the cursor is detected to be hovering over an entity.
 
 <img src="https://file.garden/Zmr4jtTYzC9bqrh3/mousemovementevent.png">
-
+<sup>Fig. 12: Mouse motion event handling in eventHandling()</sup>
+<br><br>
 <img src="https://file.garden/Zmr4jtTYzC9bqrh3/mousecheck.png">
-
+<sup>Fig. 13: mouseCheck() Entity method</sup>
+<br><br>
 PollEvent() is also used to detect if the player has pressed the space bar, which ends their turn early. 
 
 <img src="https://file.garden/Zmr4jtTYzC9bqrh3/endturnearly.png">
-
+<sup>Fig. 14: Spacebar key press handling in eventHandling()</sup>
+<br><br>
 Furthermore, they may press enter at any point during their turn to get a short message from the player character indicating her status, based on her health. 
 
 <img src="https://file.garden/Zmr4jtTYzC9bqrh3/playermessage.png">
-
+<sup>Fig. 15: Enter/Return key press handling in eventHandling()</sup>
+<br><br>
 This makes use of the Entity method dialogue(), which is also used for segments such as the game's introduction and tutorial states. 
 
 <img src="https://file.garden/Zmr4jtTYzC9bqrh3/Screenshot%202026-11-05%20072152.png">
+<sup>Fig. 16: dialogue() Entity method</sup>
+<br><br>
 
 dialogue() takes in the window, the dialogue to display, the position of the text (above or below the entity), and the speed at which that text should be displayed. It then checks the entity's ObjectType to determine the text's colour, and uses the position of the given entity and the length of their dialogue to ensure that the text won't be rendered outside of the window. It then iterates through the length of the given string, rendering it and playing the given entity's "voice" a character at a time. Text is created using SDL3's RenderDebugText.
 
 ## UML
 ![Final UML](https://file.garden/Zmr4jtTYzC9bqrh3/COMP3016%20CW1.jpg)
-<sub>[Fig. : Final UML for CW1](https://drive.google.com/file/d/1om6vWiERGeggQiyY3hICtm3T1GOsEaKp/view?usp=sharing)</sub>
+<sub>[Fig. 17: Final UML for CW1](https://drive.google.com/file/d/1om6vWiERGeggQiyY3hICtm3T1GOsEaKp/view?usp=sharing)</sub>
 
 ## Sample Screens
 
+![Intro State](https://file.garden/Zmr4jtTYzC9bqrh3/Screenshot%202026-11-05%20100242.png)
+
+<sup>[Fig. 18: Intro State](https://drive.google.com/file/d/1OLv_DDRjOf44TA5iO89_jYV4LU3jMRPg/view?usp=sharing)</sup>
+
+![Tutorial State](https://file.garden/Zmr4jtTYzC9bqrh3/Screenshot%202026-11-05%20100443.png)
+
+<sup>[Fig. 19: Tutorial State](https://drive.google.com/file/d/1qhskmSFypp_ogBClcTtrcKu9P8nF21GY/view?usp=sharing)</sup>
+
+![Moving a boulder](https://file.garden/Zmr4jtTYzC9bqrh3/Screenshot%202026-11-05%20100543.png)
+
+<sup>[Fig. 20: Moving a boulder](https://drive.google.com/file/d/1n4iWWtqYEJIwyplqBjHPkzgdjfnLSYVi/view?usp=sharing)</sup>
+
+![Level 2](https://file.garden/Zmr4jtTYzC9bqrh3/Screenshot%202026-11-05%20100614.png)
+
+<sup>[Fig. 21: Level 2](https://drive.google.com/file/d/1l3fMuTI1QLe3iSeadOJlm6MgXteMHfP3/view?usp=sharing)</sup>
+
+![Taking poison damage](https://file.garden/Zmr4jtTYzC9bqrh3/Screenshot%202026-11-05%20100709.png)
+
+<sup>[Fig. 22: Taking poison damage](https://drive.google.com/file/d/1Btg1b4kvYhuG4Jhfz8EewEKLt9VzXzXZ/view?usp=sharing)</sup>
+
+![Weapon pickup](https://file.garden/Zmr4jtTYzC9bqrh3/Screenshot%202026-11-05%20100720.png)
+
+<sup>[Fig. 23: Picking up a weapon](https://drive.google.com/file/d/1i2VJ2HEo-I_8Av6sWBGYobgOEqmFjvEB/view?usp=sharing)</sup>
+
+![Paladin enemy](https://file.garden/Zmr4jtTYzC9bqrh3/Screenshot%202026-11-05%20100811.png)
+
+<sup>[Fig. 24: Checking an enemy on the third level](https://drive.google.com/file/d/1_JapgyJU9hb-ch6dipTDT5PfYs2t94ow/view?usp=sharing)</sup>
+
+![Taking damage](https://file.garden/Zmr4jtTYzC9bqrh3/Screenshot%202026-11-05%20100739.png)
+
+<sup>[Fig. 25: Taking damage](https://drive.google.com/file/d/1n7sbe6Be4rhTxhRiZ1rFdL1_ozsdeGtV/view?usp=sharing)</sup>
+
+![Retaliating](https://file.garden/Zmr4jtTYzC9bqrh3/Screenshot%202026-11-05%20100749.png)
+
+<sup>[Fig. 26: Countering an enemy attack](https://drive.google.com/file/d/1kiVPUBV_54QtCj1iKSvkXb8vTwIiQVxf/view?usp=sharing)</sup>
+
+![Murdering an enemy](https://file.garden/Zmr4jtTYzC9bqrh3/Screenshot%202026-11-05%20185132.png)
+
+<sup>[Fig. 27: The aftermath of killing an enemy](https://drive.google.com/file/d/1f75Iv7LXSDp0ZREvGpQGn6GgjpSgAww0/view?usp=sharing)</sup>
 
 ## Exception Handling and Test Cases
 
 An instance of SDLWindow cannot be created unless SDL initialises successfully.
 
 <img src="https://file.garden/Zmr4jtTYzC9bqrh3/Screenshot%202026-11-05%20072152.png">
-
+<sup>Fig. 28: SDLWindow SDL initialisation checks</sup>
+<br><br>
 <img src="https://file.garden/Zmr4jtTYzC9bqrh3/Screenshot%202026-11-05%20090726.png">
+<sup>Fig. 29: SDLWindow constructor</sup>
+<br><br>
 
 Furthermore, each call of the SDLWindow method renderTextureFromFile(), the main method used to render image assets, checks if the file can actually be loaded and converted into a texture before rendering. 
 
 <img src="https://file.garden/Zmr4jtTYzC9bqrh3/Screenshot%202026-11-05%20085942.png">
+<sup>Fig. 30: renderTextureFromFile tests</sup>
+<br><br>
 
 Additionally, a level state cannot be entered unless all entities are successfully created. 
 
 <img src="https://file.garden/Zmr4jtTYzC9bqrh3/Screenshot%202026-11-05%20090026.png">
+<sup>Fig. 31: Level state enter() tests</sup>
+<br><br>
 
 ## Playtesting
 
