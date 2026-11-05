@@ -1,14 +1,19 @@
 ## Table of contents
 
-- [Week 2 Proposal and Deviations](https://github.com/Lilla-Rad/COMP3016_CW1/edit/master/Report.md#week-2-proposal-and-deviations)
-- [Gameplay Description](https://github.com/Lilla-Rad/COMP3016_CW1/edit/master/Report.md#gameplay-description)
-- [Game Programming Patterns Used](https://github.com/Lilla-Rad/COMP3016_CW1/edit/master/Report.md#game-programming-patterns-used)
-- [Game Mechanics](https://github.com/Lilla-Rad/COMP3016_CW1/edit/master/Report.md#game-mechanics)
-- [UML]()
-- [Sample Screens]()
-- [Exception Handling and Test Cases](https://github.com/Lilla-Rad/COMP3016_CW1/edit/master/Report.md#exception-handling-and-test-cases)
-- [Playtesting]()
-- [Evaluation]()
+- [Week 2 Proposal and Deviations](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#week-2-proposal-and-deviations)
+- [Gameplay Description](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#gameplay-description)
+- [Game Programming Patterns Used](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#game-programming-patterns-used)
+- [Game Mechanics](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#game-mechanics)
+-   [Unit Movement](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#unit-movement)
+-   [Combat](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#combat)
+-   [Terrain Interactions](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#terrain-interactions)
+- [UML](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#uml)
+- [Sample Screens](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#sample-screens)
+- [Exception Handling and Test Cases](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#exception-handling-and-test-cases)
+- [Playtesting](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#playtesting)
+-   [Evidence](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#evidence)
+-   [Reflection](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#reflection)
+- [Evaluation](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#evaluation)
 
 ## Week 2 Proposal and Deviations:
 
@@ -32,11 +37,11 @@ The Game() class acts as a state manager, entering and exiting states and poppin
 
 ## Game Mechanics:
 
-### - Unit Movement
+### Unit Movement
 
 Player movement is coded using 
 
-### - Combat
+### Combat
 
 Combat is automatically triggered upon collision during an enemy's turn. It is a method of the Entity() class, and utilises the <random> library.
 
@@ -48,7 +53,7 @@ The method calculates the maximum damage the attacking unit is capable of, then 
 
 Collision is checked for in every movement method, which creates a temporary copy of the entities vector from a given map (bar the entity calling the function), and runs collisionCheck() for all entities on the field that would trigger a collision (forest, poison, and the later weapon tiles are excluded from this check).
 
-### - Terrain Interactions
+### Terrain Interactions
 
 Terrain interactions are 
 
