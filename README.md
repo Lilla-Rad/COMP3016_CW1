@@ -35,6 +35,7 @@ Use arrow keys to move and spacebar to end your turn early.
 ### Proposal
 
 <img src="https://file.garden/Zmr4jtTYzC9bqrh3/mockup.png" width="500"><img src="https://file.garden/Zmr4jtTYzC9bqrh3/Screenshot%202026-11-05%20055934.png" width="500">
+
 <sub>[Figs. 1&2: Mockup of a level from CW1 Proposal ](https://drive.google.com/file/d/1JqN8MFLXlnTU6tZYKFf4WPcNgiQDrppa/view?usp=sharing)[vs a screenshot from first level of implementation](https://drive.google.com/file/d/1nadpsVe3x1rwFJJ2YCq8OREQbdgiBOIs/view?usp=sharing)</sub>
 
 My [CW1 Proposal](https://drive.google.com/file/d/1yix2X3n0gmWpXFAH5X0q1YIfyuHmA-Xx/view?usp=sharing) was for a turn-based tactical RPG with preset levels and puzzle elements. The implementation matches this description. Turn-based combat, use of multiple routes  to complete levels, and terrain interactions have all been implemented; the player's health also increases as they progress, and eventually they gain the ability to fight back (see [Combat](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#combat)). 
