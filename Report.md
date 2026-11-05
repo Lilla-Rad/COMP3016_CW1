@@ -119,16 +119,24 @@ dialogue() takes in the window, the dialogue to display, the position of the tex
 ## Sample Screens
 
 
-## Exception Handling and Test Cases:
+## Exception Handling and Test Cases
 
 An instance of SDLWindow cannot be created unless SDL initialises successfully.
 
 <img width="752" height="728" alt="image" src="https://github.com/user-attachments/assets/3442f222-dba4-4dcf-9f04-0c1d78e1b503" />
 
+<img width="445" height="105" alt="image" src="https://github.com/user-attachments/assets/e3ae3f47-2e7c-4020-822f-1d49a45942f2" />
+
+Furthermore, each call of the SDLWindow method renderTextureFromFile(), the main method used to render image assets, checks if the file can actually be loaded and converted into a texture before rendering. 
+
+<img width="817" height="243" alt="image" src="https://github.com/user-attachments/assets/3c589303-0954-4119-995a-b3fb242a282c" />
+
+Additionally, a level state cannot be entered unless all entities are successfully created. 
+
+<img width="395" height="126" alt="image" src="https://github.com/user-attachments/assets/b21ca918-a508-4517-bcfb-c63ed26c611e" />
+
 
 ## Playtesting
-
-
 
 ### Evidence
 
@@ -147,7 +155,7 @@ Playtesting gave a stronger insight into a player's first instincts: many player
 
 <img width="987" height="243" alt="image" src="https://github.com/user-attachments/assets/7c5557b7-3d9e-4164-a330-05b95a0377e5" />
 
-The final build of the game thus achieves a happy medium, allowing for accidental key spamming whilst ensuring that the player character is rendered on the correct tile.
+The final build of the game thus achieves a "happy medium", allowing for accidental key spamming whilst ensuring that the player character is rendered on the correct tile.
 
 
 Furthermore, playtesters were confused or frustrated by lack of proper instructions, and sometimes had to be guided through the experience; to mitigate this, hovering over certain tiles in the final game gives the player more information about their functionality.
