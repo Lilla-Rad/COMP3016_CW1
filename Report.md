@@ -11,6 +11,7 @@
   - [Unit Movement](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#unit-movement)
   - [Combat](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#combat)
   - [Terrain Interactions](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#terrain-interactions)
+  - [Mouse Handling and Miscellaneous Player Input](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#mouse-handling-and-miscellaneous-player-input)
 - [UML](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#uml)
 - [Sample Screens](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#sample-screens)
 - [Exception Handling and Test Cases](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#exception-handling-and-test-cases)
@@ -19,7 +20,7 @@
   - [Reflection](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#reflection)
 - [Evaluation](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#evaluation)
 
-## Week 2 Proposal and Deviations:
+## Week 2 Proposal and Deviations
 
 ### Proposal
 
@@ -34,7 +35,7 @@ Core functionality is achieved through C++ and SDL3 as proposed. As proposed, no
 
 Although the proposed UML made use of playerTurnState and enemyTurnState, each level already possessing a vector of all entities on the map made it more straightforward to simply make "takeTurn()" a method of the Entity class, and to move necessary input handling for a player's turn into each level's eventHandling() method. Entity was also used to instantiate interactable tiles instead of making them subclasses of a separate Tile class to allow for straightforward collision handling. The enum class ObjectType was instead used to differentiate between different "types" of tiles and entities. 
 
-## Gameplay Description:
+## Gameplay Description
 
 The player uses the arrow keys to move across a map towards the exit whilst evading the pursuing enemy units. During the enemy's turn, an enemy unit may collide with and attack the player, at which point they will lose health, risking a game over. To mitigate this, the player is able to trigger terrain interactions by standing on or interacting with specific tile types; for example, the player is able to push a boulder out of the way during the first level in order to gain access to the exit tile. This uses all of the player's movement points for a turn, but is a safer alternative to stepping on the poison tiles that surround the first level's exit otherwise. 
 
@@ -50,7 +51,7 @@ No Generative AI was used in this project, as proposed.
 
 As no Generative AI was used, no AI Development Log can be provided.
 
-## Game Programming Patterns Used:
+## Game Programming Patterns Used
 
 I made use of the game state programming pattern; each level is its own Game State, alongside the title screen, intro, tutorial, game over, and game win screens.
 
@@ -58,7 +59,7 @@ I made use of the game state programming pattern; each level is its own Game Sta
 
 The Game() class acts as a state manager, entering and exiting states and popping them off the state stack when necessary.
 
-## Game Mechanics:
+## Game Mechanics
 
 ### Unit Movement
 
@@ -111,11 +112,11 @@ This makes use of the Entity method dialogue(), which is also used for segments 
 
 dialogue() takes in the window, the dialogue to display, the position of the text (above or below the entity), and the speed at which that text should be displayed. It then checks the entity's ObjectType to determine the text's colour, and uses the position of the given entity and the length of their dialogue to ensure that the text won't be rendered outside of the window. It then iterates through the length of the given string, rendering it and playing the given entity's "voice" a character at a time. Text is created using SDL3's RenderDebugText.
 
-## UML:
+## UML
 ![Final UML](https://file.garden/Zmr4jtTYzC9bqrh3/COMP3016%20CW1.jpg)
 <sub>[Fig. : Final UML for CW1](https://drive.google.com/file/d/1om6vWiERGeggQiyY3hICtm3T1GOsEaKp/view?usp=sharing)</sub>
 
-## Sample Screens:
+## Sample Screens
 
 
 ## Exception Handling and Test Cases:
@@ -125,11 +126,11 @@ An instance of SDLWindow cannot be created unless SDL initialises successfully.
 <img width="752" height="728" alt="image" src="https://github.com/user-attachments/assets/3442f222-dba4-4dcf-9f04-0c1d78e1b503" />
 
 
-## Playtesting:
+## Playtesting
 
 
 
-### Evidence:
+### Evidence
 
 Playtesting was carried out periodically throughout various stages of development, spanning from 29/10/2026 to 03/11/2026. There were 7 playtesters in total, all of whom gave feedback via a Playtester Form which prompted them to test various game mechanics and identify issues in the process. 
 
@@ -138,7 +139,7 @@ Playtesting was carried out periodically throughout various stages of developmen
 <img src="https://file.garden/Zmr4jtTYzC9bqrh3/10863317%20COMP3016%20CW1%20PLAYTESTER%20FORM-3.png">
 
 
-### Reflection:
+### Reflection
 
 Playtesters comprised friends, family, and university staff, all of whom had varying degrees of experience with strategy RPGs and puzzle games (for example, one playtester was an avid fan of the tactical RPG series <i>Fire Emblem</i>, whereas others were less/unfamiliar with the genre). 
 
@@ -181,6 +182,6 @@ In response to this, the final game's information box uses a plain grey texture 
 
 
 
-## Evaluation:
+## Evaluation
 
 Had I the time, I would've liked to include a settings menu and proper scaling for different resolutions, alongside more robust combat; furthermore, I would've liked to implement map scrolling and different map types to give the terrain more variety, thus allowing for further variation in level completion strategy. I would've also liked to lean into the puzzle aspect of the game more. Finally, although the font used by SDL3's Debug Text fits the aesthetic of my implementation, I would've liked to implement an external font using SDL3.tff had I the time. 
