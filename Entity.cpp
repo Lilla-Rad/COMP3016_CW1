@@ -382,11 +382,6 @@ void Entity::MoveRight(std::vector<Entity*> entities, int position) {
 
 }
 
-void Entity::Die() {
-	if (getHealth() <= 0) {
-
-	}
-}
 
 bool Entity::mouseCheck() {
 	float mouseX = -1.f, mouseY = -1.f;

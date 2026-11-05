@@ -22,7 +22,6 @@ public:
 	bool mouseCheck();
 	void mouseHandling(SDLWindow window);
 	void dialogue(SDLWindow window, std::string speech, bool pos, int delay);
-	void Die();
 	int getX() const { return x; }
 	void setX(int xcoord) {
 		x = xcoord;
