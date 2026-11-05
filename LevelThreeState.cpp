@@ -125,6 +125,7 @@ void LevelThreeState::eventHandling(SDLWindow window, Game* manager)
                 boulder->MoveRight(entities, 10);
                 MIX_PlayTrack(movesfx, 0);
                 player->setMove(0);
+                player->setTurn(0);
             }
             else if (player->checkForCollidables(entities, 0, 0) == 2) {
                 player->checkForCollidables(entities, 0, 0);
