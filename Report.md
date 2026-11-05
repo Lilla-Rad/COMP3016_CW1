@@ -20,6 +20,9 @@
   - [Evidence](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#evidence)
   - [Reflection](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#reflection)
 - [Evaluation](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#evaluation)
+- [Appendices](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#appendices)
+  - [Appendix A](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#appendix-a)
+  - [Appendix B](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#appendix-b)
 
 ## HOW TO RUN GAME
 
@@ -202,14 +205,13 @@ An instance of SDLWindow cannot be created unless SDL initialises successfully.
 Furthermore, each call of the SDLWindow method renderTextureFromFile(), the main method used to render image assets, checks if the file can actually be loaded and converted into a texture before rendering. 
 
 <img src="https://file.garden/Zmr4jtTYzC9bqrh3/Screenshot%202026-11-05%20085942.png">
-<sup>Fig. 30: renderTextureFromFile tests</sup>
+<sup>Fig. 30: renderTextureFromFile() tests</sup>
 <br><br>
 
 Additionally, a level state cannot be entered unless all entities are successfully created. 
 
 <img src="https://file.garden/Zmr4jtTYzC9bqrh3/Screenshot%202026-11-05%20090026.png">
 <sup>Fig. 31: Level state enter() tests</sup>
-<br><br>
 
 ## Playtesting
 
@@ -221,6 +223,7 @@ Playtesting was carried out periodically throughout various stages of developmen
 
 <img src="https://file.garden/Zmr4jtTYzC9bqrh3/10863317%20COMP3016%20CW1%20PLAYTESTER%20FORM-3.png">
 
+<sup>[Fig. 32: Playtester form](https://drive.google.com/file/d/1WZk42o93CK3cg2fT9d2y_yR-jzcJ2QPT/view?usp=sharing)</sup>
 
 ### Reflection
 
@@ -228,43 +231,85 @@ Playtesters comprised friends, family, and university staff, all of whom had var
 
 Playtesting gave a stronger insight into a player's first instincts: many players would accidentally hit keys twice or spam movement keys in a panic. In earlier builds of the game, before SDL_PumpEvents() and SDL_FlushEvents() were implemented into a game state's eventHandling() and Update() functions respectively, this would cause issues in the event queue, skipping player turns indefinitely if space was pressed more than once and causing rendering errors. The latter was remedied via moving the enemy turn into the Update() function, however this caused its own issues: for example, a later playtester complained about the player sprite not being rerendered on the last tile they moved to until the beginning of the player's next turn.
 
-<img width="987" height="243" alt="image" src="https://github.com/user-attachments/assets/7c5557b7-3d9e-4164-a330-05b95a0377e5" />
+<img src="https://file.garden/Zmr4jtTYzC9bqrh3/tester7.png">
+
+<sup>[Fig. 33: Playtester 7 response](https://docs.google.com/spreadsheets/d/1HPJTjVKhtQPvPDYfWWxkHu493J-TqYHQ9LSlFVBgvII/edit?usp=sharing)
 
 The final build of the game thus achieves a "happy medium", allowing for accidental key spamming whilst ensuring that the player character is rendered on the correct tile.
+
+<img src="https://file.garden/Zmr4jtTYzC9bqrh3/Screenshot%202026-11-05%20193502.png">
+
+<sup>[Fig. 34: Commit addressing playtester 7's response](https://github.com/Lilla-Rad/COMP3016_CW1/commit/34ba077a1a290ff9739be3a03388006937351d8f)
 
 
 Furthermore, playtesters were confused or frustrated by lack of proper instructions, and sometimes had to be guided through the experience; to mitigate this, hovering over certain tiles in the final game gives the player more information about their functionality.
 
-<img width="980" height="277" alt="image" src="https://github.com/user-attachments/assets/4b1fddb7-d80a-469a-86b9-686862139cd4" />
+<img src="https://file.garden/Zmr4jtTYzC9bqrh3/tester5.png">
 
-<img width="335" height="43" alt="image" src="https://github.com/user-attachments/assets/6fc665fa-a21a-4fcd-8a53-7fbf01986974" />
+<sup>[Fig. 35: Playtester 5 response](https://docs.google.com/spreadsheets/d/1HPJTjVKhtQPvPDYfWWxkHu493J-TqYHQ9LSlFVBgvII/edit?usp=sharing)
+
+<img src="https://file.garden/Zmr4jtTYzC9bqrh3/tester6a.png">
+
+<sup>[Fig. 36: Part of playtester 6's response](https://docs.google.com/spreadsheets/d/1HPJTjVKhtQPvPDYfWWxkHu493J-TqYHQ9LSlFVBgvII/edit?usp=sharing)
+
 
 Game balance also became a point of contention: although combat is not meant to be particularly survivable for the player character, some playtesters were understandably frustrated by its heavy favouring of enemy units. 
 
-<img width="995" height="260" alt="image" src="https://github.com/user-attachments/assets/fe10749a-9c71-4968-8d71-65268d0fce59" />
+<img src="https://file.garden/Zmr4jtTYzC9bqrh3/tester1a.png">
+
+<sup>[Fig. 37: Playtester 1's second response](https://docs.google.com/spreadsheets/d/1HPJTjVKhtQPvPDYfWWxkHu493J-TqYHQ9LSlFVBgvII/edit?usp=sharing)
+
 
 Conversely, some players felt that the game lacked real challenge in spite of this.
 
-<img width="903" height="111" alt="image" src="https://github.com/user-attachments/assets/d5943afa-363b-4e36-afa2-c2b24e519e0b" />
+<img src="https://file.garden/Zmr4jtTYzC9bqrh3/tester6b.png">
 
+<img src="https://file.garden/Zmr4jtTYzC9bqrh3/tester6c.png">
 
-<img width="922" height="65" alt="image" src="https://github.com/user-attachments/assets/8d22e3a5-bf93-4784-aeed-d490ab417be7" />
+<sup>[Figs. 38&39: Parts of playtester 6's response](https://docs.google.com/spreadsheets/d/1HPJTjVKhtQPvPDYfWWxkHu493J-TqYHQ9LSlFVBgvII/edit?usp=sharing)
 
 This was ultimately balanced not by tweaking the combat mechanic or reducing the amount of damage the player takes, but by changing the movement radius and starting position of the enemies, giving the player a better chance of escape whilst retaining the danger and tension of a combat encounter. takeTurn() was also adjusted to give enemy units a 25% chance of moving away from the player if they are on an adjacent tile, preventing them from permanently blocking off a player's escape route. 
 
 Additionally, testers complained about the initial texture used for the information box on the bottom of the screen. 
 
-<img width="671" height="422" alt="image" src="https://github.com/user-attachments/assets/62053edd-d94c-4f97-af37-06a78e45f1f3" />
+<img src="https://file.garden/Zmr4jtTYzC9bqrh3/beta.png">
 
-<img width="983" height="227" alt="image" src="https://github.com/user-attachments/assets/b43b88ae-7323-48e2-8386-de4715355173" />
+<sup>[Figs. 40: Screenshot of a beta version using placeholder assets](https://drive.google.com/file/d/1Mqh01mdMrb2mQp5bvaZzo9VRVULjWi3K/view?usp=sharing)
+
+<img src="https://file.garden/Zmr4jtTYzC9bqrh3/tester3.png">
+
+<sup>[Fig. 41: Playtester 3's response](https://docs.google.com/spreadsheets/d/1HPJTjVKhtQPvPDYfWWxkHu493J-TqYHQ9LSlFVBgvII/edit?usp=sharing)
 
 In response to this, the final game's information box uses a plain grey texture for the sake of readability. 
 
-<img width="672" height="428" alt="image" src="https://github.com/user-attachments/assets/a7077eb2-1b3f-4e53-ba52-55157c53f8ef" />
+<img src="https://file.garden/Zmr4jtTYzC9bqrh3/Screenshot%202026-11-05%20055934.png">
 
-
-
+<sup>[Fig. 42: Final game's improved information box](https://drive.google.com/file/d/1nadpsVe3x1rwFJJ2YCq8OREQbdgiBOIs/view?usp=sharing)
 
 ## Evaluation
 
-Had I the time, I would've liked to include a settings menu and proper scaling for different resolutions, alongside more robust combat; furthermore, I would've liked to implement map scrolling and different map types to give the terrain more variety, thus allowing for further variation in level completion strategy. I would've also liked to lean into the puzzle aspect of the game more. Finally, although the font used by SDL3's Debug Text fits the aesthetic of my implementation, I would've liked to implement an external font using SDL3.tff. 
+Although I have implemented all proposed features, and have even built on intended mechanics, I believe there is room for improvement as far the optimisation and exception handling of the game is concerned. Further, had I the time, I would've liked to include a settings menu and proper scaling for different resolutions, alongside more robust combat. I would've also liked to implement map scrolling and different map types to give the terrain more variety, thus allowing for further variation in level completion strategy; to that end, I would've liked to lean into the puzzle aspect of the game more. Finally, although the font used by SDL3's Debug Text fits the aesthetic of my implementation, I would've liked to implement an external font using SDL3.tff.
+
+## Appendices
+
+### Appendix A
+
+Figure A1
+
+Playtester Form Responses 
+
+<img src="https://file.garden/Zmr4jtTYzC9bqrh3/Screenshot%202026-11-05%20200242.png">
+
+[Playtester Form Response Spreadsheet](https://docs.google.com/spreadsheets/d/1HPJTjVKhtQPvPDYfWWxkHu493J-TqYHQ9LSlFVBgvII/edit?usp=sharing)
+
+END OF Appendix A
+
+### Appendix B
+
+<img src="https://file.garden/Zmr4jtTYzC9bqrh3/Student%20Declaration%20of%20AI%20Tool%20use%20in%20this%20Assessment-1.png">
+
+<img src="https://file.garden/Zmr4jtTYzC9bqrh3/Student%20Declaration%20of%20AI%20Tool%20use%20in%20this%20Assessment-2.png">
+
+[Student Declaration of AI Tool use in this Assessment](https://drive.google.com/file/d/1q_s5xwI6qdZqoAYJDGdLcRwwxEytE8uX/view?usp=sharing)
+
+END OF Appendix B
