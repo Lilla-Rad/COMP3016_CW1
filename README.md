@@ -1,6 +1,7 @@
 ## Table of contents
 
 - [HOW TO RUN GAME](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#how-to-run-game)
+- [VIDEO LINK](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#video-link)
 - [Week 2 Proposal and Deviations](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#week-2-proposal-and-deviations)
   - [Proposal](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#proposal)
   - [Deviations](https://github.com/Lilla-Rad/COMP3016_CW1/blob/master/Report.md#deviations)
@@ -29,6 +30,10 @@
 Extract EXECUTABLE.zip from the submitted .zip archive and run "COMP3016_CW1.exe".
 
 Use arrow keys to move and spacebar to end your turn early.
+
+## VIDEO LINK
+
+[YouTube Upload of Demo](https://youtu.be/uREQR8CW4Hk)
 
 ## Week 2 Proposal and Deviations
 
