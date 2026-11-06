@@ -33,7 +33,7 @@ Use arrow keys to move and spacebar to end your turn early.
 
 ## VIDEO LINK
 
-[YouTube Upload of Demo](https://youtu.be/RWV8UCstXdM)
+[YouTube Upload of Demo](https://youtu.be/uREQR8CW4Hk)
 
 ## Week 2 Proposal and Deviations
 
