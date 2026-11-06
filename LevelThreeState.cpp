@@ -73,86 +73,91 @@ bool LevelThreeState::exit()
 void LevelThreeState::eventHandling(SDLWindow window, Game* manager)
 { 
     SDL_PumpEvents();
-    SDL_Event e;
-    if (SDL_PollEvent(&e)) {
-        if (player->getMove() <= 0) {
-            player->setTurn(0);
-        }
-        if (e.type == SDL_EVENT_MOUSE_MOTION) {
-            for (int i = 0; i < entities.size(); ++i) {
-                if (entities[i]->mouseCheck()) {
-                    entities[i]->mouseHandling(window);
-                }
-            }
-        }
-        if ((e.type == SDL_EVENT_KEY_DOWN) && (e.key.key == SDLK_RETURN))
-        {
-            std::string status;
-            if (player->getAsset() == "celestriabloody.png") {
-                status = "...";
-            }
-            else {
-                if (player->getHealth() == 35) {
-                    status = "I can do this!!";
-                }
-                else if (player->getHealth() <= 17) {
-                    status = "I can do this.";
-
-                }
-                else if (player->getHealth() <= 5) {
-                    status = "It's cold...";
-                }
-            }
-            player->dialogue(window, status, 0, 20);
-
-        }
-        if (player->collisionCheck(player->getBounds(), weapon->getBounds()) && !pickup) {
-            entities.erase(entities.end() - 2);
-            player->setStrength(player->getStrength() + 15);
-            window.boxRender("YOU'VE FOUND A WEAPON! ATK UP!");
-            enemy1->setMove(6);
-            MIX_StopAllTracks(window.mixer, 0);
-            loop = SDL_CreateProperties();
-            SDL_SetNumberProperty(loop, MIX_PROP_PLAY_LOOPS_NUMBER, -1);
-            MIX_PlayTrack(bgm, loop);
-            SDL_DestroyProperties(loop);
-            SDL_RenderPresent(window.renderer);
-            SDL_Delay(2000);
-            pickup = true;
-        }
-        if ((e.type == SDL_EVENT_KEY_DOWN) && (e.key.key == SDLK_K) && (player->getMove() == 2) && (player->getEntityTurn() == 1)) {
-            if (player->checkForCollidables(entities, 0, 0) == 1) {
-                boulder->MoveRight(entities, 10);
-                MIX_PlayTrack(movesfx, 0);
-                player->setMove(0);
+    if (player->getEntityTurn() == 0) {
+        update(manager, window);
+    }
+    else {
+        SDL_Event e;
+        if (SDL_PollEvent(&e)) {
+            if (player->getMove() <= 0) {
                 player->setTurn(0);
             }
-            else if (player->checkForCollidables(entities, 0, 0) == 2) {
-                player->checkForCollidables(entities, 0, 0);
+            if (e.type == SDL_EVENT_MOUSE_MOTION) {
+                for (int i = 0; i < entities.size(); ++i) {
+                    if (entities[i]->mouseCheck()) {
+                        entities[i]->mouseHandling(window);
+                    }
+                }
             }
-        }
-        else if (e.type == SDL_EVENT_KEY_DOWN && player->getMove() >= 0 && player->getEntityTurn() == 1) {
-            if (player->collisionCheck(player->getBounds(), escape->getBounds())) {
+            if ((e.type == SDL_EVENT_KEY_DOWN) && (e.key.key == SDLK_RETURN))
+            {
+                std::string status;
+                if (player->getAsset() == "celestriabloody.png") {
+                    status = "...";
+                }
+                else {
+                    if (player->getHealth() == 35) {
+                        status = "I can do this!!";
+                    }
+                    else if (player->getHealth() <= 17) {
+                        status = "I can do this.";
+
+                    }
+                    else if (player->getHealth() <= 5) {
+                        status = "It's cold...";
+                    }
+                }
+                player->dialogue(window, status, 0, 20);
+
+            }
+            if (player->collisionCheck(player->getBounds(), weapon->getBounds()) && !pickup) {
+                entities.erase(entities.end() - 2);
+                player->setStrength(player->getStrength() + 15);
+                window.boxRender("YOU'VE FOUND A WEAPON! ATK UP!");
+                enemy1->setMove(6);
                 MIX_StopAllTracks(window.mixer, 0);
-                manager->ChangeState(GameWinState::Instance());
+                loop = SDL_CreateProperties();
+                SDL_SetNumberProperty(loop, MIX_PROP_PLAY_LOOPS_NUMBER, -1);
+                MIX_PlayTrack(bgm, loop);
+                SDL_DestroyProperties(loop);
+                SDL_RenderPresent(window.renderer);
+                SDL_Delay(2000);
+                pickup = true;
             }
-            player->playerInput(e, entities);
-            if (e.key.key == SDLK_UP || e.key.key == SDLK_DOWN || e.key.key == SDLK_LEFT || e.key.key == SDLK_RIGHT) {
-                MIX_PlayTrack(movesfx, 0);
+            if ((e.type == SDL_EVENT_KEY_DOWN) && (e.key.key == SDLK_K) && (player->getMove() == 2) && (player->getEntityTurn() == 1)) {
+                if (player->checkForCollidables(entities, 0, 0) == 1) {
+                    boulder->MoveRight(entities, 10);
+                    MIX_PlayTrack(movesfx, 0);
+                    player->setMove(0);
+                    player->setTurn(0);
+                }
+                else if (player->checkForCollidables(entities, 0, 0) == 2) {
+                    player->checkForCollidables(entities, 0, 0);
+                }
             }
+            else if (e.type == SDL_EVENT_KEY_DOWN && player->getMove() >= 0 && player->getEntityTurn() == 1) {
+                if (player->collisionCheck(player->getBounds(), escape->getBounds())) {
+                    MIX_StopAllTracks(window.mixer, 0);
+                    manager->ChangeState(GameWinState::Instance());
+                }
+                player->playerInput(e, entities);
+                if (e.key.key == SDLK_UP || e.key.key == SDLK_DOWN || e.key.key == SDLK_LEFT || e.key.key == SDLK_RIGHT) {
+                    MIX_PlayTrack(movesfx, 0);
+                }
 
-        }
-        if ((e.type == SDL_EVENT_KEY_DOWN) && (e.key.key == SDLK_SPACE))
-        {
-            window.boxRender("ENDING TURN EARLY...");
-            SDL_RenderPresent(window.renderer);
-            SDL_Delay(500);
-            player->setMove(0);
-            player->setTurn(0);
+            }
+            if ((e.type == SDL_EVENT_KEY_DOWN) && (e.key.key == SDLK_SPACE))
+            {
+                window.boxRender("ENDING TURN EARLY...");
+                SDL_RenderPresent(window.renderer);
+                SDL_Delay(500);
+                player->setMove(0);
+                player->setTurn(0);
 
-        }
-        if (e.type == SDL_EVENT_QUIT || e.type == SDL_EVENT_KEY_DOWN && e.key.key == SDLK_ESCAPE) {
-            manager->ChangeState(ExitState::Instance());
+            }
+            if (e.type == SDL_EVENT_QUIT || e.type == SDL_EVENT_KEY_DOWN && e.key.key == SDLK_ESCAPE) {
+                manager->ChangeState(ExitState::Instance());
+            }
         }
     }
 }

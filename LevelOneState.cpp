@@ -62,72 +62,77 @@ bool LevelOneState::exit()
 void LevelOneState::eventHandling(SDLWindow window, Game* manager)
 {
     SDL_PumpEvents();
-    SDL_Event e;
-    if (SDL_PollEvent(&e)) {
-        if (player->getMove() <= 0) {
-            player->setTurn(0);
-        }
-        if (e.type == SDL_EVENT_MOUSE_MOTION) {
-            for (int i = 0; i < entities.size(); ++i) {
-                if (entities[i]->mouseCheck()) {
-                    entities[i]->mouseHandling(window);
-                }
-            }
-        }
-        if ((e.type == SDL_EVENT_KEY_DOWN) && (e.key.key == SDLK_RETURN))
-        {
-            std::string status;
-            if (player->getHealth() >= 15) {
-                status = "I'm scared... but I have to get out of here.";
-            }
-            else if (player->getHealth() <= 10) {
-                status = "Will I make it?";
+    if (player->getEntityTurn() == 0) {
+        update(manager, window);
+    }
+    else {
 
-            }
-            else if (player->getHealth() <= 5) {
-                status = "It's cold...";
-            }
-            player->dialogue(window, status, 0, 20);
-
-        }
-        if ((e.type == SDL_EVENT_KEY_DOWN) && (e.key.key == SDLK_K) && (player->getMove() == 2) && (player->getEntityTurn() == 1)) {
-            if (player->checkForCollidables(entities, 0, 0) == 1) {
-                player->checkForCollidables(entities, 0, 1);
-                MIX_PlayTrack(movesfx, 0);
-                player->setMove(0);
+        SDL_Event e;
+        if (SDL_PollEvent(&e)) {
+            if (player->getMove() <= 0) {
                 player->setTurn(0);
             }
-            else if (player->checkForCollidables(entities, 0, 0) == 2) {
-                player->checkForCollidables(entities, 0, 0);
+            if (e.type == SDL_EVENT_MOUSE_MOTION) {
+                for (int i = 0; i < entities.size(); ++i) {
+                    if (entities[i]->mouseCheck()) {
+                        entities[i]->mouseHandling(window);
+                    }
+                }
             }
-        }
-        else if (e.type == SDL_EVENT_KEY_DOWN && player->getMove() >= 0 && player->getEntityTurn() == 1) {
-            if (player->collisionCheck(player->getBounds(), escape->getBounds())) {
-                manager->ChangeState(LevelTwoState::Instance());
-            }
-            player->playerInput(e, entities);
-            if (e.key.key == SDLK_UP || e.key.key == SDLK_DOWN || e.key.key == SDLK_LEFT || e.key.key == SDLK_RIGHT) {
-                MIX_PlayTrack(movesfx, 0);
-            }
-            if (player->collisionCheck(player->getBounds(), escape->getBounds())) {
-                manager->ChangeState(LevelTwoState::Instance());
-            }
+            if ((e.type == SDL_EVENT_KEY_DOWN) && (e.key.key == SDLK_RETURN))
+            {
+                std::string status;
+                if (player->getHealth() >= 15) {
+                    status = "I'm scared... but I have to get out of here.";
+                }
+                else if (player->getHealth() <= 10) {
+                    status = "Will I make it?";
 
-        }
-        if ((e.type == SDL_EVENT_KEY_DOWN) && (e.key.key == SDLK_SPACE))
-        {
-            window.boxRender("ENDING TURN EARLY...");
-            SDL_RenderPresent(window.renderer);
-            SDL_Delay(500);
-            player->setMove(0);
-            player->setTurn(0);
-         
-        }
-        if (e.type == SDL_EVENT_QUIT || e.type == SDL_EVENT_KEY_DOWN && e.key.key == SDLK_ESCAPE) {
-            manager->ChangeState(ExitState::Instance());
+                }
+                else if (player->getHealth() <= 5) {
+                    status = "It's cold...";
+                }
+                player->dialogue(window, status, 0, 20);
+
+            }
+            if ((e.type == SDL_EVENT_KEY_DOWN) && (e.key.key == SDLK_K) && (player->getMove() == 2) && (player->getEntityTurn() == 1)) {
+                if (player->checkForCollidables(entities, 0, 0) == 1) {
+                    player->checkForCollidables(entities, 0, 1);
+                    MIX_PlayTrack(movesfx, 0);
+                    player->setMove(0);
+                    player->setTurn(0);
+                }
+                else if (player->checkForCollidables(entities, 0, 0) == 2) {
+                    player->checkForCollidables(entities, 0, 0);
+                }
+            }
+            else if (e.type == SDL_EVENT_KEY_DOWN && player->getMove() >= 0 && player->getEntityTurn() == 1) {
+                if (player->collisionCheck(player->getBounds(), escape->getBounds())) {
+                    manager->ChangeState(LevelTwoState::Instance());
+                }
+                player->playerInput(e, entities);
+                if (e.key.key == SDLK_UP || e.key.key == SDLK_DOWN || e.key.key == SDLK_LEFT || e.key.key == SDLK_RIGHT) {
+                    MIX_PlayTrack(movesfx, 0);
+                }
+                if (player->collisionCheck(player->getBounds(), escape->getBounds())) {
+                    manager->ChangeState(LevelTwoState::Instance());
+                }
+
+            }
+            if ((e.type == SDL_EVENT_KEY_DOWN) && (e.key.key == SDLK_SPACE))
+            {
+                window.boxRender("ENDING TURN EARLY...");
+                SDL_RenderPresent(window.renderer);
+                SDL_Delay(500);
+                player->setMove(0);
+                player->setTurn(0);
+
+            }
+            if (e.type == SDL_EVENT_QUIT || e.type == SDL_EVENT_KEY_DOWN && e.key.key == SDLK_ESCAPE) {
+                manager->ChangeState(ExitState::Instance());
+            }
         }
     }
-
 }
 
 void LevelOneState::update(Game* manager, SDLWindow window)
